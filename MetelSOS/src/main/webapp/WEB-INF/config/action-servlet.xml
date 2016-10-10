@@ -8,12 +8,12 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc">
 	
 	<!-- 인터셉터 설정  -->
-	<!-- <mvc:interceptors>
+	 <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<bean id="loggerInterceptor" class="com.common.logger.LoggerInterceptor"></bean>
+			<bean id="loggerInterceptor" class="com.metelsos.common.logger.LoggerInterceptor"></bean>
 		</mvc:interceptor>
-	</mvc:interceptors> -->
+	</mvc:interceptors> 
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
