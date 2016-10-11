@@ -104,10 +104,6 @@
 		<script src="/metelSOS/resources/js/smart-chat-ui/smart.chat.manager.min.js"></script>
 		
 		<script data-pace-options='{ "restartOnRequestAfter": true }' src="/metelSOS/resources/js/plugin/pace/pace.min.js"></script>
-		
-		<script>
-			
-		</script>
 </head>
 <body>
 		<header id="header">
@@ -116,7 +112,7 @@
 				<span id="logo"> <img src="/metelSOS/resources/img/logo.png" alt="MetelSOS"> </span>
 			</div>
 
-			<span id="extr-page-header-space" style="line-height:40px;"> <span class="hidden-mobile hidden-xs">계정이 없으신가요?</span> <a href="register.html" class="btn btn-danger">회원가입</a> </span>
+			<span id="extr-page-header-space" style="line-height:40px;"> <span class="hidden-mobile hidden-xs">계정이 없으신가요?</span> <a href="register.jsp" class="btn btn-danger">회원가입</a> </span>
 
 		</header>
 

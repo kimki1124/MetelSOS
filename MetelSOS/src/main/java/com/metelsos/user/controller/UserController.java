@@ -31,4 +31,14 @@ public class UserController {
 		jsonModel = new MetelSOSJsonModel(returnMap);
 		return jsonModel;
 	}
+	
+	@RequestMapping(value="/logout.do")
+	public ModelAndView logoutUser(HttpServletRequest request, HttpSession session) throws Exception{
+		log.info("#operation => logout");
+		ModelAndView modelAndView = new ModelAndView();
+		request.getSession().invalidate();
+		modelAndView.setViewName("redirect:login.jsp");
+		
+		return modelAndView;
+	}
 }
