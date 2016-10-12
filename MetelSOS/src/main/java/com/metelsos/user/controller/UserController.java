@@ -41,4 +41,23 @@ public class UserController {
 		
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="/register.do")
+	public ModelAndView registerUser(@RequestParam HashMap<String, String> paramMap){
+		log.info("#operation => registerUser");
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("redirect:login.jsp");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="/validateId.do")
+	public ModelAndView validateId(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => validateId");
+		MetelSOSJsonModel jsonModel = null;
+		HashMap<String, Object> returnMap = userService.validateId(paramMap);
+		jsonModel = new MetelSOSJsonModel(returnMap);
+		
+		return jsonModel;
+	}
 }

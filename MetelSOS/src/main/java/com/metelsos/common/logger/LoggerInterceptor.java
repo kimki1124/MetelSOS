@@ -17,7 +17,8 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter{
 		// 전처리기. 컨트롤러가 호출되기 전에 실행됨
 		log.info("====================== START ======================");
 		log.info(" Request URI \t:     "+ request.getRequestURI());
-		if("/metelSOS/login.do".equals(request.getRequestURI())){
+		if("/metelSOS/login.do".equals(request.getRequestURI()) || "/metelSOS/register.do".equals(request.getRequestURI())
+				|| "/metelSOS/validateId.do".equals(request.getRequestURI())){
 			//이 조건의 URI는 세션 체크 확인을 할 필요가 없으므로 바로 true 리턴 
 			return true;
 		}

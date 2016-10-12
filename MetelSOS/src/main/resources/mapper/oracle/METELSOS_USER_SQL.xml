@@ -9,4 +9,12 @@
 			WHERE USER_ID = #{userId} AND USER_PASSWD = #{userPasswd}
 		]]>
 	</select>
+	
+	<select id="getUserById" parameterType="hashmap" resultType="User">
+		<![CDATA[
+			SELECT *
+			FROM METELSOS_USER
+			WHERE USER_ID = #{userId}
+		]]>
+	</select>
 </mapper>

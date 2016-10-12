@@ -56,33 +56,40 @@
 					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
 						<div class="well no-padding">
 
-							<form action="php/demo-register.php" id="smart-form-register" class="smart-form client-form">
+							<form action="/metelSOS/register.do" onsubmit="return registerFormSubmit();" id="smart-form-register" class="smart-form client-form">
 								<header>
 									회원가입
 								</header>
-
+									<input type="hidden" id="isValidateCheck" />
 								<fieldset>
-									<section>
-										<label class="input"> <i class="icon-append fa fa-user"></i>
-											<input type="text" name="userId" placeholder="아이디">
-											<b class="tooltip tooltip-bottom-right">아이디는 최대 20자까지 가능합니다.</b> </label>
-									</section>
+									<div class="row">
+										<section class="col col-9">
+											<label class="input"> <i class="icon-append fa fa-user"></i>
+												<input type="text" name="id" id="userId" placeholder="아이디">
+												<b class="tooltip tooltip-bottom-right">아이디는 최대 20자까지 가능합니다.</b> </label>
+										</section>
+										<section class="col col-3">
+											<button id="idValidate" class="btn btn-primary" style="padding:6px 22px 6px 22px; margin-left:-14px;">
+												중복확인
+											</button>
+										</section>
+									</div>
 									
 									<section>
 										<label class="input"> <i class="icon-append fa fa-lock"></i>
-											<input type="password" name="userPasswd" placeholder="비밀번호" id="password">
-											<b class="tooltip tooltip-bottom-right">비밀번호는 영문과 숫자를 섞어 최대 20자까지 가능합니다.</b> </label>
+											<input type="password" name="password" placeholder="비밀번호" id="password">
+											<b class="tooltip tooltip-bottom-right">비밀번호는 영문과 숫자를 섞어 8~20자까지 가능합니다.</b> </label>
 									</section>
 
 									<section>
 										<label class="input"> <i class="icon-append fa fa-lock"></i>
-											<input type="password" name="userPasswdConfirm" placeholder="비밀번호 확인">
+											<input type="password" name="passwordConfirm" placeholder="비밀번호 확인" id="passwordConfirm">
 											<b class="tooltip tooltip-bottom-right">비밀번호를 한번 더 입력해주세요.</b> </label>
 									</section>
 
 									<section>
 										<label class="input"> <i class="icon-append fa fa-envelope"></i>
-											<input type="email" name="userEmail" placeholder="이메일">
+											<input type="email" name="email" id="userEmail" placeholder="이메일">
 											<b class="tooltip tooltip-bottom-right">이메일은 계정을 인증할 때 필요합니다.</b> </label>
 									</section>
 									
@@ -95,7 +102,7 @@
 									<section>
 										<label class="input"> <i class="icon-append fa fa-mobile" style="font-size:25px;"></i>
 											<input type="text" name="userPhone" placeholder="전화번호">
-											<b class="tooltip tooltip-bottom-right">통화 가능한 번호를 입력해 주세요.</b> </label>
+											<b class="tooltip tooltip-bottom-right">통화 가능한 번호(- 제외)를 입력해 주세요.</b> </label>
 									</section>
 									
 									<section>
@@ -142,26 +149,32 @@
 
 						</div>
 						<p class="note text-center">Copyright 2016. MetelSOS all rights reserved.</p>
-						<!-- <h5 class="text-center">- Or sign in using -</h5>
-						<ul class="list-inline text-center">
-							<li>
-								<a href="javascript:void(0);" class="btn btn-primary btn-circle"><i class="fa fa-facebook"></i></a>
-							</li>
-							<li>
-								<a href="javascript:void(0);" class="btn btn-info btn-circle"><i class="fa fa-twitter"></i></a>
-							</li>
-							<li>
-								<a href="javascript:void(0);" class="btn btn-warning btn-circle"><i class="fa fa-linkedin"></i></a>
-							</li>
-						</ul> -->
 					</div>
 				</div>
 			</div>
 
 		</div>
+		
+		<div id="idValidateOK" title="idValidateOK">
+			<p>
+				사용하실 수 있는 아이디입니다.
+			</p>
+		</div>
+		
+		<div id="idValidateNO" title="idValidateNO">
+			<p>
+				사용하실 수 없는 아이디입니다.
+			</p>
+		</div>
+		
+		<div id="needIdValidate" title="needIdValidate">
+			<p>
+				아이디 중복확인을 해주세요.
+			</p>
+		</div>
 
 		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -171,176 +184,6 @@
 						<h4 class="modal-title" id="myModalLabel">Terms & Conditions</h4>
 					</div>
 					<div class="modal-body custom-scroll terms-body">
-						
- <div id="left">
-
-
-
-            <h1>SMARTADMIN TERMS & CONDITIONS TEMPLATE</h1>
-
-
-
-            <h2>Introduction</h2>
-
-            <p>These terms and conditions govern your use of this website; by using this website, you accept these terms and conditions in full.   If you disagree with these terms and conditions or any part of these terms and conditions, you must not use this website.</p>
-
-            <p>[You must be at least [18] years of age to use this website.  By using this website [and by agreeing to these terms and conditions] you warrant and represent that you are at least [18] years of age.]</p>
-
-
-            <h2>License to use website</h2>
-            <p>Unless otherwise stated, [NAME] and/or its licensors own the intellectual property rights in the website and material on the website.  Subject to the license below, all these intellectual property rights are reserved.</p>
-
-            <p>You may view, download for caching purposes only, and print pages [or [OTHER CONTENT]] from the website for your own personal use, subject to the restrictions set out below and elsewhere in these terms and conditions.</p>
-
-            <p>You must not:</p>
-            <ul>
-                <li>republish material from this website (including republication on another website);</li>
-                <li>sell, rent or sub-license material from the website;</li>
-                <li>show any material from the website in public;</li>
-                <li>reproduce, duplicate, copy or otherwise exploit material on this website for a commercial purpose;]</li>
-                <li>[edit or otherwise modify any material on the website; or]</li>
-                <li>[redistribute material from this website [except for content specifically and expressly made available for redistribution].]</li>
-            </ul>
-            <p>[Where content is specifically made available for redistribution, it may only be redistributed [within your organisation].]</p>
-
-            <h2>Acceptable use</h2>
-
-            <p>You must not use this website in any way that causes, or may cause, damage to the website or impairment of the availability or accessibility of the website; or in any way which is unlawful, illegal, fraudulent or harmful, or in connection with any unlawful, illegal, fraudulent or harmful purpose or activity.</p>
-
-            <p>You must not use this website to copy, store, host, transmit, send, use, publish or distribute any material which consists of (or is linked to) any spyware, computer virus, Trojan horse, worm, keystroke logger, rootkit or other malicious computer software.</p>
-
-            <p>You must not conduct any systematic or automated data collection activities (including without limitation scraping, data mining, data extraction and data harvesting) on or in relation to this website without [NAME'S] express written consent.</p>
-
-            <p>[You must not use this website to transmit or send unsolicited commercial communications.]</p>
-
-            <p>[You must not use this website for any purposes related to marketing without [NAME'S] express written consent.]</p>
-
-            <h2>[Restricted access</h2>
-
-            <p>[Access to certain areas of this website is restricted.]  [NAME] reserves the right to restrict access to [other] areas of this website, or indeed this entire website, at [NAME'S] discretion.</p>
-
-            <p>If [NAME] provides you with a user ID and password to enable you to access restricted areas of this website or other content or services, you must ensure that the user ID and password are kept confidential.</p>
-
-            <p>[[NAME] may disable your user ID and password in [NAME'S] sole discretion without notice or explanation.]</p>
-
-            <h2>[User content</h2>
-
-            <p>In these terms and conditions, “your user content” means material (including without limitation text, images, audio material, video material and audio-visual material) that you submit to this website, for whatever purpose.</p>
-
-            <p>You grant to [NAME] a worldwide, irrevocable, non-exclusive, royalty-free license to use, reproduce, adapt, publish, translate and distribute your user content in any existing or future media.  You also grant to [NAME] the right to sub-license these rights, and the right to bring an action for infringement of these rights.</p>
-
-            <p>Your user content must not be illegal or unlawful, must not infringe any third party's legal rights, and must not be capable of giving rise to legal action whether against you or [NAME] or a third party (in each case under any applicable law).</p>
-
-            <p>You must not submit any user content to the website that is or has ever been the subject of any threatened or actual legal proceedings or other similar complaint.</p>
-
-            <p>[NAME] reserves the right to edit or remove any material submitted to this website, or stored on [NAME'S] servers, or hosted or published upon this website.</p>
-
-            <p>[Notwithstanding [NAME'S] rights under these terms and conditions in relation to user content, [NAME] does not undertake to monitor the submission of such content to, or the publication of such content on, this website.]</p>
-
-            <h2>No warranties</h2>
-
-            <p>This website is provided “as is” without any representations or warranties, express or implied.  [NAME] makes no representations or warranties in relation to this website or the information and materials provided on this website.</p>
-
-            <p>Without prejudice to the generality of the foregoing paragraph, [NAME] does not warrant that:</p>
-            <ul>
-                <li>this website will be constantly available, or available at all; or</li>
-                <li>the information on this website is complete, true, accurate or non-misleading.</li>
-            </ul>
-            <p>Nothing on this website constitutes, or is meant to constitute, advice of any kind.  [If you require advice in relation to any [legal, financial or medical] matter you should consult an appropriate professional.]</p>
-
-            <h2>Limitations of liability</h2>
-
-            <p>[NAME] will not be liable to you (whether under the law of contact, the law of torts or otherwise) in relation to the contents of, or use of, or otherwise in connection with, this website:</p>
-            <ul>
-                <li>[to the extent that the website is provided free-of-charge, for any direct loss;]</li>
-                <li>for any indirect, special or consequential loss; or</li>
-                <li>for any business losses, loss of revenue, income, profits or anticipated savings, loss of contracts or business relationships, loss of reputation or goodwill, or loss or corruption of information or data.</li>
-            </ul>
-            <p>These limitations of liability apply even if [NAME] has been expressly advised of the potential loss.</p>
-
-            <h2>Exceptions</h2>
-
-            <p>Nothing in this website disclaimer will exclude or limit any warranty implied by law that it would be unlawful to exclude or limit; and nothing in this website disclaimer will exclude or limit [NAME'S] liability in respect of any:</p>
-            <ul>
-                <li>death or personal injury caused by [NAME'S] negligence;</li>
-                <li>fraud or fraudulent misrepresentation on the part of [NAME]; or</li>
-                <li>matter which it would be illegal or unlawful for [NAME] to exclude or limit, or to attempt or purport to exclude or limit, its liability.</li>
-            </ul>
-            <h2>Reasonableness</h2>
-
-            <p>By using this website, you agree that the exclusions and limitations of liability set out in this website disclaimer are reasonable.</p>
-
-            <p>If you do not think they are reasonable, you must not use this website.</p>
-
-            <h2>Other parties</h2>
-
-            <p>[You accept that, as a limited liability entity, [NAME] has an interest in limiting the personal liability of its officers and employees.  You agree that you will not bring any claim personally against [NAME'S] officers or employees in respect of any losses you suffer in connection with the website.]</p>
-
-            <p>[Without prejudice to the foregoing paragraph,] you agree that the limitations of warranties and liability set out in this website disclaimer will protect [NAME'S] officers, employees, agents, subsidiaries, successors, assigns and sub-contractors as well as [NAME].</p>
-
-            <h2>Unenforceable provisions</h2>
-
-            <p>If any provision of this website disclaimer is, or is found to be, unenforceable under applicable law, that will not affect the enforceability of the other provisions of this website disclaimer.</p>
-
-            <h2>Indemnity</h2>
-
-            <p>You hereby indemnify [NAME] and undertake to keep [NAME] indemnified against any losses, damages, costs, liabilities and expenses (including without limitation legal expenses and any amounts paid by [NAME] to a third party in settlement of a claim or dispute on the advice of [NAME'S] legal advisers) incurred or suffered by [NAME] arising out of any breach by you of any provision of these terms and conditions[, or arising out of any claim that you have breached any provision of these terms and conditions].</p>
-
-            <h2>Breaches of these terms and conditions</h2>
-
-            <p>Without prejudice to [NAME'S] other rights under these terms and conditions, if you breach these terms and conditions in any way, [NAME] may take such action as [NAME] deems appropriate to deal with the breach, including suspending your access to the website, prohibiting you from accessing the website, blocking computers using your IP address from accessing the website, contacting your internet service provider to request that they block your access to the website and/or bringing court proceedings against you.</p>
-
-            <h2>Variation</h2>
-
-            <p>[NAME] may revise these terms and conditions from time-to-time.  Revised terms and conditions will apply to the use of this website from the date of the publication of the revised terms and conditions on this website.  Please check this page regularly to ensure you are familiar with the current version.</p>
-
-            <h2>Assignment</h2>
-
-            <p>[NAME] may transfer, sub-contract or otherwise deal with [NAME'S] rights and/or obligations under these terms and conditions without notifying you or obtaining your consent.</p>
-
-            <p>You may not transfer, sub-contract or otherwise deal with your rights and/or obligations under these terms and conditions.</p>
-
-            <h2>Severability</h2>
-
-            <p>If a provision of these terms and conditions is determined by any court or other competent authority to be unlawful and/or unenforceable, the other provisions will continue in effect.  If any unlawful and/or unenforceable provision would be lawful or enforceable if part of it were deleted, that part will be deemed to be deleted, and the rest of the provision will continue in effect.</p>
-
-            <h2>Entire agreement</h2>
-
-            <p>These terms and conditions [, together with [DOCUMENTS],] constitute the entire agreement between you and [NAME] in relation to your use of this website, and supersede all previous agreements in respect of your use of this website.</p>
-
-            <h2>Law and jurisdiction</h2>
-
-            <p>These terms and conditions will be governed by and construed in accordance with [GOVERNING LAW], and any disputes relating to these terms and conditions will be subject to the [non-]exclusive jurisdiction of the courts of [JURISDICTION].</p>
-
-<h2>About these website terms and conditions</h2><p>We created these website terms and conditions with the help of a free website terms and conditions form developed by Contractology and available at <a href="http://www.SmartAdmin.com">www.SmartAdmin.com</a>.
-Contractology supply a wide variety of commercial legal documents, such as <a href="#">template data protection statements</a>.
-</p>
-            <h2>[Registrations and authorisations</h2>
-
-            <p>[[NAME] is registered with [TRADE REGISTER].  You can find the online version of the register at [URL].  [NAME'S] registration number is [NUMBER].]</p>
-
-            <p>[[NAME] is subject to [AUTHORISATION SCHEME], which is supervised by [SUPERVISORY AUTHORITY].]</p>
-
-            <p>[[NAME] is registered with [PROFESSIONAL BODY].  [NAME'S] professional title is [TITLE] and it has been granted in [JURISDICTION].  [NAME] is subject to the [RULES] which can be found at [URL].]</p>
-
-            <p>[[NAME] subscribes to the following code[s] of conduct: [CODE(S) OF CONDUCT].  [These codes/this code] can be consulted electronically at [URL(S)].</p>
-
-            <p>[[NAME'S] [TAX] number is [NUMBER].]]</p>
-
-            <h2>[NAME'S] details</h2>
-
-            <p>The full name of [NAME] is [FULL NAME].</p>
-
-            <p>[[NAME] is registered in [JURISDICTION] under registration number [NUMBER].]</p>
-
-            <p>[NAME'S] [registered] address is [ADDRESS].</p>
-
-            <p>You can contact [NAME] by email to [EMAIL].</p>
-
-           
-
-            </div>
-			
 			<br><br>
 
             <p><strong>By using this  WEBSITE TERMS AND CONDITIONS template document, you agree to the 
@@ -365,9 +208,9 @@ Contractology supply a wide variety of commercial legal documents, such as <a hr
 							<i class="fa fa-print"></i> Print
 						</button>
 					</div>
-				</div><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
+				</div>/.modal-content
+			</div>/.modal-dialog
+		</div>/.modal -->
 
 		<!--================================================== -->	
 
@@ -408,25 +251,116 @@ Contractology supply a wide variety of commercial legal documents, such as <a hr
 		<script type="text/javascript">
 			runAllForms();
 			
-			// Model i agree button
-			$("#i-agree").click(function(){
-				$this=$("#terms");
-				if($this.checked) {
-					$('#myModal').modal('toggle');
-				} else {
-					$this.prop('checked', true);
-					$('#myModal').modal('toggle');
-				}
-			});
-			
-			// Validation
 			$(function() {
+				//isValidateCheck 값 false로 설정
+				$("#isValidateCheck").val(false);
+				
+				//다이얼로그 title에 html을 적용하기 위한 코드
+				 $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+						_title : function(title) {
+							if (!this.options.title) {
+								title.html("&#160;");
+							} else {
+								title.html(this.options.title);
+							}
+						}
+				}));
+				
+				//중복확인 성공 다이얼로그 정의
+				 $('#idValidateOK').dialog({
+						autoOpen : false,
+						width: 300,
+						height:200,
+						resizable: false,
+						modal : true,
+						title:"<div class='widget-header'><h4><i class='fa fa-check'></i>&nbsp;아이디 중복 확인</h4></div>",
+						buttons:[{
+							html:"<i class='fa fa-check'></i>&nbsp; 확인",
+							"class": "btn btn-default",
+							click:function(){
+								$("#isValidateCheck").val(true);
+								$('#idValidateOK').dialog("close");
+								$("#password").focus();
+								return false;
+							}
+						}]
+				});
+				 
+				//중복확인 실패 다이얼로그 정의
+				 $('#idValidateNO').dialog({
+						autoOpen : false,
+						width: 300,
+						height:200,
+						resizable: false,
+						modal : true,
+						title:"<div class='widget-header'><h4><i class='fa fa-warning'></i>&nbsp;아이디 중복 확인</h4></div>",
+						buttons:[{
+							html:"<i class='fa fa-check'></i>&nbsp; 확인",
+							"class": "btn btn-default",
+							click:function(){
+								$('#idValidateNO').dialog("close");
+								$("#userId").focus();
+								return false;
+							}
+						}]
+				});
+				
+				 $('#needIdValidate').dialog({
+						autoOpen : false,
+						width: 300,
+						height:200,
+						resizable: false,
+						modal : true,
+						title:"<div class='widget-header'><h4><i class='fa fa-warning'></i>&nbsp;회원 가입</h4></div>",
+						buttons:[{
+							html:"<i class='fa fa-check'></i>&nbsp; 확인",
+							"class": "btn btn-default",
+							click:function(){
+								$('#needIdValidate').dialog("close");
+								$("#userId").focus();
+								return false;
+							}
+						}]
+				});
+				 
+				
+				$("input[name=id]").focus();
+				
+				//고객사 콤보박스 required validate
+				$.validator.addMethod("valueNotEquals", function(value, element, arg){
+					return value != null;
+				}, "Value must not equal arg.");
+				
+				$("#idValidate").click(function(){
+					var userId = $("#userId").val();
+					
+					$.ajax({
+						url:'validateId.do',
+						type:'post',
+						dataType:"json",
+						data:'userId='+userId,
+						success:function(msg){
+							if(msg.resultMsg == 'SUCCESS'){
+								//아이디가 존재하면 
+								console.log('중복확인 성공');
+								$('#idValidateNO').dialog("open");
+							}else{
+								//아이디가 존재하지 않으면
+								console.log('중복확인 실패');
+								$('#idValidateOK').dialog("open");
+							}
+						}
+					});
+					
+					return false;
+				});
+				
 				// Validation
 				$("#smart-form-register").validate({
 
 					// Rules for form validation
 					rules : {
-						username : {
+						id : {
 							required : true
 						},
 						email : {
@@ -435,27 +369,26 @@ Contractology supply a wide variety of commercial legal documents, such as <a hr
 						},
 						password : {
 							required : true,
-							minlength : 3,
+							minlength : 8,
 							maxlength : 20
 						},
 						passwordConfirm : {
 							required : true,
-							minlength : 3,
+							minlength : 8,
 							maxlength : 20,
 							equalTo : '#password'
 						},
-						firstname : {
+						userName : {
 							required : true
 						},
-						lastname : {
-							required : true
+						userDept : {
+							valueNotEquals : 'default'
 						},
-						gender : {
-							required : true
-						},
-						terms : {
-							required : true
+						userPhone : {
+							required : true,
+							digits : true
 						}
+						
 					},
 
 					// Messages for form validation
@@ -464,17 +397,23 @@ Contractology supply a wide variety of commercial legal documents, such as <a hr
 							required : 'Please enter your login'
 						},
 						email : {
-							required : 'Please enter your email address',
-							email : 'Please enter a VALID email address'
+							required : '이메일 주소를 입력해주세요.',
+							email : '이메일 형식을 지켜서 작성해주세요.(###@###.###)'
 						},
 						password : {
-							required : 'Please enter your password'
+							required : '비밀번호를 입력해 주세요.'
 						},
 						passwordConfirm : {
-							required : 'Please enter your password one more time',
-							equalTo : 'Please enter the same password as above'
+							required : '비밀번호를 한번 더 입력해주세요.',
+							equalTo : '비밀번호와 입력한 값이 틀립니다.'
 						},
-						firstname : {
+						userDept : {
+							valueNotEquals : '고객사를 선택해주세요.'
+						},
+						userPhone : {
+							digits : '숫자만 입력해주세요.'
+						}
+						/* firstname : {
 							required : 'Please select your first name'
 						},
 						lastname : {
@@ -485,22 +424,22 @@ Contractology supply a wide variety of commercial legal documents, such as <a hr
 						},
 						terms : {
 							required : 'You must agree with Terms and Conditions'
-						}
+						} */
 					},
 
 					// Ajax form submition
-					submitHandler : function(form) {
-						$(form).ajaxSubmit({
+					//submitHandler : function(form) {
+						/* $(form).ajaxSubmit({
 							success : function() {
 								$("#smart-form-register").addClass('submited');
 							}
-						});
-					},
+						});  */
+					//},  
 
 					// Do not change code below
-					errorPlacement : function(error, element) {
-						error.insertAfter(element.parent());
-					}
+					// errorPlacement : function(error, element) {
+					//	error.insertAfter(element.parent());
+					//} 
 				});
 				
 				//고객사를 선택하면 hidden인 소속 콤보박스가 show
@@ -512,8 +451,22 @@ Contractology supply a wide variety of commercial legal documents, such as <a hr
 						$("#userDept").show();
 					}
 				});
-
 			});
+			
+			registerFormSubmit = function(){
+				var isValidateCheck = $("#isValidateCheck").val();
+				
+				if(isValidateCheck == 'false'){
+					$('#needIdValidate').dialog("open");
+					return false;
+				}else{
+					return true;
+				}
+				//console.log(isValidateCheck);
+				/* if(isValidateCheck){
+					return true;
+				} */
+			}
 		</script>
 
 	</body>
