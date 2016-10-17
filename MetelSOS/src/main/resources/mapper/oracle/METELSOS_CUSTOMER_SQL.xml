@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="customer">
+	<select id="getCustomerByIdAndPasswd" parameterType="hashmap" resultType="Customer">
+		<![CDATA[
+			SELECT *
+			FROM METELSOS_CUSTOMER
+			WHERE CUSTOMER_ID = #{customerId} AND CUSTOMER_PASSWD = #{customerPasswd}
+		]]>
+	</select>
+	
+	<select id="getCustomerById" parameterType="hashmap" resultType="Customer">
+		<![CDATA[
+			SELECT *
+			FROM METELSOS_CUSTOMER
+			WHERE CUSTOMER_ID = #{customerId}
+		]]>
+	</select>
+	
+	<insert id="insertCustomer" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO METELSOS_CUSTOMER
+			VALUES(SEQ_CUSTOMER_NUM.NEXTVAL, #{customerId}, #{customerPasswd}, #{customerName}, #{companyName}, #{customerPosition}, #{customerEmail}, #{customerPhone}, #{customerCreateDate}, null)
+		]]>
+	</insert>
+</mapper>

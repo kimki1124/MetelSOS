@@ -17,8 +17,9 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter{
 		// 전처리기. 컨트롤러가 호출되기 전에 실행됨
 		log.info("====================== START ======================");
 		log.info(" Request URI \t:     "+ request.getRequestURI());
-		if("/metelSOS/login.do".equals(request.getRequestURI()) || "/metelSOS/register.do".equals(request.getRequestURI())
-				|| "/metelSOS/validateId.do".equals(request.getRequestURI())){
+		if("/metelSOS/login.do".equals(request.getRequestURI()) || "/metelSOS/engineerRegister.do".equals(request.getRequestURI())
+				|| "/metelSOS/engineer/validateEngineerId.do".equals(request.getRequestURI()) || "/metelSOS/setItemForRegisterForm.do".equals(request.getRequestURI())
+				|| "/metelSOS/customerValidateId.do".equals(request.getRequestURI()) || "/metelSOS/customerRegister.do".equals(request.getRequestURI())){
 			//이 조건의 URI는 세션 체크 확인을 할 필요가 없으므로 바로 true 리턴 
 			return true;
 		}
@@ -27,7 +28,7 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter{
 		try{	
 			if(request.getSession().getAttribute("SESSION_LOGIN_USER_ID") == null){
 				//로그인하지 않은 경우 로그인 페이지로 이동
-				response.sendRedirect("/modestyExtjs/login.jsp");
+				response.sendRedirect("/metelSOS/login.jsp");
 				return false;
 			}
 		}catch(Exception e){

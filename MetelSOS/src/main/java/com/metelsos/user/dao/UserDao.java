@@ -17,4 +17,8 @@ public class UserDao extends AbstractDAO{
 	public UserVo checkUserById(HashMap<String, String> paramMap) {
 		return (UserVo)selectOne("user.getUserById", paramMap);
 	}
+
+	public int insertUser(HashMap<String, String> paramMap) {
+		return (int) insert("user.insertUser", paramMap);
+	}
 }

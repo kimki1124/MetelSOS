@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="company">
+	<select id="getCustomerCompanyName" resultType="Company">
+		SELECT COMPANY_NAME, COMPANY_ENG_NAME
+		FROM METELSOS_CUSTOMER_COMPANY
+	</select>
+</mapper>

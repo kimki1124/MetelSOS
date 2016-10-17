@@ -10,7 +10,7 @@ public class UserVo {
 	private String user_phone;
 	private String user_code;
 	private String user_create_date;
-	private String user_connect_date;
+	private String last_connect_date;
 	
 	public int getUser_num() {
 		return user_num;
@@ -67,10 +67,10 @@ public class UserVo {
 		this.user_create_date = user_create_date;
 	}
 	public String getUser_connect_date() {
-		return user_connect_date;
+		return last_connect_date;
 	}
-	public void setUser_connect_date(String user_connect_date) {
-		this.user_connect_date = user_connect_date;
+	public void setUser_connect_date(String last_connect_date) {
+		this.last_connect_date = last_connect_date;
 	}
 	
 	

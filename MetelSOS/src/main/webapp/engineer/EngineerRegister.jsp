@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-		<title> 로그인</title>
+		<title>+++ 엔지니어 회원가입 +++</title>
 		<meta name="description" content="">
 		<meta name="author" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -57,16 +57,16 @@
 					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
 						<div class="well no-padding">
 
-							<form action="/metelSOS/register.do" id="smart-form-register" class="smart-form client-form"><!-- action="/metelSOS/register.do" -->
+							<form action="/metelSOS/engineerRegister.do" id="smart-form-register" class="smart-form client-form"><!-- action="/metelSOS/register.do" -->
 								<header>
-									회원가입
+									본사 엔지니어 회원가입
 								</header>
 									<input type="hidden" id="isValidateCheck" />
 								<fieldset>
 									<div class="row">
 										<section class="col col-9">
 											<label class="input"> <i class="icon-append fa fa-user"></i>
-												<input type="text" name="id" id="userId" placeholder="아이디">
+												<input type="text" name="engineerId" id="engineerId" placeholder="아이디">
 												<b class="tooltip tooltip-bottom-right">아이디는 최대 20자까지 가능합니다.</b> </label>
 										</section>
 										<section class="col col-3">
@@ -78,56 +78,45 @@
 									
 									<section>
 										<label class="input"> <i class="icon-append fa fa-lock"></i>
-											<input type="password" name="password" placeholder="비밀번호" id="password">
+											<input type="password" name="engineerPasswd" placeholder="비밀번호" id="engineerPasswd">
 											<b class="tooltip tooltip-bottom-right">비밀번호는 영문과 숫자를 섞어 8~20자까지 가능합니다.</b> </label>
 									</section>
 
 									<section>
 										<label class="input"> <i class="icon-append fa fa-lock"></i>
-											<input type="password" name="passwordConfirm" placeholder="비밀번호 확인" id="passwordConfirm">
+											<input type="password" name="engineerPasswdConfirm" placeholder="비밀번호 확인" id="engineerPasswdConfirm">
 											<b class="tooltip tooltip-bottom-right">비밀번호를 한번 더 입력해주세요.</b> </label>
 									</section>
 
 									<section>
 										<label class="input"> <i class="icon-append fa fa-envelope"></i>
-											<input type="email" name="email" id="userEmail" placeholder="이메일">
+											<input type="email" name="engineerEmail" id="engineerEmail" placeholder="이메일">
 											<b class="tooltip tooltip-bottom-right">이메일은 계정을 인증할 때 필요합니다.</b> </label>
 									</section>
 									
 									<section>
+										<label class="select">
+											<select name="engineerDept">
+												<option value="default" selected="" disabled="">부서를 선택해 주세요.</option>
+												<option value="제품지원부">제품지원부</option>
+												<option value="플랫폼연구부">플랫폼연구부</option>
+												<option value="기술연구부">기술연구부</option>
+												<option value="사업수행부">사업수행부</option>
+											</select> 
+											<i></i> 
+										</label>
+									</section>
+									
+									<section>
 										<label class="input"> <i class="icon-append fa fa-user"></i>
-											<input type="text" name="userName" placeholder="이름">
+											<input type="text" name="engineerName" placeholder="이름">
 											<b class="tooltip tooltip-bottom-right">이름을 입력해 주세요.</b> </label>
 									</section>
 									
 									<section>
 										<label class="input"> <i class="icon-append fa fa-mobile" style="font-size:25px;"></i>
-											<input type="text" name="userPhone" placeholder="전화번호">
+											<input type="text" name="engineerPhone" placeholder="전화번호">
 											<b class="tooltip tooltip-bottom-right">통화 가능한 번호(- 제외)를 입력해 주세요.</b> </label>
-									</section>
-									
-									<section>
-										<label class="label">구분</label>
-										<div class="inline-group">
-											<label class="radio">
-												<input type="radio" name="userCode" checked="checked" value="Head">
-												<i></i>본사</label>
-											<label class="radio">
-												<input type="radio" name="userCode" value="Customer">
-												<i></i>고객사</label>
-										</div>
-									</section>
-									
-									<section id="userDept" hidden>
-										<label class="select">
-											<select name="userDept">
-												<option value="default" selected="" disabled="">고객사를 선택해 주세요.</option>
-												<c:forEach var="item" items="${customerCompanyList }" varStatus="status">
-													<option value="${item.customer_eng_name}">${item.customer_name}</option>
-												</c:forEach>
-											</select> 
-											<i></i> 
-										</label>
 									</section>
 								</fieldset>
 								<footer>
@@ -297,7 +286,7 @@
 							click:function(){
 								$("#isValidateCheck").val(true);
 								$('#idValidateOK').dialog("close");
-								$("#password").focus();
+								$("#engineerPasswd").focus();
 								return false;
 							}
 						}]
@@ -316,7 +305,7 @@
 							"class": "btn btn-default",
 							click:function(){
 								$('#idValidateNO').dialog("close");
-								$("#userId").focus();
+								$("#engineerId").focus();
 								return false;
 							}
 						}]
@@ -335,7 +324,7 @@
 							"class": "btn btn-default",
 							click:function(){
 								$('#needIdValidate').dialog("close");
-								$("#userId").focus();
+								$("#engineerId").focus();
 								return false;
 							}
 						}]
@@ -378,7 +367,7 @@
 						}]
 				});
 				
-				$("input[name=id]").focus();
+				$("input[name=engineerId]").focus();
 				
 				//고객사 콤보박스 required validate
 				$.validator.addMethod("valueNotEquals", function(value, element, arg){
@@ -386,15 +375,15 @@
 				}, "Value must not equal arg.");
 				
 				$("#idValidate").click(function(){
-					var userId = $("#userId").val();
+					var engineerId = $("#engineerId").val();
 					
 					$.ajax({
-						url:'validateId.do',
+						url:'validateEngineerId.do',
 						type:'post',
 						dataType:"json",
-						data:'userId='+userId,
+						data:'engineerId='+engineerId,
 						success:function(msg){
-							if(msg.resultMsg == 'SUCCESS'){
+							if(msg.resultMsg == 'FAILED'){
 								//아이디가 존재하면 
 								$('#idValidateNO').dialog("open");
 							}else{
@@ -412,31 +401,31 @@
 
 					// Rules for form validation
 					rules : {
-						id : {
+						engineerId : {
 							required : true
 						},
-						email : {
+						engineerEmail : {
 							required : true,
 							email : true
 						},
-						password : {
+						engineerPasswd : {
 							required : true,
 							minlength : 8,
 							maxlength : 20
 						},
-						passwordConfirm : {
+						engineerPasswdConfirm : {
 							required : true,
 							minlength : 8,
 							maxlength : 20,
-							equalTo : '#password'
+							equalTo : '#engineerPasswd'
 						},
-						userName : {
+						engineerName : {
 							required : true
 						},
-						userDept : {
+						engineerDept : {
 							valueNotEquals : 'default'
 						},
-						userPhone : {
+						engineerPhone : {
 							required : true,
 							digits : true
 						}
@@ -448,60 +437,24 @@
 						login : {
 							required : 'Please enter your login'
 						},
-						email : {
+						engineerEmail : {
 							required : '이메일 주소를 입력해주세요.',
 							email : '이메일 형식을 지켜서 작성해주세요.(###@###.###)'
 						},
-						password : {
+						engineerPasswd : {
 							required : '비밀번호를 입력해 주세요.'
 						},
-						passwordConfirm : {
+						engineerPasswdConfirm : {
 							required : '비밀번호를 한번 더 입력해주세요.',
 							equalTo : '비밀번호와 입력한 값이 틀립니다.'
 						},
-						userDept : {
-							valueNotEquals : '고객사를 선택해주세요.'
+						engineerDept : {
+							valueNotEquals : '부서를 선택해주세요.'
 						},
-						userPhone : {
+						engineerPhone : {
 							digits : '숫자만 입력해주세요.'
 						}
-						/* firstname : {
-							required : 'Please select your first name'
-						},
-						lastname : {
-							required : 'Please select your last name'
-						},
-						gender : {
-							required : 'Please select your gender'
-						},
-						terms : {
-							required : 'You must agree with Terms and Conditions'
-						} */
 					},
-
-					// Ajax form submition
-					//submitHandler : function(form) {
-						/* $(form).ajaxSubmit({
-							success : function() {
-								$("#smart-form-register").addClass('submited');
-							}
-						});  */
-					//},  
-
-					// Do not change code below
-					// errorPlacement : function(error, element) {
-					//	error.insertAfter(element.parent());
-					//} 
-				});
-				
-				//고객사를 선택하면 hidden인 소속 콤보박스가 show
-				$("input[name=userCode]").change(function(){
-					var radioValue = $(this).val();
-					if(radioValue == 'Head'){
-						$("#userDept").hide();
-					}else{
-						$("#userDept").show();
-					}
 				});
 				
 				// register form submit

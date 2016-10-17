@@ -6,7 +6,7 @@
 		<![CDATA[
 			SELECT *
 			FROM METELSOS_USER
-			WHERE USER_ID = #{userId} AND USER_PASSWD = #{userPasswd}
+			WHERE USER_ID = #{userID} AND USER_PASSWD = #{userPasswd}
 		]]>
 	</select>
 	
@@ -17,4 +17,11 @@
 			WHERE USER_ID = #{userId}
 		]]>
 	</select>
+	
+	<insert id="insertUser" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO METELSOS_USER(USER_NUM, USER_ID, USER_PASSWD, USER_NAME, USER_DEPT, USER_EMAIL, USER_PHONE, USER_CODE, USER_CREATE_DATE, LAST_CONNECT_DATE)
+			VALUES (SEQ_USER_NUM.NEXTVAL, '${id}', '${password}', '${userName}', '${userDept}', '${email}', '${userPhone}', '${userCode}', '${USER_CREATE_DATE}', '${LAST_CONNECT_DATE}')
+		]]>
+	</insert>
 </mapper>

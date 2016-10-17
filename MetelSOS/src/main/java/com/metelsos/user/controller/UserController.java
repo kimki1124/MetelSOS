@@ -1,6 +1,7 @@
 package com.metelsos.user.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.metelsos.common.view.MetelSOSJsonModel;
+import com.metelsos.customer.service.CustomerService;
+import com.metelsos.customer.vo.CustomerVo;
+import com.metelsos.engineer.service.EngineerService;
 import com.metelsos.user.service.UserService;
 
 @Controller
@@ -23,13 +27,45 @@ public class UserController {
 	@Resource(name="userService")
 	private UserService userService;
 	
+	@Resource(name="customerService")
+	private CustomerService customerService;
+	
+	@Resource(name="engineerService")
+	private EngineerService engineerService;
+	
 	@RequestMapping(value="/login.do")
 	public ModelAndView loginUser(@RequestParam HashMap<String, String> paramMap, HttpServletRequest request, HttpSession session) throws Exception{
 		log.info("#operation => loginUser");
-		MetelSOSJsonModel jsonModel = null;
-		HashMap<String, Object> returnMap = userService.loginUser(paramMap, request, session);
-		jsonModel = new MetelSOSJsonModel(returnMap);
-		return jsonModel;
+		ModelAndView modelAndView = new ModelAndView();
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if("Engineer".equals(paramMap.get("userType"))){
+			//엔지니어가 로그인 하는 경우
+			returnMap = engineerService.checkLogin(paramMap, request, session);
+		}else{
+			//고객이 로그인 하는 경우
+			returnMap = customerService.checkLogin(paramMap, request, session);
+		}
+		
+		if("SUCCESS".equals(returnMap.get("resultMsg"))){
+			if("Engineer".equals(paramMap.get("userType"))){
+				
+				//엔지니어가 로그인 하는 경우
+				modelAndView.addObject("engineerName", returnMap.get("engineerName"));
+				modelAndView.setViewName("/EngineerMain");
+			}else{
+				//고객이 로그인 하는 경우
+				modelAndView.addObject("customerName", returnMap.get("customerName"));
+				modelAndView.setViewName("/CustomerMain");
+			}
+			
+		}else{
+			modelAndView.addObject("failedMsg", "FAILED");
+			modelAndView.addObject("userType", paramMap.get("userType"));
+			modelAndView.setViewName("/login");
+		}
+		
+		return modelAndView;
 	}
 	
 	@RequestMapping(value="/logout.do")
@@ -40,24 +76,5 @@ public class UserController {
 		modelAndView.setViewName("redirect:login.jsp");
 		
 		return modelAndView;
-	}
-	
-	@RequestMapping(value="/register.do")
-	public ModelAndView registerUser(@RequestParam HashMap<String, String> paramMap){
-		log.info("#operation => registerUser");
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("redirect:login.jsp");
-		
-		return modelAndView;
-	}
-	
-	@RequestMapping(value="/validateId.do")
-	public ModelAndView validateId(@RequestParam HashMap<String, String> paramMap) throws Exception{
-		log.info("#operation => validateId");
-		MetelSOSJsonModel jsonModel = null;
-		HashMap<String, Object> returnMap = userService.validateId(paramMap);
-		jsonModel = new MetelSOSJsonModel(returnMap);
-		
-		return jsonModel;
 	}
 }

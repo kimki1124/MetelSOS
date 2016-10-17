@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="engineer">
+	<select id="getEngineerByIdAndPasswd" parameterType="hashmap" resultType="Engineer">
+		<![CDATA[
+			SELECT *
+			FROM METELSOS_ENGINEER
+			WHERE ENGINEER_ID = #{engineerId} AND ENGINEER_PASSWD = #{engineerPasswd}
+		]]>
+	</select>
+	
+	<select id="getEngineerById" parameterType="hashmap" resultType="Engineer">
+		<![CDATA[
+			SELECT *
+			FROM METELSOS_ENGINEER
+			WHERE ENGINEER_ID = #{engineerId}
+		]]>
+	</select>
+	
+	<insert id="insertEngineer" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO METELSOS_ENGINEER
+			VALUES(SEQ_ENGINEER_NUM.NEXTVAL, #{engineerId}, #{engineerPasswd}, #{engineerName}, #{engineerDept}, #{engineerEmail}, #{engineerPhone}, #{engineerCreateDate}, null)
+		]]>
+	</insert>
+</mapper>

@@ -104,6 +104,17 @@
 		<script src="/metelSOS/resources/js/smart-chat-ui/smart.chat.manager.min.js"></script>
 		
 		<script data-pace-options='{ "restartOnRequestAfter": true }' src="/metelSOS/resources/js/plugin/pace/pace.min.js"></script>
+		<script>
+			var sessionId = '<%=session.getAttribute("SESSION_LOGIN_USER_ID")%>';
+			if(sessionId != 'null'){
+				var sessionType = '<%=session.getAttribute("SESSION_LOGIN_USER_TYPE")%>';
+				if(sessionType == 'ENGINEER'){
+					document.location.href="/metelSOS/EngineerMain.jsp";
+				}else{
+					document.location.href="/metelSOS/CustomerMain.jsp";
+				}
+			}
+		</script>
 </head>
 <body>
 		<header id="header">
@@ -112,7 +123,7 @@
 				<span id="logo"> <img src="/metelSOS/resources/img/logo.png" alt="MetelSOS"> </span>
 			</div>
 
-			<span id="extr-page-header-space" style="line-height:40px;"> <span class="hidden-mobile hidden-xs">계정이 없으신가요?</span> <a href="register.jsp" class="btn btn-danger">회원가입</a> </span>
+			<span id="extr-page-header-space" style="line-height:40px;"> <span class="hidden-mobile hidden-xs">계정이 없으신가요?</span> <button id="register" class="btn btn-danger">회원가입</button></span>
 
 		</header>
 
@@ -124,24 +135,40 @@
 				<div class="row" style="margin-left:200px;">
 					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
 						<div class="well no-padding">
-							<form id="login-form" class="smart-form client-form">
+							<!-- ENGINEER login form START -->
+							<form id="user-type-form" class="smart-form client-form">
 								<header>
 									로그인
 								</header>
-
-								<fieldset>
-									
+								<fieldset style="padding:10px 14px 0px;">
+									<section>
+											<div class="inline-group">
+												<label class="radio">
+													<input type="radio" name="userCode" checked="checked" value="Engineer">
+													<i></i>본사</label>
+												<label class="radio">
+													<input type="radio" name="userCode" value="Customer">
+													<i></i>고객사</label>
+											</div>
+									</section>
+								</fieldset>
+							</form>
+							<form action="/metelSOS/login.do" id="engineer-login-form" class="smart-form client-form" method="post">
+								<fieldset style="padding:0px 14px 5px;">
+									<section>
+										<input type="hidden" name="userType" value="Engineer" />
+									</section>
 									<section>
 										<label class="label">ID</label>
 										<label class="input"> <i class="icon-append fa fa-user"></i>
-											<input type="text" name="userID" id="userId">
+											<input type="text" name="engineerId" id="engineerId">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> 아이디를 입력해주세요.</b></label>
 									</section>
 
 									<section>
 										<label class="label">Password</label>
 										<label class="input"> <i class="icon-append fa fa-lock"></i>
-											<input type="password" name="userPasswd" id="userPasswd">
+											<input type="password" name="engineerPasswd" id="engineerPasswd">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> 비밀번호를 입력해주세요</b> </label>
 										<div class="note">
 											<a href="forgotpassword.html">비밀번호를 잊어버렸습니까?</a>
@@ -155,9 +182,52 @@
 									</section>
 								</fieldset>
 								<footer>
-									<input type="button" class="btn btn-primary" id="loginButton" value="로그인" />
+									<button type="submit" class="btn btn-primary">
+										로그인
+									</button>
+									<!-- <input type="button" class="btn btn-primary" id="loginButton" value="로그인" /> -->
 								</footer>
 							</form>
+							<!-- ENGINEER login form END -->
+							
+							<!-- CUSTOMER login form START -->
+							<form action="/metelSOS/login.do" id="customer-login-form" class="smart-form client-form" method="post" hidden>
+								<fieldset style="padding:0px 14px 5px;">
+									<section>
+										<input type="hidden" name="userType" value="Customer" />
+									</section>
+									
+									<section>
+										<label class="label">ID</label>
+										<label class="input"> <i class="icon-append fa fa-user"></i>
+											<input type="text" name="customerId" id="customerId">
+											<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> 아이디를 입력해주세요.</b></label>
+									</section>
+
+									<section>
+										<label class="label">Password</label>
+										<label class="input"> <i class="icon-append fa fa-lock"></i>
+											<input type="password" name="customerPasswd" id="customerPasswd">
+											<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> 비밀번호를 입력해주세요</b> </label>
+										<div class="note">
+											<a href="forgotpassword.html">비밀번호를 잊어버렸습니까?</a>
+										</div>
+									</section>
+
+									<section>
+										<label class="checkbox">
+											<input type="checkbox" name="remember" checked="true">
+											<i></i>로그인 상태 유지하기</label>
+									</section>
+								</fieldset>
+								<footer>
+									<button type="submit" class="btn btn-primary">
+										로그인
+									</button>
+									<!-- <input type="button" class="btn btn-primary" id="loginButton" value="로그인" /> -->
+								</footer>
+							</form>
+							<!-- CUSTOMER login form END -->
 
 						</div>
 					</div>
@@ -174,7 +244,7 @@
 		
 		<script>
 		$(document).ready(function(){
-			$("#userId").focus();
+			$("#engineerId").focus();
 			
 			//다이얼로그 title에 html을 적용하기 위한 코드
 			 $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
@@ -199,10 +269,19 @@
 						"class": "btn btn-default",
 						click:function(){
 							$('#empty_dialog').dialog("close");
-							if($("#userId").val() == ''){
-								$("#userId").focus();
+							var radioValue = $("input[name=userCode]").val();
+							if(radioValue == 'Engineer'){
+								if($("#engineerId").val() == ''){
+									$("#engineerId").focus();
+								}else{
+									$("#engineerPasswd").focus();
+								}
 							}else{
-								$("#userPasswd").focus();
+								if($("#customerId").val() == ''){
+									$("#customerId").focus();
+								}else{
+									$("#customerPasswd").focus();
+								}
 							}
 							
 							return false;
@@ -210,38 +289,22 @@
 					}]
 				});
 				
-				login = function(){
-					var userId = $("#userId").val();
-					var userPasswd = $("#userPasswd").val();
-					
-					if(userId == '' || userPasswd == ''){
-						$('#empty_dialog').dialog("open");
-					}else{
-						$.ajax({
-							url:'login.do',
-							type:'post',
-							dataType:"json",
-							data:'userId='+userId+"&userPasswd="+userPasswd,
-							async:false,
-							success:function(msg){
-								if(msg.resultMsg == 'SUCCESS'){
-									//로그인 성공
-									$(location).attr('href', 'main.jsp');
-								}else{
-									//로그인 실패
-								}
-							}
-						});
-					}
-				};
-				
-				$("#loginButton").click(function(){
-					login();
+				//회원가입 버튼 클릭 이벤트 처리
+				$("#register").click(function(){
+					document.location.href="/metelSOS/SelectRegisterType.jsp";
 				});
 				
-				 $("#login-form input").keypress(function(e){
-					if(e.keyCode == 13){
-						login();
+				//본사, 고객사 라디오버튼 이벤트
+				$("input[name=userCode]").change(function(){
+					var radioValue = $(this).val();
+					if(radioValue == 'Engineer'){
+						$("#customer-login-form").hide();
+						$("#engineer-login-form").show();
+						$("#engineerId").focus();
+					}else{
+						$("#engineer-login-form").hide();
+						$("#customer-login-form").show();
+						$("#customerId").focus();
 					}
 				});
 		});
