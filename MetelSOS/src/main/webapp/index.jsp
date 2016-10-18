@@ -16,7 +16,7 @@
 	}else{
 		//세션이 있을 때 메인 페이지로 이동
 		if("ENGINEER".equals(session.getAttribute("SESSION_LOGIN_USER_TYPE"))){
-			request.getRequestDispatcher("EngineerMain.jsp").forward(request, response);
+			request.getRequestDispatcher("EngineerMain.do").forward(request, response);
 		}else{
 			request.getRequestDispatcher("CustomerMain.jsp").forward(request, response);
 		}

@@ -29,6 +29,7 @@ public class EngineerServiceImpl implements EngineerService{
 		
 		if(engineerVo != null){
 			session.setAttribute("SESSION_LOGIN_USER_ID", engineerVo.getEngineer_id());
+			session.setAttribute("SESSION_LOGIN_USER_NAME", engineerVo.getEngineer_name());
 			session.setAttribute("SESSION_LOGIN_USER_TYPE", "ENGINEER");
 			returnMap.put("resultMsg", "SUCCESS");
 			returnMap.put("engineerName", engineerVo.getEngineer_name());

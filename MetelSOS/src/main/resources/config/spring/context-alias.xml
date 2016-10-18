@@ -6,5 +6,6 @@
 		<typeAlias type="com.metelsos.customer.vo.CustomerVo" alias="Customer" />
 		<typeAlias type="com.metelsos.engineer.vo.EngineerVo" alias="Engineer" />
 		<typeAlias type="com.metelsos.company.vo.CompanyVo" alias="Company" />
+		<typeAlias type="com.metelsos.menu.vo.MenuVo" alias="Menu" />
 	</typeAliases>
 </configuration>

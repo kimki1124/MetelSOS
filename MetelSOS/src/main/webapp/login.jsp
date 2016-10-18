@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 		<meta charset="utf-8">
@@ -307,6 +307,48 @@
 						$("#customerId").focus();
 					}
 				});
+				
+				//로그인 버튼 ajax 이벤트 처리
+				$("#engineer-login-form").submit(function(event){
+					event.preventDefault();
+					var postData = $(this).serializeArray();
+					var formUrl = $(this).attr('action');
+					$.ajax({
+						url:formUrl,
+						type:'POST',
+						dataType:'json',
+						data:postData,
+						success:function(msg){
+							if(msg.resultMsg == 'SUCCESS'){
+								//로그인 성공
+								document.location.href="/metelSOS/EngineerMain.do";
+							}else{
+								//로그인 실패
+							}
+						}
+					});
+				});
+				
+				$("#customer-login-form").submit(function(event){
+					event.preventDefault();
+					var postData = $(this).serializeArray();
+					var formUrl = $(this).attr('action');
+					$.ajax({
+						url:formUrl,
+						type:'POST',
+						dataType:'json',
+						data:postData,
+						success:function(msg){
+							if(msg.resultMsg == 'SUCCESS'){
+								//로그인 성공
+								document.location.href="/metelSOS/CustomerMain.do";
+							}else{
+								//로그인 실패
+							}
+						}
+					});
+				});
+				
 		});
 		</script>
 </body>

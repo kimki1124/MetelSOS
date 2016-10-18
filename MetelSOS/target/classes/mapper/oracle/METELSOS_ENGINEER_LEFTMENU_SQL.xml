@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="engineerMenu">
+	<select id="getEngineerMenuList" resultType="Menu">
+		<![CDATA[
+			SELECT MENU_CODE, MENU_TITLE, MENU_PARENT_CODE, MENU_SEQ, MENU_LEVEL, MENU_VISIBLE, MENU_ICON
+			FROM METELSOS_ENGINEER_LEFTMENU
+			WHERE MENU_PARENT_CODE IS NOT NULL
+			CONNECT BY PRIOR MENU_CODE = DECODE(MENU_CODE, MENU_PARENT_CODE, NULL, MENU_PARENT_CODE)
+			START WITH MENU_CODE = 0
+			ORDER SIBLINGS BY MENU_SEQ ASC, MENU_CODE ASC
+		]]>
+	</select>
+</mapper>

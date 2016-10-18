@@ -36,7 +36,8 @@ public class UserController {
 	@RequestMapping(value="/login.do")
 	public ModelAndView loginUser(@RequestParam HashMap<String, String> paramMap, HttpServletRequest request, HttpSession session) throws Exception{
 		log.info("#operation => loginUser");
-		ModelAndView modelAndView = new ModelAndView();
+		//ModelAndView modelAndView = new ModelAndView();
+		MetelSOSJsonModel jsonModel = null;
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		
 		if("Engineer".equals(paramMap.get("userType"))){
@@ -47,25 +48,9 @@ public class UserController {
 			returnMap = customerService.checkLogin(paramMap, request, session);
 		}
 		
-		if("SUCCESS".equals(returnMap.get("resultMsg"))){
-			if("Engineer".equals(paramMap.get("userType"))){
-				
-				//엔지니어가 로그인 하는 경우
-				modelAndView.addObject("engineerName", returnMap.get("engineerName"));
-				modelAndView.setViewName("/EngineerMain");
-			}else{
-				//고객이 로그인 하는 경우
-				modelAndView.addObject("customerName", returnMap.get("customerName"));
-				modelAndView.setViewName("/CustomerMain");
-			}
-			
-		}else{
-			modelAndView.addObject("failedMsg", "FAILED");
-			modelAndView.addObject("userType", paramMap.get("userType"));
-			modelAndView.setViewName("/login");
-		}
+		jsonModel = new MetelSOSJsonModel(returnMap);
 		
-		return modelAndView;
+		return jsonModel;
 	}
 	
 	@RequestMapping(value="/logout.do")

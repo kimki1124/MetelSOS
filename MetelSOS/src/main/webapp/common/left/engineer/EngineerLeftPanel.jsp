@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <!DOCTYPE html>
 <html>
 <head>
-	<!--
+		<!--
 
 	TABLE OF CONTENTS.
 	
@@ -49,13 +50,48 @@
 	-->
 </head>
 <body>
-		<div class="page-footer">
-			<div class="row">
-				<div class="col-xs-12 col-sm-6">
-					<span class="txt-color-white">Metel SOS 1.0.0 <span class="hidden-xs"> - Web Application Framework</span> © 2016</span>
-				</div>
-			</div>
-			<!-- end row -->
-		</div>
+		<aside id="left-panel">
+			<nav>
+				<ul>
+					<c:forEach var="item" items="${menuList }" varStatus="status">
+						<c:choose>
+							<c:when test="${status.count == 1}">
+								<li class="active">
+							</c:when>
+							<c:otherwise>
+								<li>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${fn:length(item.children) > 0}">
+								<a href="#"><i class="${item.menu_icon}"></i><span class="menu-item-parent">${item.menu_title}</span></a>
+								<c:if test="${fn:length(item.children) > 0}">
+									<ul>
+										<c:forEach var="childItem" items="${item.children}" varStatus="childStatus">
+											<li>
+												<a href="#">${childItem.menu_title}</a>
+											</li>
+										</c:forEach>
+									</ul>
+								</c:if>
+							</c:when>
+							<c:otherwise>
+								<a href="#"><i class="${item.menu_icon}"></i><span class="menu-item-parent">${item.menu_title}</span></a>
+							</c:otherwise>
+						</c:choose>
+								</li>
+					</c:forEach>
+				</ul>
+			</nav>
+
+			<span class="minifyme" data-action="minifyMenu"> <i class="fa fa-arrow-circle-left hit"></i> </span>
+
+		</aside>
+		
+		<script>
+			$(document).ready(function(){
+				
+			});
+		</script>
 </body>
 </html>

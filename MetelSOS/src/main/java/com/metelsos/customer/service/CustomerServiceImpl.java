@@ -29,6 +29,7 @@ public class CustomerServiceImpl implements CustomerService{
 		
 		if(customerVo != null){
 			session.setAttribute("SESSION_LOGIN_USER_ID", customerVo.getCustomer_id());
+			session.setAttribute("SESSION_LOGIN_USER_NAME", customerVo.getCustomer_name());
 			session.setAttribute("SESSION_LOGIN_USER_TYPE", "CUSTOMER");
 			returnMap.put("resultMsg", "SUCCESS");
 			returnMap.put("customerName", customerVo.getCustomer_name());
