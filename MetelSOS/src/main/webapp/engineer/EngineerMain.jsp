@@ -119,7 +119,10 @@
 				<!-- breadcrumb -->
 				<ol class="breadcrumb">
 					<li>Home</li>
-					<li>메인화면</li>
+					<c:forEach var="item" items="${breadcrumbList}" varStatus="status">
+						<li>${item}</li>
+					</c:forEach>
+					<!-- <li>메인화면</li> -->
 				</ol>
 				<!-- end breadcrumb -->
 			</div>
@@ -133,8 +136,8 @@
 					<h3 class="page-title txt-color-blueDark">
 						
 						<!-- PAGE HEADER -->
-						<i class="fa-fw fa fa-home"></i> 
-							메인화면 
+						<i class="${menuIcon}"></i> 
+							${menuTitle} 
 						<!-- <span>>  
 							Subtitle
 						</span> -->
@@ -244,6 +247,8 @@
 	        			}
 	    			}
 				});
+		  		
+		  		$("#left-panel nav ul li").first().addClass("active");
 		 	 });
 		
 		</script>

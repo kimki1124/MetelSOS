@@ -308,7 +308,7 @@
 					}
 				});
 				
-				//로그인 버튼 ajax 이벤트 처리
+				//엔지니어 로그인 버튼 ajax 이벤트 처리
 				$("#engineer-login-form").submit(function(event){
 					event.preventDefault();
 					var postData = $(this).serializeArray();
@@ -321,7 +321,7 @@
 						success:function(msg){
 							if(msg.resultMsg == 'SUCCESS'){
 								//로그인 성공
-								document.location.href="/metelSOS/EngineerMain.do";
+								document.location.href="/metelSOS/pageMove.do?userType=engineer&menuTitle=EngineerMain&menuIcon=fa fa-lg fa-fw fa-home";
 							}else{
 								//로그인 실패
 							}
@@ -329,6 +329,7 @@
 					});
 				});
 				
+				//고객 로그인 버튼 ajax 이벤트 처리
 				$("#customer-login-form").submit(function(event){
 					event.preventDefault();
 					var postData = $(this).serializeArray();
@@ -341,7 +342,7 @@
 						success:function(msg){
 							if(msg.resultMsg == 'SUCCESS'){
 								//로그인 성공
-								document.location.href="/metelSOS/CustomerMain.do";
+								document.location.href="/metelSOS/pageMove.do?userType=customer&menuTitle=CustomerMain&menuIcon=fa fa-lg fa-fw fa-home";
 							}else{
 								//로그인 실패
 							}

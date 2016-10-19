@@ -10,6 +10,7 @@ public class MenuVo {
 	private int menu_level;
 	private String menu_visible;
 	private String menu_icon;
+	private String menu_eng_title;
 	private List<MenuVo> children;
 	
 	
@@ -60,6 +61,12 @@ public class MenuVo {
 	}
 	public void setMenu_icon(String menu_icon) {
 		this.menu_icon = menu_icon;
+	}
+	public String getMenu_eng_title() {
+		return menu_eng_title;
+	}
+	public void setMenu_eng_title(String menu_eng_title) {
+		this.menu_eng_title = menu_eng_title;
 	}
 	
 	
