@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -31,201 +31,15 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
 		<!-- #GOOGLE FONT -->
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
-</head>
-<body id="login">
-	
-		<header id="header">
-			<!--<span id="logo"></span>-->
-
-			<div id="logo-group">
-				<span id="logo"> <img src="/metelSOS/resources/img/logo.png"> </span>
-
-				<!-- END AJAX-DROPDOWN -->
-			</div>
-
-			<!-- <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Already registered?</span> <a href="login.html" class="btn btn-danger">Sign In</a> </span> -->
-
-		</header>
-
-		<div id="main" role="main">
-
-			<!-- MAIN CONTENT -->
-			<div id="content" class="container">
-
-				<div class="row">
-					<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
-					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
-						<div class="well no-padding">
-
-							<form action="/metelSOS/engineerRegister.do" id="smart-form-register" class="smart-form client-form"><!-- action="/metelSOS/register.do" -->
-								<header>
-									본사 엔지니어 회원가입
-								</header>
-									<input type="hidden" id="isValidateCheck" />
-								<fieldset>
-									<div class="row">
-										<section class="col col-9">
-											<label class="input"> <i class="icon-append fa fa-user"></i>
-												<input type="text" name="engineerId" id="engineerId" placeholder="아이디">
-												<b class="tooltip tooltip-bottom-right">아이디는 최대 20자까지 가능합니다.</b> </label>
-										</section>
-										<section class="col col-3">
-											<button id="idValidate" class="btn btn-primary" style="padding:6px 22px 6px 22px; margin-left:-14px;">
-												중복확인
-											</button>
-										</section>
-									</div>
-									
-									<section>
-										<label class="input"> <i class="icon-append fa fa-lock"></i>
-											<input type="password" name="engineerPasswd" placeholder="비밀번호" id="engineerPasswd">
-											<b class="tooltip tooltip-bottom-right">비밀번호는 영문과 숫자를 섞어 8~20자까지 가능합니다.</b> </label>
-									</section>
-
-									<section>
-										<label class="input"> <i class="icon-append fa fa-lock"></i>
-											<input type="password" name="engineerPasswdConfirm" placeholder="비밀번호 확인" id="engineerPasswdConfirm">
-											<b class="tooltip tooltip-bottom-right">비밀번호를 한번 더 입력해주세요.</b> </label>
-									</section>
-
-									<section>
-										<label class="input"> <i class="icon-append fa fa-envelope"></i>
-											<input type="email" name="engineerEmail" id="engineerEmail" placeholder="이메일">
-											<b class="tooltip tooltip-bottom-right">이메일은 계정을 인증할 때 필요합니다.</b> </label>
-									</section>
-									
-									<section>
-										<label class="select">
-											<select name="engineerDept">
-												<option value="default" selected="" disabled="">부서를 선택해 주세요.</option>
-												<option value="제품지원부">제품지원부</option>
-												<option value="플랫폼연구부">플랫폼연구부</option>
-												<option value="기술연구부">기술연구부</option>
-												<option value="사업수행부">사업수행부</option>
-											</select> 
-											<i></i> 
-										</label>
-									</section>
-									
-									<section>
-										<label class="input"> <i class="icon-append fa fa-user"></i>
-											<input type="text" name="engineerName" placeholder="이름">
-											<b class="tooltip tooltip-bottom-right">이름을 입력해 주세요.</b> </label>
-									</section>
-									
-									<section>
-										<label class="input"> <i class="icon-append fa fa-mobile" style="font-size:25px;"></i>
-											<input type="text" name="engineerPhone" placeholder="전화번호">
-											<b class="tooltip tooltip-bottom-right">통화 가능한 번호(- 제외)를 입력해 주세요.</b> </label>
-									</section>
-								</fieldset>
-								<footer>
-									<button id="cancel" class="btn btn-default">
-										취소
-									</button>
-									<button type="submit" class="btn btn-primary">
-										확인
-									</button>
-								</footer>
-
-								<div class="message">
-									<i class="fa fa-check"></i>
-									<p>
-										Thank you for your registration!
-									</p>
-								</div>
-							</form>
-
-						</div>
-						<p class="note text-center">Copyright 2016. MetelSOS all rights reserved.</p>
-					</div>
-				</div>
-			</div>
-
-		</div>
 		
-		<div id="idValidateOK" title="idValidateOK">
-			<p>
-				사용하실 수 있는 아이디입니다.
-			</p>
-		</div>
-		
-		<div id="idValidateNO" title="idValidateNO">
-			<p>
-				사용하실 수 없는 아이디입니다.
-			</p>
-		</div>
-		
-		<div id="needIdValidate" title="needIdValidate">
-			<p>
-				아이디 중복확인을 해주세요.
-			</p>
-		</div>
-		
-		<div id="welcomeMsg" title="welcomeMsg">
-			<p>
-				회원가입을 축하합니다.<br />
-				로그인 페이지로 이동합니다.
-			</p>
-		</div>
-		
-		<div id="failedRegister" title="failedRegister">
-			<p>
-				회원가입에 실패했습니다. <br />
-				자세한 사항은 관리자에게 문의하세요.
-			</p>
-		</div>
-
-		<!-- Modal -->
-		<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-							&times;
-						</button>
-						<h4 class="modal-title" id="myModalLabel">Terms & Conditions</h4>
-					</div>
-					<div class="modal-body custom-scroll terms-body">
-			<br><br>
-
-            <p><strong>By using this  WEBSITE TERMS AND CONDITIONS template document, you agree to the 
-	 <a href="#">terms and conditions</a> set out on 
-	 <a href="#">SmartAdmin.com</a>.  You must retain the credit 
-	 set out in the section headed "ABOUT THESE WEBSITE TERMS AND CONDITIONS".  Subject to the licensing restrictions, you should 
-	 edit the document, adapting it to the requirements of your jurisdiction, your business and your 
-	 website.  If you are not a lawyer, we recommend that you take professional legal advice in relation to the editing and 
-	 use of the template.</strong></p>
-
-
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Cancel
-						</button>
-						<button type="button" class="btn btn-primary" id="i-agree">
-							<i class="fa fa-check"></i> I Agree
-						</button>
-						
-						<button type="button" class="btn btn-danger pull-left" id="print">
-							<i class="fa fa-print"></i> Print
-						</button>
-					</div>
-				</div>/.modal-content
-			</div>/.modal-dialog
-		</div>/.modal -->
-
-		<!--================================================== -->	
-
-		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
-		<script src="/metelSOS/resources/js/plugin/pace/pace.min.js"></script>
-
-	    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+		<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
 	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script> if (!window.jQuery) { document.write('<script src="/metelSOS/resources/js/libs/jquery-2.1.1.min.js"><\/script>');} </script>
 
 	    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 		<script> if (!window.jQuery.ui) { document.write('<script src="/metelSOS/resources/js/libs/jquery-ui-1.10.3.min.js"><\/script>');} </script>
+		
+		<script src="/metelSOS/resources/js/plugin/pace/pace.min.js"></script>
 
 		<!-- IMPORTANT: APP CONFIG -->
 		<script src="/metelSOS/resources/js/app.config.js"></script>
@@ -253,14 +67,10 @@
 
 		<!-- MAIN APP JS FILE -->
 		<script src="/metelSOS/resources/js/app.min.js"></script>
-
-		<script type="text/javascript">
-			runAllForms();
-			
-			$(function() {
-				//isValidateCheck 값 false로 설정
-				$("#isValidateCheck").val(false);
-				
+		
+		
+		<script>
+			$(document).ready(function(){
 				//다이얼로그 title에 html을 적용하기 위한 코드
 				 $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
 						_title : function(title) {
@@ -367,7 +177,194 @@
 						}]
 				});
 				
+				$('#err_500_dialog').dialog({
+					autoOpen:false,
+					width:500,
+					height:700,
+					resizable:false,
+					modal:true,
+					title:"<div class='widget-header'><h4><i class='fa fa-warning'></i>&nbsp;회원 가입</h4></div>",
+					buttons:[{
+						html:"<i class='fa fa-check'></i>&nbsp; 확인",
+						"class": "btn btn-default",
+						click:function(){
+							$('#err_500_dialog').dialog("close");
+							$("#engineerId").focus();
+							return false;
+						}
+					}]
+				});
+			});
+		</script>
+</head>
+<body id="login">
+	
+		<header id="header">
+			<!--<span id="logo"></span>-->
+
+			<div id="logo-group">
+				<span id="logo"> <img src="/metelSOS/resources/img/logo.png"> </span>
+
+				<!-- END AJAX-DROPDOWN -->
+			</div>
+
+			<!-- <span id="extr-page-header-space"> <span class="hidden-mobile hiddex-xs">Already registered?</span> <a href="login.html" class="btn btn-danger">Sign In</a> </span> -->
+
+		</header>
+
+		<div id="main" role="main">
+
+			<!-- MAIN CONTENT -->
+			<div id="content" class="container">
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+						<div class="well no-padding">
+
+							<form id="smart-form-register" class="smart-form client-form"><!--action="/metelSOS/engineerRegister.do" -->
+								<header>
+									본사 엔지니어 회원가입
+								</header>
+									<input type="hidden" id="isValidateCheck" />
+								<fieldset>
+									<div class="row">
+										<section class="col col-9">
+											<label class="input"> <i class="icon-append fa fa-user"></i>
+												<input type="text" name="engineerId" id="engineerId" placeholder="아이디">
+												<b class="tooltip tooltip-bottom-right">아이디는 최대 20자까지 가능합니다.</b> </label>
+										</section>
+										<section class="col col-3">
+											<button id="idValidate" class="btn btn-primary" style="padding:6px 22px 6px 22px; margin-left:-14px;">
+												중복확인
+											</button>
+										</section>
+									</div>
+									
+									<section>
+										<label class="input"> <i class="icon-append fa fa-lock"></i>
+											<input type="password" name="engineerPasswd" placeholder="비밀번호" id="engineerPasswd">
+											<b class="tooltip tooltip-bottom-right">비밀번호는 영문과 숫자를 섞어 8~20자까지 가능합니다.</b> </label>
+									</section>
+
+									<section>
+										<label class="input"> <i class="icon-append fa fa-lock"></i>
+											<input type="password" name="engineerPasswdConfirm" placeholder="비밀번호 확인" id="engineerPasswdConfirm">
+											<b class="tooltip tooltip-bottom-right">비밀번호를 한번 더 입력해주세요.</b> </label>
+									</section>
+
+									<section>
+										<label class="input"> <i class="icon-append fa fa-envelope"></i>
+											<input type="email" name="engineerEmail" id="engineerEmail" placeholder="이메일">
+											<b class="tooltip tooltip-bottom-right">이메일은 계정을 인증할 때 필요합니다.</b> </label>
+									</section>
+									
+									<section>
+										<label class="select">
+											<select name="engineerDept">
+												<option value="default" selected="" disabled="">부서를 선택해 주세요.</option>
+												<option value="제품지원부">제품지원부</option>
+												<option value="플랫폼연구부">플랫폼연구부</option>
+												<option value="기술연구부">기술연구부</option>
+												<option value="사업수행부">사업수행부</option>
+											</select> 
+											<i></i> 
+										</label>
+									</section>
+									
+									<section>
+										<label class="input"> <i class="icon-append fa fa-user"></i>
+											<input type="text" name="engineerName" placeholder="이름">
+											<b class="tooltip tooltip-bottom-right">이름을 입력해 주세요.</b> </label>
+									</section>
+									
+									<section>
+										<label class="input"> <i class="icon-append fa fa-mobile" style="font-size:25px;"></i>
+											<input type="text" name="engineerPhone" placeholder="전화번호">
+											<b class="tooltip tooltip-bottom-right">통화 가능한 번호(- 제외)를 입력해 주세요.</b> </label>
+									</section>
+								</fieldset>
+								<footer>
+									<span style="float:right;">
+										<button type="submit" class="btn btn-primary" value="confirm">
+											확인
+										</button>
+										<button type="reset" id="cancel" class="btn btn-default" value="cancel">
+											취소
+										</button>
+									</span>
+								</footer>
+
+								<div class="message">
+									<i class="fa fa-check"></i>
+									<p>
+										Thank you for your registration!
+									</p>
+								</div>
+							</form>
+
+						</div>
+						<p class="note text-center">Copyright 2016. MetelSOS all rights reserved.</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+		<div id="idValidateOK" title="idValidateOK">
+			<p>
+				<span>사용하실 수 있는 아이디입니다.</span>
+			</p>
+		</div>
+		
+		<div id="idValidateNO" title="idValidateNO">
+			<p>
+				<span>사용하실 수 없는 아이디입니다.</span>
+			</p>
+		</div>
+		
+		<div id="needIdValidate" title="needIdValidate">
+			<p>
+				<span>아이디 중복확인을 해주세요.</span>
+			</p>
+		</div>
+		
+		<div id="welcomeMsg" title="welcomeMsg">
+			<p>
+				<span>회원가입을 축하합니다.<br />
+				로그인 페이지로 이동합니다.</span>
+			</p>
+		</div>
+		
+		<div id="failedRegister" title="failedRegister">
+			<p>
+				<span>회원가입에 실패했습니다. <br />
+				자세한 사항은 관리자에게 문의하세요.</span>
+			</p>
+		</div>
+		
+		<div id="err_500_dialog" title="err 500 dialog">
+			<p>
+				<span id="err-dialog-text"></span>
+			</p>
+		</div>
+
+		<!--================================================== -->	
+
+		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
+		
+		<script type="text/javascript">
+			runAllForms();
+			
+			$(function() {
+				//isValidateCheck 값 false로 설정
+				$("#isValidateCheck").val(false);
 				$("input[name=engineerId]").focus();
+				
+				//취소 버튼 누르면 로그인 화면으로 이동
+				$("#cancel").click(function(){
+					document.location.href="/metelSOS/login.jsp";
+				});
 				
 				//고객사 콤보박스 required validate
 				$.validator.addMethod("valueNotEquals", function(value, element, arg){
@@ -390,7 +387,10 @@
 								//아이디가 존재하지 않으면
 								$('#idValidateOK').dialog("open");
 							}
-						}
+						},
+						error:function(request,status,error){
+							alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					    }
 					});
 					
 					return false;
@@ -455,51 +455,41 @@
 							digits : '숫자만 입력해주세요.'
 						}
 					},
-				});
-				
-				// register form submit
-				$("#smart-form-register").submit(function(event){
-					event.preventDefault();
-					var postData = $(this).serializeArray();
-					var formUrl = $(this).attr('action');
-					var isValidateCheck = $("#isValidateCheck").val();
 					
-					if(isValidateCheck == 'false'){
-						$('#needIdValidate').dialog("open");
-						return false;
-					}else{
-						$.ajax({
-							url:formUrl,
-							type:'POST',
-							dataType:"json",
-							data: postData,
-							success:function(msg){
-								if(msg.resultMsg == 'SUCCESS'){
-									$('#welcomeMsg').dialog("open");
-								}else{
-									$('#failedRegister').dialog("open");
-								}
-							}
-						});
-					}
-					
+					invalidHandler: function(form, validator) {
+			             return false;
+			        },
+			        
+			        submitHandler: function (form) {
+			        	var isValidateCheck = $("#isValidateCheck").val();
+						if(isValidateCheck == 'false'){
+							$('#needIdValidate').dialog("open");
+							return false;
+						}else{
+							$.ajax({
+								url:'/metelSOS/engineerRegister.do',
+								type:'POST',
+								dataType:"json",
+								data: $(form).serializeArray(),
+								success:function(msg){
+									if(msg.resultMsg == 'SUCCESS'){
+										$('#welcomeMsg').dialog("open");
+									}else{
+										$('#failedRegister').dialog("open");
+									}
+								},
+								error:function(request,status,error){
+									var errMsg = request.status+"\n"+error;
+									$('#err-dialog-text').html(errMsg);
+									$('#err_500_dialog').dialog("open");
+							    }
+							});
+						}
+			            
+			        }
 				});
 			});
 			
-			/* registerFormSubmit = function(){
-				var isValidateCheck = $("#isValidateCheck").val();
-				
-				if(isValidateCheck == 'false'){
-					$('#needIdValidate').dialog("open");
-					return false;
-				}else{
-					return true;
-				}
-				//console.log(isValidateCheck);
-				/* if(isValidateCheck){
-					return true;
-				} */
-			//} */
 		</script>
 
 	</body>

@@ -1,6 +1,7 @@
 package com.metelsos.engineer.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,18 @@ public class EngineerDao extends AbstractDAO{
 
 	public int insertUser(HashMap<String, String> paramMap) throws Exception{
 		return (int)insert("engineer.insertEngineer", paramMap);
+	}
+
+	public List<EngineerVo> findEngineerId(HashMap<String, String> paramMap) throws Exception{
+		return (List<EngineerVo>)selectList("engineer.getEngineerByNameAndEmail", paramMap);
+	}
+
+	public EngineerVo findEngineer(HashMap<String, String> paramMap) throws Exception{
+		return (EngineerVo)selectOne("engineer.getEngineerByIdAndNameAndEmail", paramMap);
+	}
+
+	public void updateEngineerPasswd(EngineerVo vo) {
+		update("engineer.updateEngineerPasswd", vo);
 	}
 
 }

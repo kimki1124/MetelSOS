@@ -14,4 +14,8 @@ public interface CustomerService {
 
 	HashMap<String, Object> insertCustomer(HashMap<String, Object> paramMap) throws Exception;
 
+	HashMap<String, Object> findCustomerId(HashMap<String, String> paramMap) throws Exception;
+
+	HashMap<String, Object> sendTempCustomerPasswd(HashMap<String, String> paramMap) throws Exception;
+
 }

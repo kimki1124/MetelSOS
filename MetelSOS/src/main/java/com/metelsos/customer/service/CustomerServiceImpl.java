@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
+import com.metelsos.common.aes.AesUtil;
 import com.metelsos.customer.dao.CustomerDao;
 import com.metelsos.customer.vo.CustomerVo;
 
@@ -24,6 +25,10 @@ public class CustomerServiceImpl implements CustomerService{
 	public HashMap<String, Object> checkLogin(HashMap<String, String> paramMap, HttpServletRequest request,
 			HttpSession session) throws Exception{
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		
+		AesUtil aesUtil = new AesUtil();
+		String securityPasswd = aesUtil.encrypt(paramMap.get("customerPasswd"));
+		paramMap.put("customerPasswd", securityPasswd);
 		
 		CustomerVo customerVo = customerDao.checkLogin(paramMap);
 		
@@ -62,6 +67,11 @@ public class CustomerServiceImpl implements CustomerService{
 		
 		paramMap.put("customerCreateDate", df.format(now));
 		
+		//유저 패스워드 암호화 후 set
+		AesUtil aesUtil = new AesUtil();
+		String securityPasswd = aesUtil.encrypt(String.valueOf(paramMap.get("customerPasswd")));
+		paramMap.put("customerPasswd", securityPasswd);
+		
 		int result = customerDao.insertUser(paramMap);
 		
 		if(result > 0){
@@ -71,6 +81,18 @@ public class CustomerServiceImpl implements CustomerService{
 		}
 		
 		return returnMap;
+	}
+
+	@Override
+	public HashMap<String, Object> findCustomerId(HashMap<String, String> paramMap) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public HashMap<String, Object> sendTempCustomerPasswd(HashMap<String, String> paramMap) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

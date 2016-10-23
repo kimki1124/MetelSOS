@@ -19,7 +19,9 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter{
 		log.info(" Request URI \t:     "+ request.getRequestURI());
 		if("/metelSOS/login.do".equals(request.getRequestURI()) || "/metelSOS/engineerRegister.do".equals(request.getRequestURI())
 				|| "/metelSOS/engineer/validateEngineerId.do".equals(request.getRequestURI()) || "/metelSOS/setItemForRegisterForm.do".equals(request.getRequestURI())
-				|| "/metelSOS/customerValidateId.do".equals(request.getRequestURI()) || "/metelSOS/customerRegister.do".equals(request.getRequestURI())){
+				|| "/metelSOS/customerValidateId.do".equals(request.getRequestURI()) || "/metelSOS/customerRegister.do".equals(request.getRequestURI())
+				|| "/metelSOS/findId.do".equals(request.getRequestURI()) || "/metelSOS/findPasswdPageMove.do".equals(request.getRequestURI())
+				|| "/metelSOS/sendTempPasswd.do".equals(request.getRequestURI())){
 			//이 조건의 URI는 세션 체크 확인을 할 필요가 없으므로 바로 true 리턴 
 			return true;
 		}

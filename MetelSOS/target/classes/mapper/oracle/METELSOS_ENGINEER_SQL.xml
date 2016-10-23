@@ -24,4 +24,28 @@
 			VALUES(SEQ_ENGINEER_NUM.NEXTVAL, #{engineerId}, #{engineerPasswd}, #{engineerName}, #{engineerDept}, #{engineerEmail}, #{engineerPhone}, #{engineerCreateDate}, null)
 		]]>
 	</insert>
+	
+	<select id="getEngineerByNameAndEmail" parameterType="hashmap" resultType="Engineer">
+		<![CDATA[
+			SELECT * 
+			FROM METELSOS_ENGINEER
+			WHERE ENGINEER_NAME = #{userName} AND ENGINEER_EMAIL = #{userEmail}
+		]]>
+	</select>
+	
+	<select id="getEngineerByIdAndNameAndEmail" parameterType="hashmap" resultType="Engineer">
+		<![CDATA[
+			SELECT *
+			FROM METELSOS_ENGINEER
+			WHERE ENGINEER_ID = #{userId} AND ENGINEER_NAME = #{userName} AND ENGINEER_EMAIL = #{userEmail}
+		]]>
+	</select>
+	
+	<update id="updateEngineerPasswd" parameterType="Engineer">
+		<![CDATA[
+			UPDATE METELSOS_ENGINEER
+			SET ENGINEER_PASSWD = #{engineer_passwd}
+			WHERE ENGINEER_ID = #{engineer_id}
+		]]>
+	</update>
 </mapper>

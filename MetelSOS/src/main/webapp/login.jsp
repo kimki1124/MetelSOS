@@ -114,6 +114,75 @@
 					document.location.href="/metelSOS/CustomerMain.jsp";
 				}
 			}
+			
+			//다이얼로그 title에 html을 적용하기 위한 코드
+			 $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+					_title : function(title) {
+						if (!this.options.title) {
+							title.html("&#160;");
+						} else {
+							title.html(this.options.title);
+						}
+					}
+				}));  
+			
+			$(document).ready(function(){
+				$('#empty_dialog').dialog({
+					autoOpen : false,
+					width: 300,
+					height:200,
+					resizable: false,
+					modal : true,
+					title:"<div class='widget-header'><h4><i class='fa fa-warning'></i>&nbsp;로그인 실패</h4></div>",
+					buttons:[{
+						html:"<i class='fa fa-check'></i>&nbsp; 확인",
+						"class": "btn btn-default",
+						click:function(){
+							$('#empty_dialog').dialog("close");
+							var radioValue = $("input[name=userCode]").val();
+							if(radioValue == 'Engineer'){
+								if($("#engineerId").val() == ''){
+									$("#engineerId").focus();
+								}else{
+									$("#engineerPasswd").focus();
+								}
+							}else{
+								if($("#customerId").val() == ''){
+									$("#customerId").focus();
+								}else{
+									$("#customerPasswd").focus();
+								}
+							}
+							
+							return false;
+						}
+					}]
+				});
+				
+				$('#login_fail_dialog').dialog({
+					autoOpen: false,
+					width:300,
+					height:200,
+					resizable:false,
+					modal:true,
+					title:"<div class='widget-header'><h4><i class='fa fa-warning'></i>&nbsp;로그인 실패</h4></div>",
+					buttons:[{
+						html:"<i class='fa fa-check'></i>&nbsp; 확인",
+						"class": "btn btn-default",
+						click:function(){
+							$('#login_fail_dialog').dialog("close");
+							var radioValue = $("input[name=userCode]").val();
+							if(radioValue == 'Engineer'){
+								$("#engineerId").focus();
+							}else{
+								$("#customerId").focus();
+							}
+							
+							return false;
+						}
+					}]
+				});
+			});
 		</script>
 </head>
 <body>
@@ -127,13 +196,13 @@
 
 		</header>
 
-		<div id="main" role="main">
+		<div id="main" role="main" style="margin-left:0px;">
 
 			<!-- MAIN CONTENT -->
 			<div id="content" class="container">
 
-				<div class="row" style="margin-left:200px;">
-					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4" style="margin-left:390px;">
 						<div class="well no-padding">
 							<!-- ENGINEER login form START -->
 							<form id="user-type-form" class="smart-form client-form">
@@ -171,20 +240,17 @@
 											<input type="password" name="engineerPasswd" id="engineerPasswd">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> 비밀번호를 입력해주세요</b> </label>
 										<div class="note">
-											<a href="forgotpassword.html">비밀번호를 잊어버렸습니까?</a>
+											<a href="/metelSOS/find/FindId.jsp">아이디 찾기</a>&nbsp;&nbsp;&nbsp;&nbsp;
+											<a href="/metelSOS/find/FindPasswd.jsp">비밀번호 찾기</a>
 										</div>
-									</section>
-
-									<section>
-										<label class="checkbox">
-											<input type="checkbox" name="remember" checked="true">
-											<i></i>로그인 상태 유지하기</label>
 									</section>
 								</fieldset>
 								<footer>
-									<button type="submit" class="btn btn-primary">
-										로그인
-									</button>
+									<span style="float:right;">
+										<button type="submit" class="btn btn-primary">
+											로그인
+										</button>
+									</span>
 									<!-- <input type="button" class="btn btn-primary" id="loginButton" value="로그인" /> -->
 								</footer>
 							</form>
@@ -210,20 +276,17 @@
 											<input type="password" name="customerPasswd" id="customerPasswd">
 											<b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> 비밀번호를 입력해주세요</b> </label>
 										<div class="note">
-											<a href="forgotpassword.html">비밀번호를 잊어버렸습니까?</a>
+											<a href="/metelSOS/find/FindId.jsp">아이디 찾기</a>&nbsp;&nbsp;&nbsp;&nbsp;
+											<a href="/metelSOS/find/FindPasswd.jsp">비밀번호 찾기</a>
 										</div>
-									</section>
-
-									<section>
-										<label class="checkbox">
-											<input type="checkbox" name="remember" checked="true">
-											<i></i>로그인 상태 유지하기</label>
 									</section>
 								</fieldset>
 								<footer>
-									<button type="submit" class="btn btn-primary">
-										로그인
-									</button>
+									<span style="float:right;">
+										<button type="submit" class="btn btn-primary">
+											로그인
+										</button>
+									</span>
 									<!-- <input type="button" class="btn btn-primary" id="loginButton" value="로그인" /> -->
 								</footer>
 							</form>
@@ -238,56 +301,18 @@
 		
 		<div id="empty_dialog" title="empty dialog title">
 			<p>
-				빈 칸을 입력해주세요.
+				<span>빈 칸을 입력해주세요.</span>
 			</p>
 		</div>
 		
+		<div id="login_fail_dialog" title="login fail dialog">
+			<p>
+				<span id="dialog-text"></span>
+			</p>
+		</div>
 		<script>
 		$(document).ready(function(){
 			$("#engineerId").focus();
-			
-			//다이얼로그 title에 html을 적용하기 위한 코드
-			 $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
-					_title : function(title) {
-						if (!this.options.title) {
-							title.html("&#160;");
-						} else {
-							title.html(this.options.title);
-						}
-					}
-				}));  
-				
-				$('#empty_dialog').dialog({
-					autoOpen : false,
-					width: 300,
-					height:200,
-					resizable: false,
-					modal : true,
-					title:"<div class='widget-header'><h4><i class='fa fa-warning'></i>&nbsp;로그인 실패</h4></div>",
-					buttons:[{
-						html:"<i class='fa fa-check'></i>&nbsp; 확인",
-						"class": "btn btn-default",
-						click:function(){
-							$('#empty_dialog').dialog("close");
-							var radioValue = $("input[name=userCode]").val();
-							if(radioValue == 'Engineer'){
-								if($("#engineerId").val() == ''){
-									$("#engineerId").focus();
-								}else{
-									$("#engineerPasswd").focus();
-								}
-							}else{
-								if($("#customerId").val() == ''){
-									$("#customerId").focus();
-								}else{
-									$("#customerPasswd").focus();
-								}
-							}
-							
-							return false;
-						}
-					}]
-				});
 				
 				//회원가입 버튼 클릭 이벤트 처리
 				$("#register").click(function(){
@@ -312,6 +337,15 @@
 				$("#engineer-login-form").submit(function(event){
 					event.preventDefault();
 					var postData = $(this).serializeArray();
+					for(var i=0;i<postData.length;i++){
+						if(postData[i].name == 'engineerId' && postData[i].value == ''){
+							$('#empty_dialog').dialog("open");
+							return false;
+						}else if(postData[i].name == 'engineerPasswd' && postData[i].value == ''){
+							$('#empty_dialog').dialog("open");
+							return false;
+						}
+					}
 					var formUrl = $(this).attr('action');
 					$.ajax({
 						url:formUrl,
@@ -324,8 +358,14 @@
 								document.location.href="/metelSOS/pageMove.do?userType=engineer&menuTitle=EngineerMain&menuIcon=fa fa-lg fa-fw fa-home";
 							}else{
 								//로그인 실패
+								var errMsg = '로그인에 실패했습니다. <br /> 아이디와 비밀번호를 확인해주세요.';
+								$('#dialog-text').html(errMsg);
+								$('#login_fail_dialog').dialog("open");
 							}
-						}
+						},
+						error:function(request,status,error){
+					        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					    }
 					});
 				});
 				
@@ -333,6 +373,15 @@
 				$("#customer-login-form").submit(function(event){
 					event.preventDefault();
 					var postData = $(this).serializeArray();
+					for(var i=0;i<postData.length;i++){
+						if(postData[i].name == 'engineerId' && postData[i].value == ''){
+							$('#empty_dialog').dialog("open");
+							return false;
+						}else if(postData[i].name == 'engineerPasswd' && postData[i].value == ''){
+							$('#empty_dialog').dialog("open");
+							return false;
+						}
+					}
 					var formUrl = $(this).attr('action');
 					$.ajax({
 						url:formUrl,
@@ -345,8 +394,14 @@
 								document.location.href="/metelSOS/pageMove.do?userType=customer&menuTitle=CustomerMain&menuIcon=fa fa-lg fa-fw fa-home";
 							}else{
 								//로그인 실패
+								var errMsg = '로그인에 실패했습니다. <br /> 아이디와 비밀번호를 확인해주세요.';
+								$('#dialog-text').html(errMsg);
+								$('#login_fail_dialog').dialog("open");
 							}
-						}
+						},
+						error:function(request,status,error){
+					        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					    }
 					});
 				});
 				
