@@ -1,6 +1,7 @@
 package com.metelsos.customer.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +21,18 @@ public class CustomerDao extends AbstractDAO{
 
 	public int insertUser(HashMap<String, Object> paramMap) throws Exception{
 		return (int) insert("customer.insertCustomer", paramMap);
+	}
+
+	public List<CustomerVo> findEngineerId(HashMap<String, String> paramMap) throws Exception{
+		return (List<CustomerVo>)selectList("customer.getCustomerByNameAndEmail", paramMap);
+	}
+
+	public CustomerVo findEngineer(HashMap<String, String> paramMap) throws Exception{
+		return (CustomerVo)selectOne("customer.getCustomerByIdAndNameAndEmail", paramMap);
+	}
+
+	public void updateCustomerPasswd(CustomerVo vo) throws Exception{
+		update("customer.updateCustomerPasswd", vo);
 	}
 
 }

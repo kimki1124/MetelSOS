@@ -1,5 +1,6 @@
 package com.metelsos.menu.service;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,6 +10,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.metelsos.engineer.dao.EngineerDao;
+import com.metelsos.engineer.vo.EngineerVo;
 import com.metelsos.menu.dao.MenuDao;
 import com.metelsos.menu.vo.MenuVo;
 
@@ -17,6 +20,9 @@ public class MenuServiceImpl implements MenuService{
 	
 	@Resource(name="menuDao")
 	private MenuDao menuDao;
+	
+	@Resource(name="engineerDao")
+	private EngineerDao engineerDao;
 
 	@Override
 	public List<MenuVo> getEngineerLeftMenuList() throws Exception {
@@ -127,7 +133,10 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuList", filterList);
 		returnMap.put("breadcrumbList", breadcrumbList);
 		returnMap.put("menuPath", menuPath);
-		returnMap.put("menuTitle", breadcrumbList.get(breadcrumbList.size()-1));
+		if(breadcrumbList.size() > 0){
+			returnMap.put("menuTitle", breadcrumbList.get(breadcrumbList.size()-1));
+		}
+		
 		returnMap.put("menuIcon", paramMap.get("menuIcon"));
 		
 		return returnMap;
@@ -152,5 +161,18 @@ public class MenuServiceImpl implements MenuService{
 				}
 			}
 		}
+	}
+
+	@Override
+	public void setProfileViewItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
+			throws Exception {
+		EngineerVo vo = engineerDao.findEngineer(paramMap);
+		
+		List<String> list = new ArrayList<String>();
+		list.add("마이 프로필");
+		returnMap.put("engineerVo", vo);
+		returnMap.put("breadcrumbList", list);
+		returnMap.put("menuPath", "/myprofile/viewMyProfile");
+		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 }

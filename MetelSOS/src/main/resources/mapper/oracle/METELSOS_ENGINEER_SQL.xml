@@ -33,11 +33,11 @@
 		]]>
 	</select>
 	
-	<select id="getEngineerByIdAndNameAndEmail" parameterType="hashmap" resultType="Engineer">
+	<select id="getEngineerByUserId" parameterType="hashmap" resultType="Engineer">
 		<![CDATA[
 			SELECT *
 			FROM METELSOS_ENGINEER
-			WHERE ENGINEER_ID = #{userId} AND ENGINEER_NAME = #{userName} AND ENGINEER_EMAIL = #{userEmail}
+			WHERE ENGINEER_ID = #{userId}
 		]]>
 	</select>
 	
@@ -45,6 +45,14 @@
 		<![CDATA[
 			UPDATE METELSOS_ENGINEER
 			SET ENGINEER_PASSWD = #{engineer_passwd}
+			WHERE ENGINEER_ID = #{engineer_id}
+		]]>
+	</update>
+	
+	<update id="updateEngineerInfo" parameterType="Engineer">
+		<![CDATA[
+			UPDATE METELSOS_ENGINEER
+			SET ENGINEER_PASSWD = #{engineer_passwd}, ENGINEER_DEPT = #{engineer_dept}, ENGINEER_EMAIL = #{engineer_email}, ENGINEER_PHONE = #{engineer_phone}
 			WHERE ENGINEER_ID = #{engineer_id}
 		]]>
 	</update>

@@ -18,4 +18,7 @@ public interface EngineerService {
 
 	HashMap<String, Object> sendTempEngineerPasswd(HashMap<String, String> paramMap) throws Exception;
 
+	HashMap<String, Object> updateEngineerInfo(HashMap<String, String> paramMap) throws Exception;
+
+
 }

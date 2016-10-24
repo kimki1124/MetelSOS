@@ -535,7 +535,7 @@
 									}
 								},
 								error:function(request,status,error){
-									var errMsg = request.status+"\n"+request.responseText+"\n"+error;
+									var errMsg = request.status+"\n"+error;
 									$('#customer_err-dialog-text').html(errMsg);
 									$('#customer_err_500_dialog').dialog("open");
 							    }

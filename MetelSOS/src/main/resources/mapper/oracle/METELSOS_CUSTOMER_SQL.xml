@@ -24,4 +24,28 @@
 			VALUES(SEQ_CUSTOMER_NUM.NEXTVAL, #{customerId}, #{customerPasswd}, #{customerName}, #{companyName}, #{customerPosition}, #{customerEmail}, #{customerPhone}, #{customerCreateDate}, null)
 		]]>
 	</insert>
+	
+	<select id="getCustomerByNameAndEmail" parameterType="hashmap" resultType="Customer">
+		<![CDATA[
+			SELECT * 
+			FROM METELSOS_CUSTOMER
+			WHERE CUSTOMER_NAME = #{userName} AND CUSTOMER_EMAIL = #{userEmail}
+		]]>
+	</select>
+	
+	<select id="getCustomerByIdAndNameAndEmail" parameterType="hashmap" resultType="Customer">
+		<![CDATA[
+			SELECT *
+			FROM METELSOS_CUSTOMER
+			WHERE CUSTOMER_ID = #{userId} AND CUSTOMER_NAME = #{userName} AND CUSTOMER_EMAIL = #{userEmail}
+		]]>
+	</select>
+	
+	<update id="updateCustomerPasswd" parameterType="Customer">
+		<![CDATA[
+			UPDATE METELSOS_CUSTOMER
+			SET CUSTOMER_PASSWD = #{customer_passwd}
+			WHERE CUSTOMER_ID = #{customer_id}
+		]]>
+	</update>
 </mapper>

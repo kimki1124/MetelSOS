@@ -40,4 +40,13 @@ public class EngineerController {
 		
 		return jsonModel;
 	}
+	
+	@RequestMapping(value="/updateEngineerInfo.do")
+	public ModelAndView updateEngineerInfo(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => updateEngineerInfo");
+		MetelSOSJsonModel jsonModel = null;
+		HashMap<String, Object> returnMap = engineerService.updateEngineerInfo(paramMap);
+		jsonModel = new MetelSOSJsonModel(returnMap);
+		return jsonModel;
+	}
 }

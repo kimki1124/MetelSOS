@@ -13,4 +13,6 @@ public interface MenuService {
 
 	HashMap<String, Object> getMainPanelItems(HashMap<String, String> paramMap) throws Exception;
 
+	void setProfileViewItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception;
+
 }

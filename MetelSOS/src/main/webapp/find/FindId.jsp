@@ -115,7 +115,7 @@
 								title.html(this.options.title);
 							}
 						}
-					}));  
+				}));  
 				
 				 $('#empty_dialog').dialog({
 						autoOpen : false,

@@ -15,10 +15,10 @@
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}else{
 		//세션이 있을 때 메인 페이지로 이동
-		if("ENGINEER".equals(session.getAttribute("SESSION_LOGIN_USER_TYPE"))){
-			request.getRequestDispatcher("pageMove.do?userType=engineer&menuTitle=EngineerMain&menuIcon=fa fa-lg fa-fw fa-home").forward(request, response);
+		if("engineer".equals(session.getAttribute("SESSION_LOGIN_USER_TYPE"))){
+			request.getRequestDispatcher("leftMenuPageMove.do?userType=engineer&menuTitle=EngineerMain&menuIcon=fa fa-lg fa-fw fa-home").forward(request, response);
 		}else{
-			request.getRequestDispatcher("pageMove.do?userType=customer&menuTitle=CustomerMain&menuIcon=fa fa-lg fa-fw fa-home").forward(request, response);
+			request.getRequestDispatcher("leftMenuPageMove.do?userType=customer&menuTitle=CustomerMain&menuIcon=fa fa-lg fa-fw fa-home").forward(request, response);
 		}
 	}
 %>

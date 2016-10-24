@@ -194,7 +194,14 @@
 							<form action="/metelSOS/sendTempPasswd.do" onsubmit="return emptyCheck();" id="find-id-form" class="smart-form client-form" method="post">
 								<fieldset style="padding:0px 14px 5px;">
 									<section>
-										<input type="hidden" name="userType" value="Engineer" />
+										<c:choose>
+											<c:when test="${userType  == 'Customer'}">
+												<input type="hidden" id="userType" name="userType" value="Customer" />
+											</c:when>
+											<c:otherwise>
+												<input type="hidden" id="userType" name="userType" value="Engineer" />
+											</c:otherwise>
+										</c:choose>
 									</section>
 									<section>
 										<label class="label">아이디</label>
@@ -263,15 +270,6 @@
 		</div>
 
 		<script>
-		function emptyCheck(){
-			if($("#userId").val() == '' || $("#userName").val() == '' || $("#userEmail").val() == ''){
-				$('#empty_dialog').dialog("open");
-				return false;
-			}
-			
-			return true;
-		};
-		
 		$(document).ready(function(){
 			$("#userId").focus();
 			
@@ -279,6 +277,21 @@
 			$("#cancel").click(function(){
 				document.location.href="/metelSOS/login.jsp";
 			});
+			
+			function emptyCheck(){
+				if($("#userId").val() == '' || $("#userName").val() == '' || $("#userEmail").val() == ''){
+					$('#empty_dialog').dialog("open");
+					return false;
+				}
+				
+				return true;
+			};
+			
+			$("input[name='userCode']").change(function(){
+				var userType = $("input[name='userCode']:checked").val();
+				$("#userType").val(userType);
+			});
+			
 		});
 		</script>
 </body>

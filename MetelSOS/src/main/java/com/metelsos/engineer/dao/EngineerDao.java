@@ -28,11 +28,15 @@ public class EngineerDao extends AbstractDAO{
 	}
 
 	public EngineerVo findEngineer(HashMap<String, String> paramMap) throws Exception{
-		return (EngineerVo)selectOne("engineer.getEngineerByIdAndNameAndEmail", paramMap);
+		return (EngineerVo)selectOne("engineer.getEngineerByUserId", paramMap);
 	}
 
 	public void updateEngineerPasswd(EngineerVo vo) {
 		update("engineer.updateEngineerPasswd", vo);
+	}
+
+	public void updateEngineerInfo(EngineerVo vo) throws Exception{
+		update("engineer.updateEngineerInfo", vo);
 	}
 
 }

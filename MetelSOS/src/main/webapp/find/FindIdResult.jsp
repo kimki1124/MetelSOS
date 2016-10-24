@@ -133,29 +133,56 @@
 										<input type="hidden" name="userType" value="${userType }">
 									</section>
 									<section>
-										<label class="label">다음 정보로 가입된 아이디가 총 ${engineerCount}개 있습니다.</label>
+										<label class="label">다음 정보로 가입된 아이디가 총 ${userCount}개 있습니다.</label>
 										<br /><br />
 											<table class="table table-bordered" style="border:0; margin-left:-14px;">
-												<c:forEach var="item" items="${findEngineerList }" varStatus="status">
-												<tbody style="border-top:0;">
-													<tr>
-														<td style="padding-top:33px; border:0;">
-															<!-- form input value set -->
-															<input type="radio" name="userId" value="${item.engineer_id }">
-															<input type="hidden" name="userName" value="${item.engineer_name }">
-															<input type="hidden" name="userEmail" value="${item.engineer_email }">
-														</td>
-														<td style="padding-left:50px; border:0;">
-															<!-- 아이디, 이름, 이메일 정보 -->
-															<ul class="error-search text-left font-md" style="color:#000000;">
-							            						<li style="width:300px;"><small>아이디 : ${item.engineer_id }</small></li>
-							           							<li style="width:300px;"><small>이름 : ${item.engineer_name }</small></li>
-							           							<li style="width:300px;"><small>이메일 : ${item.engineer_email }</small></li>
-							        						</ul>
-														</td>
-													</tr>
-												</tbody>
-												</c:forEach>
+												<c:choose>
+													<c:when test="${userType == 'Engineer' }">
+														<c:forEach var="item" items="${findUserList }" varStatus="status">
+															<tbody style="border-top:0;">
+																<tr>
+																	<td style="padding-top:33px; border:0;">
+																		<!-- form input value set -->
+																		<input type="radio" name="userId" value="${item.engineer_id }">
+																		<input type="hidden" name="userName" value="${item.engineer_name }">
+																		<input type="hidden" name="userEmail" value="${item.engineer_email }">
+																	</td>
+																	<td style="padding-left:50px; border:0;">
+																		<!-- 아이디, 이름, 이메일 정보 -->
+																		<ul class="error-search text-left font-md" style="color:#000000;">
+							            									<li style="width:300px;"><small>아이디 : ${item.engineer_id }</small></li>
+							           										<li style="width:300px;"><small>이름 : ${item.engineer_name }</small></li>
+							           										<li style="width:300px;"><small>이메일 : ${item.engineer_email }</small></li>
+							        									</ul>
+																	</td>
+																</tr>
+															</tbody>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<c:forEach var="item" items="${findUserList }" varStatus="status">
+															<tbody style="border-top:0;">
+																<tr>
+																	<td style="padding-top:33px; border:0;">
+																		<!-- form input value set -->
+																		<input type="radio" name="userId" value="${item.customer_id }">
+																		<input type="hidden" name="userName" value="${item.customer_name }">
+																		<input type="hidden" name="userEmail" value="${item.customer_email }">
+																	</td>
+																	<td style="padding-left:50px; border:0;">
+																		<!-- 아이디, 이름, 이메일 정보 -->
+																		<ul class="error-search text-left font-md" style="color:#000000;">
+							            									<li style="width:300px;"><small>아이디 : ${item.customer_id }</small></li>
+							           										<li style="width:300px;"><small>이름 : ${item.customer_name }</small></li>
+							           										<li style="width:300px;"><small>이메일 : ${item.customer_email }</small></li>
+							        									</ul>
+																	</td>
+																</tr>
+															</tbody>
+														</c:forEach>
+													</c:otherwise>
+												</c:choose>
+												
 											</table>
 									</section>
 								</fieldset>

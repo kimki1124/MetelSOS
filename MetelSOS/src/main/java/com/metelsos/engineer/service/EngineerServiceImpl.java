@@ -38,7 +38,7 @@ public class EngineerServiceImpl implements EngineerService{
 		if(engineerVo != null){
 			session.setAttribute("SESSION_LOGIN_USER_ID", engineerVo.getEngineer_id());
 			session.setAttribute("SESSION_LOGIN_USER_NAME", engineerVo.getEngineer_name());
-			session.setAttribute("SESSION_LOGIN_USER_TYPE", "ENGINEER");
+			session.setAttribute("SESSION_LOGIN_USER_TYPE", "engineer");
 			returnMap.put("resultMsg", "SUCCESS");
 			returnMap.put("engineerName", engineerVo.getEngineer_name());
 		}else{
@@ -94,8 +94,8 @@ public class EngineerServiceImpl implements EngineerService{
 		List<EngineerVo> list = engineerDao.findEngineerId(paramMap);
 		
 		returnMap.put("userType", paramMap.get("userType"));
-		returnMap.put("findEngineerList", list);
-		returnMap.put("engineerCount", list.size());
+		returnMap.put("findUserList", list);
+		returnMap.put("userCount", list.size());
 		
 		return returnMap;
 	}
@@ -104,7 +104,7 @@ public class EngineerServiceImpl implements EngineerService{
 	public HashMap<String, Object> sendTempEngineerPasswd(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		
-		//1. 아이디, 이름, 이메일을 토대로 EngineerVo를 찾아냄
+		//1. 아이디를 토대로 EngineerVo를 찾아냄
 		EngineerVo vo = engineerDao.findEngineer(paramMap);
 		
 		//2. 리턴되는 EngineerVo가 있으면 임시 비밀번호 생성, 없으면 실패 메시지 put해서 리턴
@@ -130,6 +130,32 @@ public class EngineerServiceImpl implements EngineerService{
 			returnMap.put("resultMsg", "SUCCESS");
 		}else{
 			returnMap.put("resultMsg", "FAILED");
+		}
+		
+		return returnMap;
+	}
+
+	@Override
+	public HashMap<String, Object> updateEngineerInfo(HashMap<String, String> paramMap) throws Exception {
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		AesUtil aesUtil = new AesUtil();
+		paramMap.put("engineerPasswd", aesUtil.encrypt(paramMap.get("currPasswd")));
+		EngineerVo vo = engineerDao.checkLogin(paramMap);
+		
+		if(vo != null){
+			String changePwd = aesUtil.encrypt(paramMap.get("newPasswd"));
+			vo.setEngineer_passwd(changePwd);
+			vo.setEngineer_dept(paramMap.get("engineerDept"));
+			vo.setEngineer_email(paramMap.get("engineerEmail"));
+			vo.setEngineer_phone(paramMap.get("engineerPhone"));
+			
+			engineerDao.updateEngineerInfo(vo);
+			returnMap.put("resultMsg", "SUCCESS");
+			returnMap.put("userType", "engineer");
+			returnMap.put("userId", vo.getEngineer_id());
+		}else{
+			returnMap.put("resultMsg", "FAILED");
+			returnMap.put("errMsg", "기존 비밀번호가 틀렸습니다. 다시 확인해주세요.");
 		}
 		
 		return returnMap;

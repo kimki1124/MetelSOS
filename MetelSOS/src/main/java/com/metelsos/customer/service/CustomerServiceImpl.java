@@ -2,8 +2,10 @@ package com.metelsos.customer.service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import com.metelsos.common.aes.AesUtil;
+import com.metelsos.common.util.MetelSOSUtil;
 import com.metelsos.customer.dao.CustomerDao;
 import com.metelsos.customer.vo.CustomerVo;
 
@@ -35,7 +38,7 @@ public class CustomerServiceImpl implements CustomerService{
 		if(customerVo != null){
 			session.setAttribute("SESSION_LOGIN_USER_ID", customerVo.getCustomer_id());
 			session.setAttribute("SESSION_LOGIN_USER_NAME", customerVo.getCustomer_name());
-			session.setAttribute("SESSION_LOGIN_USER_TYPE", "CUSTOMER");
+			session.setAttribute("SESSION_LOGIN_USER_TYPE", "customer");
 			returnMap.put("resultMsg", "SUCCESS");
 			returnMap.put("customerName", customerVo.getCustomer_name());
 		}else{
@@ -85,14 +88,45 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public HashMap<String, Object> findCustomerId(HashMap<String, String> paramMap) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		List<CustomerVo> list = customerDao.findEngineerId(paramMap);
+		
+		returnMap.put("userType", paramMap.get("userType"));
+		returnMap.put("findUserList", list);
+		returnMap.put("userCount", list.size());
+		
+		return returnMap;
 	}
 
 	@Override
 	public HashMap<String, Object> sendTempCustomerPasswd(HashMap<String, String> paramMap) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		
+		CustomerVo vo = customerDao.findEngineer(paramMap);
+		
+		if(vo != null){
+			MetelSOSUtil util = new MetelSOSUtil();
+			AesUtil aesUtil = new AesUtil();
+			String tempPasswd = util.generateTempPasswd("P", 20);
+			
+			vo.setCustomer_passwd(aesUtil.encrypt(tempPasswd));
+			customerDao.updateCustomerPasswd(vo);
+			
+			String title = "임시 비밀번호입니다.";
+			StringBuffer content = new StringBuffer();
+			content.append("<h1>임시 비밀번호입니다.</h1><br />");
+			content.append("<strong>"+tempPasswd+"</strong>");
+			content.append("<br /><br />");
+			content.append("임시 비밀번호로 접속 후 마이프로필에서 비밀번호를 변경해 주시기 바랍니다. <br />");
+			content.append("from. MetelSOS ADMIN");
+			util.sendEmail(vo.getCustomer_email(), title, content.toString(), tempPasswd);
+			returnMap.put("tempPasswd", tempPasswd);
+			returnMap.put("resultMsg", "SUCCESS");
+		}else{
+			returnMap.put("resultMsg", "FAILED");
+		}
+		
+		return returnMap;
 	}
 
 }

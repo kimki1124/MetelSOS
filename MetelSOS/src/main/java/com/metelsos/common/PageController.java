@@ -1,5 +1,6 @@
 package com.metelsos.common;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,11 +22,26 @@ public class PageController {
 	@Resource(name="menuService")
 	private MenuService menuService;
 	
-	@RequestMapping(value="/pageMove.do")
+	@RequestMapping(value="/leftMenuPageMove.do")
 	public ModelAndView movePage(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => movePage");
 		ModelAndView modelAndView = new ModelAndView();
 		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		modelAndView.addAllObjects(returnMap);
+		String menuPath = String.valueOf(returnMap.get("menuPath"));
+		String path = "/"+paramMap.get("userType")+menuPath;
+		modelAndView.setViewName(path);
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="/profilePageMove.do")
+	public ModelAndView moveProfilePage(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => moveProfilePage");
+		ModelAndView modelAndView = new ModelAndView();
+		paramMap.put("menuTitle", URLDecoder.decode(paramMap.get("menuTitle"), "UTF-8"));
+		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		menuService.setProfileViewItems(returnMap, paramMap);
+		
 		modelAndView.addAllObjects(returnMap);
 		String menuPath = String.valueOf(returnMap.get("menuPath"));
 		String path = "/"+paramMap.get("userType")+menuPath;
