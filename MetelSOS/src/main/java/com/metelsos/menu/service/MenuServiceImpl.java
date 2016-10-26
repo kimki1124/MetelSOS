@@ -1,8 +1,9 @@
 package com.metelsos.menu.service;
 
-import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,10 +11,19 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.metelsos.common.aes.AesUtil;
+import com.metelsos.company.dao.CompanyDao;
+import com.metelsos.company.vo.CompanyVo;
+import com.metelsos.customer.dao.CustomerDao;
+import com.metelsos.customer.vo.CustomerVo;
 import com.metelsos.engineer.dao.EngineerDao;
 import com.metelsos.engineer.vo.EngineerVo;
+import com.metelsos.meeting.dao.CSTMRMeetingDao;
+import com.metelsos.meeting.vo.CSTMRMeetingVo;
 import com.metelsos.menu.dao.MenuDao;
 import com.metelsos.menu.vo.MenuVo;
+import com.metelsos.support.dao.SupportDao;
+import com.metelsos.support.vo.SupportVo;
 
 @Service("menuService")
 public class MenuServiceImpl implements MenuService{
@@ -23,6 +33,18 @@ public class MenuServiceImpl implements MenuService{
 	
 	@Resource(name="engineerDao")
 	private EngineerDao engineerDao;
+	
+	@Resource(name="customerDao")
+	private CustomerDao customerDao;
+	
+	@Resource(name="companyDao")
+	private CompanyDao companyDao;
+	
+	@Resource(name="supportDao")
+	private SupportDao supportDao;
+	
+	@Resource(name="cstmrmeetingDao")
+	private CSTMRMeetingDao cstmrmeetingDao;
 
 	@Override
 	public List<MenuVo> getEngineerLeftMenuList() throws Exception {
@@ -166,13 +188,77 @@ public class MenuServiceImpl implements MenuService{
 	@Override
 	public void setProfileViewItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
-		EngineerVo vo = engineerDao.findEngineer(paramMap);
+		if("engineer".equals(paramMap.get("userType"))){
+			EngineerVo vo = engineerDao.findEngineer(paramMap);
+			Date from = new Date();
+			SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String to = transFormat.format(from);
+			List<SupportVo> supportList = supportDao.getSupportHistory(paramMap);
+			List<CSTMRMeetingVo> cstmrMeetingList = cstmrmeetingDao.getMeetingHistory(paramMap);
+			
+			for(int i=0;i<supportList.size();i++){
+				SupportVo supportVo = supportList.get(i);
+				String acceptDate = supportVo.getSupport_accept_date();
+				transFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+				Date date = transFormat.parse(acceptDate);
+				transFormat.applyPattern("yyyy-MM-dd HH:mm:ss");
+				String acceptDateStr = transFormat.format(date);
+				supportVo.setSupport_accept_date(acceptDateStr);
+			}
+			
+			for(int i=0;i<cstmrMeetingList.size();i++){
+				CSTMRMeetingVo cstmrMeetingVo = cstmrMeetingList.get(i);
+				String acceptDate = cstmrMeetingVo.getMeeting_accept_date();
+				transFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+				Date date = transFormat.parse(acceptDate);
+				transFormat.applyPattern("yyyy-MM-dd HH:mm:ss");
+				String acceptDateStr = transFormat.format(date);
+				cstmrMeetingVo.setMeeting_accept_date(acceptDateStr);
+			}
+			
+			returnMap.put("currDate", to);
+			returnMap.put("CSTMRMeetingList", cstmrMeetingList);
+			returnMap.put("supportHistoryList", supportList);
+			returnMap.put("engineerVo", vo);
+			returnMap.put("menuPath", "/myprofile/EngineerViewMyProfile");
+		}else{
+			paramMap.put("customerId", paramMap.get("userId"));
+			CustomerVo vo = customerDao.validateCustomerId(paramMap);
+			List<CompanyVo> companyList = companyDao.setItemForRegisterForm();
+			returnMap.put("customerCompanyList", companyList);
+			returnMap.put("customerVo", vo);
+			returnMap.put("menuPath", "/myprofile/CustomerViewMyProfile");
+		}
 		
 		List<String> list = new ArrayList<String>();
 		list.add("마이 프로필");
-		returnMap.put("engineerVo", vo);
+		
 		returnMap.put("breadcrumbList", list);
-		returnMap.put("menuPath", "/myprofile/viewMyProfile");
+		returnMap.put("menuTitle", paramMap.get("menuTitle"));
+	}
+
+	@Override
+	public void setLeavePageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
+			throws Exception {
+		AesUtil aesUtil = new AesUtil();
+		if("engineer".equals(paramMap.get("userType"))){
+			EngineerVo vo = engineerDao.findEngineer(paramMap);
+			String userPasswd = aesUtil.decrypt(vo.getEngineer_passwd());
+			returnMap.put("userId", paramMap.get("userId"));
+			returnMap.put("userPasswd", userPasswd);
+		}else{
+			paramMap.put("customerId", paramMap.get("userId"));
+			CustomerVo vo = customerDao.validateCustomerId(paramMap);
+			String userPasswd = aesUtil.decrypt(vo.getCustomer_passwd());
+			returnMap.put("userId", paramMap.get("userId"));
+			returnMap.put("userPasswd", userPasswd);
+		}
+		
+		List<String> list = new ArrayList<String>();
+		list.add("마이 프로필");
+		returnMap.put("userType", paramMap.get("userType"));
+		returnMap.put("menuPath", "/leave/LeaveUser");
+		returnMap.put("breadcrumbList", list);
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 }

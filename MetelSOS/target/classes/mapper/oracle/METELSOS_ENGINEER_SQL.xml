@@ -56,4 +56,12 @@
 			WHERE ENGINEER_ID = #{engineer_id}
 		]]>
 	</update>
+	
+	<delete id="deleteEngineer" parameterType="hashmap">
+		<![CDATA[
+			DELETE
+			FROM METELSOS_ENGINEER
+			WHERE ENGINEER_ID = #{userId} AND ENGINEER_PASSWD = #{userPasswd}
+		]]>
+	</delete>
 </mapper>

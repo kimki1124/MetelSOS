@@ -7,5 +7,7 @@
 		<typeAlias type="com.metelsos.engineer.vo.EngineerVo" alias="Engineer" />
 		<typeAlias type="com.metelsos.company.vo.CompanyVo" alias="Company" />
 		<typeAlias type="com.metelsos.menu.vo.MenuVo" alias="Menu" />
+		<typeAlias type="com.metelsos.support.vo.SupportVo" alias="Support" />
+		<typeAlias type="com.metelsos.meeting.vo.CSTMRMeetingVo" alias="CSTMRMeeting" />
 	</typeAliases>
 </configuration>

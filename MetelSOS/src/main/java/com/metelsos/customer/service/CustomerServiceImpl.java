@@ -89,7 +89,7 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public HashMap<String, Object> findCustomerId(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
-		List<CustomerVo> list = customerDao.findEngineerId(paramMap);
+		List<CustomerVo> list = customerDao.findCustomerId(paramMap);
 		
 		returnMap.put("userType", paramMap.get("userType"));
 		returnMap.put("findUserList", list);
@@ -102,7 +102,7 @@ public class CustomerServiceImpl implements CustomerService{
 	public HashMap<String, Object> sendTempCustomerPasswd(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		
-		CustomerVo vo = customerDao.findEngineer(paramMap);
+		CustomerVo vo = customerDao.findCustomer(paramMap);
 		
 		if(vo != null){
 			MetelSOSUtil util = new MetelSOSUtil();
@@ -121,6 +121,50 @@ public class CustomerServiceImpl implements CustomerService{
 			content.append("from. MetelSOS ADMIN");
 			util.sendEmail(vo.getCustomer_email(), title, content.toString(), tempPasswd);
 			returnMap.put("tempPasswd", tempPasswd);
+			returnMap.put("resultMsg", "SUCCESS");
+		}else{
+			returnMap.put("resultMsg", "FAILED");
+		}
+		
+		return returnMap;
+	}
+
+	@Override
+	public HashMap<String, Object> updateCustomerInfo(HashMap<String, String> paramMap) throws Exception {
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		AesUtil aesUtil = new AesUtil();
+		paramMap.put("customerPasswd", aesUtil.encrypt(paramMap.get("currPasswd")));
+		CustomerVo vo = customerDao.checkLogin(paramMap);
+		
+		if(vo != null){
+			String changePwd = aesUtil.encrypt(paramMap.get("newPasswd"));
+			vo.setCustomer_passwd(changePwd);
+			vo.setCompany_name(paramMap.get("companyName"));
+			vo.setCustomer_position(paramMap.get("customerPosition"));
+			vo.setCustomer_email(paramMap.get("customerEmail"));
+			vo.setCustomer_phone(paramMap.get("customerPhone"));
+			
+			customerDao.updateCustomerInfo(vo);
+			returnMap.put("resultMsg", "SUCCESS");
+			returnMap.put("userType", "customer");
+			returnMap.put("userId", vo.getCustomer_id());
+		}else{
+			returnMap.put("resultMsg", "FAILED");
+			returnMap.put("errMsg", "기존 비밀번호가 틀렸습니다. 다시 확인해주세요.");
+		}
+		
+		return returnMap;
+	}
+
+	@Override
+	public HashMap<String, Object> deleteCustomerAccount(HashMap<String, String> paramMap) throws Exception {
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		AesUtil aesUtil = new AesUtil();
+		paramMap.put("userPasswd", aesUtil.encrypt(paramMap.get("inputPasswd")));
+		
+		int result = customerDao.deleteCustomerAccount(paramMap);
+		
+		if(result > 0){
 			returnMap.put("resultMsg", "SUCCESS");
 		}else{
 			returnMap.put("resultMsg", "FAILED");

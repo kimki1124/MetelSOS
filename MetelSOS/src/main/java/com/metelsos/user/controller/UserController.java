@@ -117,5 +117,25 @@ public class UserController {
 		
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="/deleteUser.do")
+	public ModelAndView deleteUserAccount(@RequestParam HashMap<String, String> paramMap, HttpServletRequest request, HttpSession session) throws Exception{
+		log.info("#operation => deleteUserAccount");
+		MetelSOSJsonModel jsonModel = null;
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		if("engineer".equals(paramMap.get("userType"))){
+			returnMap = engineerService.deleteEngineerAccount(paramMap);
+		}else{
+			returnMap = customerService.deleteCustomerAccount(paramMap);
+		}
+		
+		if("SUCCESS".equals(returnMap.get("resultMsg"))){
+			request.getSession().invalidate();
+		}
+
+		jsonModel = new MetelSOSJsonModel(returnMap);
+		
+		return jsonModel;
+	}
 }
 

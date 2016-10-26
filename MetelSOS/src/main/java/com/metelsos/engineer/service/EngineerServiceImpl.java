@@ -161,4 +161,21 @@ public class EngineerServiceImpl implements EngineerService{
 		return returnMap;
 	}
 
+	@Override
+	public HashMap<String, Object> deleteEngineerAccount(HashMap<String, String> paramMap) throws Exception {
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		AesUtil aesUtil = new AesUtil();
+		paramMap.put("userPasswd", aesUtil.encrypt(paramMap.get("inputPasswd")));
+		
+		int result = engineerDao.deleteEngineerAccount(paramMap);
+		
+		if(result > 0){
+			returnMap.put("resultMsg", "SUCCESS");
+		}else{
+			returnMap.put("resultMsg", "FAILED");
+		}
+		
+		return returnMap;
+	}
+
 }

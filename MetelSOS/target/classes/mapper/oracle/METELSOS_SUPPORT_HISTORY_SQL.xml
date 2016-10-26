@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="support">
+	<resultMap id="supportResult" type="Support">
+		<result property="purpose_of_visit" column="PURPOSE_OF_VISIT" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="support_request" column="SUPPORT_REQUEST" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="support_response" column="SUPPORT_RESPONSE" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="support_engineer_comment" column="SUPPORT_ENGINEER_COMMENT" jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
+
+	<select id="getSupportListByEngineerName" parameterType="hashmap" resultMap="supportResult">
+		<![CDATA[
+			SELECT * 
+			FROM METELSOS_SUPPORT_HISTORY
+			WHERE SUPPORT_ENGINEER = (SELECT ENGINEER_NAME
+                                						  FROM METELSOS_ENGINEER
+                                						  WHERE ENGINEER_ID = #{userId}) AND ROWNUM <= 5
+            ORDER BY SUPPORT_NUM DESC
+		]]>
+	</select>
+</mapper>

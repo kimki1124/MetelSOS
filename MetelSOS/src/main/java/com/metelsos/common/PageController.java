@@ -48,4 +48,15 @@ public class PageController {
 		modelAndView.setViewName(path);
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="/leavePageMove.do")
+	public ModelAndView moveLeavePage(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		ModelAndView modelAndView = new ModelAndView();
+		paramMap.put("menuTitle", URLDecoder.decode(paramMap.get("menuTitle"), "UTF-8"));
+		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		menuService.setLeavePageItems(returnMap, paramMap);
+		modelAndView.addAllObjects(returnMap);
+		modelAndView.setViewName(String.valueOf(returnMap.get("menuPath")));
+		return modelAndView;
+	}
 }

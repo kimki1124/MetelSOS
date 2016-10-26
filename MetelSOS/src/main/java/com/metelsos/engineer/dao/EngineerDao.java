@@ -39,4 +39,8 @@ public class EngineerDao extends AbstractDAO{
 		update("engineer.updateEngineerInfo", vo);
 	}
 
+	public int deleteEngineerAccount(HashMap<String, String> paramMap) throws Exception{
+		return (int)delete("engineer.deleteEngineer", paramMap);
+	}
+
 }

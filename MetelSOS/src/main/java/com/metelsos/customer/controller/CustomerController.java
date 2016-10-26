@@ -40,4 +40,14 @@ public class CustomerController {
 		
 		return jsonModel;
 	}
+	
+	@RequestMapping(value="/updateCustomerInfo.do")
+	public ModelAndView updateCustomerInfo(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => updateCustomerInfo");
+		MetelSOSJsonModel jsonModel = null;
+		HashMap<String, Object> returnMap = customerService.updateCustomerInfo(paramMap);
+		jsonModel = new MetelSOSJsonModel(returnMap);
+		
+		return jsonModel;
+	}
 }

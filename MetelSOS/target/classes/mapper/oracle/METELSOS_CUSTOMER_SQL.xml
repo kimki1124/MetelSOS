@@ -48,4 +48,20 @@
 			WHERE CUSTOMER_ID = #{customer_id}
 		]]>
 	</update>
+	
+	<update id="updateCustomerInfo" parameterType="Customer">
+		<![CDATA[
+			UPDATE METELSOS_CUSTOMER
+			SET CUSTOMER_PASSWD = #{customer_passwd}, COMPANY_NAME = #{company_name}, CUSTOMER_POSITION = #{customer_position}, CUSTOMER_EMAIL = #{customer_email}, CUSTOMER_PHONE = #{customer_phone}
+			WHERE CUSTOMER_ID = #{customer_id}
+		]]>
+	</update>
+	
+	<delete id="deleteCustomer" parameterType="hashmap">
+		<![CDATA[
+			DELETE
+			FROM METELSOS_CUSTOMER
+			WHERE CUSTOMER_ID = #{userId} AND CUSTOMER_PASSWD = #{userPasswd}
+		]]>
+	</delete>
 </mapper>
