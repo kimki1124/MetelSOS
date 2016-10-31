@@ -2,15 +2,18 @@ package com.metelsos.common;
 
 import java.net.URLDecoder;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.metelsos.menu.service.MenuService;
@@ -51,6 +54,7 @@ public class PageController {
 	
 	@RequestMapping(value="/leavePageMove.do")
 	public ModelAndView moveLeavePage(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => moveLeavePage");
 		ModelAndView modelAndView = new ModelAndView();
 		paramMap.put("menuTitle", URLDecoder.decode(paramMap.get("menuTitle"), "UTF-8"));
 		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
@@ -59,4 +63,33 @@ public class PageController {
 		modelAndView.setViewName(String.valueOf(returnMap.get("menuPath")));
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="/noticePageMove.do")
+	public ModelAndView noticePageMove(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => noticePageMove ");
+		ModelAndView modelAndView = new ModelAndView();
+		paramMap.put("menuTitle", URLDecoder.decode(paramMap.get("menuTitle"), "UTF-8"));
+		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		menuService.setNoticePageItems(returnMap, paramMap);
+		
+		modelAndView.addAllObjects(returnMap);
+		modelAndView.setViewName("/admin/notice/NoticeList");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping(value="/writeNoticePageMove.do")
+	public ModelAndView writeNoticePageMove(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => writeNoticePageMove");
+		ModelAndView modelAndView= new ModelAndView();
+		paramMap.put("menuTitle", URLDecoder.decode(paramMap.get("menuTitle"), "UTF-8"));
+		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		menuService.setWriteNoticePageItems(returnMap, paramMap);	
+		
+		modelAndView.addAllObjects(returnMap);
+		modelAndView.setViewName("/admin/notice/NoticeForm");
+		
+		return modelAndView;
+	}
+	
 }

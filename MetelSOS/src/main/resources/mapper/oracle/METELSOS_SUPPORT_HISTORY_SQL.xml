@@ -19,4 +19,15 @@
             ORDER BY SUPPORT_NUM DESC
 		]]>
 	</select>
+	
+	<select id="getSupportListByCustomerName" parameterType="hashmap" resultMap="supportResult">
+		<![CDATA[
+			SELECT * 
+			FROM METELSOS_SUPPORT_HISTORY
+			WHERE CUSTOMER_NAME = (SELECT CUSTOMER_NAME
+                                						  FROM METELSOS_CUSTOMER
+                                						  WHERE CUSTOMER_ID = #{userId}) AND ROWNUM <= 5
+            ORDER BY SUPPORT_NUM DESC
+		]]>
+	</select>
 </mapper>

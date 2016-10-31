@@ -1,8 +1,17 @@
 package com.metelsos.common.util;
 
+import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -11,8 +20,19 @@ import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 public class MetelSOSUtil {
+	
+	private Log log = LogFactory.getLog(MetelSOSUtil.class);
+	
+	//파일이 저장될 경로
+	private static final String filePath = "C:\\dev\\file\\";
 	
 	/**
 	 * 임시 비밀번호 생성 
@@ -117,4 +137,93 @@ public class MetelSOSUtil {
             msg_e.printStackTrace();
         }
 	}
+	
+	/**
+	 * 현재 시간 String으로 리턴
+	 * @param pattern - date 패턴 
+	 * @return
+	 */
+	public String currDatetoString(String pattern){
+		Date date = new Date();
+		SimpleDateFormat transFormat = new SimpleDateFormat(pattern);
+
+		return transFormat.format(date);
+	}
+	
+	/**
+	 * String으로 되어있는 특정 시간을 패턴 변경해서 리턴
+	 * @param objectDate - 대상 String
+	 * @param beforePattern - 기존의 date 패턴
+	 * @param afterPattern - 변경할 date 패턴
+	 * @return
+	 */
+	public String changeDatePattern(String objectDate, String beforePattern, String afterPattern){
+		SimpleDateFormat transFormat = new SimpleDateFormat(beforePattern);
+		Date date = null;
+		
+		try {
+			date = transFormat.parse(objectDate);
+		} catch (ParseException e) {
+			log.error(e,e);
+		}
+		transFormat.applyPattern(afterPattern);
+		
+		return transFormat.format(date);
+	}
+	
+	/**
+	 * 32글자의 랜덤한 문자열(숫자포함)을 만들어서 반환
+	 * @return
+	 */
+	public String getRandomString(){
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
+	
+	/**
+	 * 
+	 * @param map
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public List<HashMap<String,Object>> parseInsertFileInfo(HashMap<String,Object> paramMap, HttpServletRequest request) throws Exception{
+        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
+        Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+         
+        MultipartFile multipartFile = null;
+        String originalFileName = null;
+        String originalFileExtension = null;
+        String storedFileName = null;
+         
+        List<HashMap<String,Object>> list = new ArrayList<HashMap<String,Object>>();
+        HashMap<String, Object> listMap = null; 
+         
+        String boardIdx = (String)paramMap.get("boardNum");
+         
+        File file = new File(filePath);
+        if(file.exists() == false){
+            file.mkdirs();
+        }
+         
+        while(iterator.hasNext()){
+            multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+            if(multipartFile.isEmpty() == false){
+                originalFileName = multipartFile.getOriginalFilename();
+                originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                storedFileName = getRandomString() + originalFileExtension;
+                 
+                file = new File(filePath + storedFileName);
+                multipartFile.transferTo(file);
+                 
+                listMap = new HashMap<String,Object>();
+                listMap.put("BOARD_IDX", boardIdx);
+                listMap.put("ORIGINAL_FILE_NAME", originalFileName);
+                listMap.put("STORED_FILE_NAME", storedFileName);
+                listMap.put("FILE_SIZE", multipartFile.getSize());
+                listMap.put("CREA_ID", paramMap.get("userName"));
+                list.add(listMap);
+            }
+        }
+        return list;
+    }
 }

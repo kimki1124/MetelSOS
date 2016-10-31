@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice">
+	<resultMap id="noticeResult" type="Notice">
+		<result property="notice_content" column="NOTICE_CONTENT" jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
+	
+	<resultMap id="noticeFileResult" type="NoticeFile">
+		<result property="crea_dtm" column="CREA_DTM" jdbcType="DATE" javaType="java.lang.String" />
+	</resultMap>
+	
+	<select id="getNoticeList" resultMap="noticeResult">
+		<![CDATA[
+			SELECT NOTICE_NUM, NOTICE_TITLE, NOTICE_AUTHOR, NOTICE_DATE 
+			FROM METELSOS_NOTICE
+			WHERE NOTICE_DEL_GB = 'N'
+			ORDER BY NOTICE_NUM DESC
+		]]>
+	</select>
+	
+	<insert id="insertNoticeBoard" parameterType="hashmap">
+		<selectKey keyProperty="noticeNum" resultType="string" order="BEFORE">
+        	SELECT SEQ_NOTICE_NUM.NEXTVAL FROM DUAL
+    	</selectKey>
+		<![CDATA[
+			INSERT INTO METELSOS_NOTICE
+			VALUES(#{noticeNum}, NULL, #{noticeTitle}, #{noticeAuthor}, #{currDate}, #{noticeContent}, 0, 'N')
+		]]>
+	</insert>
+	
+	<insert id="uploadNoticeFile" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO METELSOS_NOTICE_FILE
+			VALUES(SEQ_NOTICE_FILE_NUM.NEXTVAL, #{BOARD_IDX}, #{ORIGINAL_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, SYSDATE, #{CREA_ID}, 'N')
+		]]>
+	</insert>
+	
+	<select id="getNoticeFileList" parameterType="int" resultType="NoticeFile">
+		<![CDATA[
+			SELECT FILE_NUM, ORIGINAL_FILE_NAME, ROUND(FILE_SIZE/1024,1) AS FILE_SIZE, CREA_DTM
+        	FROM METELSOS_NOTICE_FILE
+        	WHERE BOARD_NUM = #{boardNum} AND DEL_GB = 'N'
+		]]>
+	</select>
+	
+	<select id="getDetailNotice" parameterType="hashmap" resultMap="noticeResult">
+		<![CDATA[
+			SELECT *
+			FROM METELSOS_NOTICE
+			WHERE NOTICE_NUM = #{notice_num}
+		]]>
+	</select>
+	
+	<select id="getNoticeFileInfo" parameterType="hashmap" resultMap="noticeFileResult">
+		<![CDATA[
+			SELECT STORED_FILE_NAME, ORIGINAL_FILE_NAME
+        	FROM METELSOS_NOTICE_FILE
+        	WHERE FILE_NUM = #{file_num}
+		]]>
+	</select>
+	
+	<delete id="deleteNoticeFile" parameterType="int">
+		<![CDATA[
+			DELETE
+			FROM METELSOS_NOTICE_FILE
+			WHERE BOARD_NUM = #{file_num}
+		]]>
+	</delete>
+	
+	<delete id="deleteNotice" parameterType="int">
+		<![CDATA[
+			DELETE
+			FROM METELSOS_NOTICE
+			WHERE NOTICE_NUM = #{boardNum}
+		]]>
+	</delete>
+	
+	<select id="selectHasNoticeFile" parameterType="int" resultMap="noticeFileResult">
+		<![CDATA[
+			SELECT * 
+			FROM METELSOS_NOTICE_FILE
+			WHERE BOARD_NUM = #{boardNum}
+		]]>
+	</select>
+</mapper>

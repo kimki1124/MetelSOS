@@ -9,5 +9,8 @@
 		<typeAlias type="com.metelsos.menu.vo.MenuVo" alias="Menu" />
 		<typeAlias type="com.metelsos.support.vo.SupportVo" alias="Support" />
 		<typeAlias type="com.metelsos.meeting.vo.CSTMRMeetingVo" alias="CSTMRMeeting" />
+		<typeAlias type="com.metelsos.meeting.vo.INRMeetingVo" alias="INRMeeting" />
+		<typeAlias type="com.metelsos.notice.vo.NoticeVo" alias="Notice" />
+		<typeAlias type="com.metelsos.notice.vo.FileVo" alias="NoticeFile" />
 	</typeAliases>
 </configuration>

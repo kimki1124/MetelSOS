@@ -124,7 +124,7 @@
 							title.html(this.options.title);
 						}
 					}
-				}));  
+			}));  
 			
 			$(document).ready(function(){
 				$('#empty_dialog').dialog({
@@ -355,7 +355,7 @@
 						success:function(msg){
 							if(msg.resultMsg == 'SUCCESS'){
 								//로그인 성공
-								document.location.href="/metelSOS/leftMenuPageMove.do?userType=engineer&menuTitle=EngineerMain&menuIcon=fa fa-lg fa-fw fa-home";
+								document.location.href="/metelSOS/leftMenuPageMove.do?userType=engineer&menuTitle=EngineerMain&menuIcon=fa fa-lg fa-fw fa-info";
 							}else{
 								//로그인 실패
 								var errMsg = '로그인에 실패했습니다. <br /> 아이디와 비밀번호를 확인해주세요.';

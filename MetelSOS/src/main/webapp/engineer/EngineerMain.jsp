@@ -63,7 +63,11 @@
 <body class="">
 		<jsp:include page = "/common/header/HeaderPanel.jsp" flush="false"/>
 		<jsp:include page = "/common/left/engineer/EngineerLeftPanel.jsp" flush="false"/>
-		
+		<form name="noticePageParamForm">
+			<input type="hidden" name="userType">
+			<input type="hidden" name="menuTitle">
+			<input type="hidden" name="menuIcon">
+		</form>
 		<!-- #MAIN PANEL -->
 		<div id="main" role="main">
 
@@ -83,27 +87,320 @@
 			<!-- END RIBBON -->
 
 			<!-- #MAIN CONTENT -->
-
+			<div id="content">
 				
-				<!-- col -->
-				<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-					<h3 class="page-title txt-color-blueDark">
-						
-						<!-- PAGE HEADER -->
-						<i class="${menuIcon}"></i> 
-							${menuTitle} 
-						<!-- <span>>  
-							Subtitle
-						</span> -->
-					</h3>
+				<div class="row">
+					<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+						<h3 class="page-title txt-color-blueDark">
+							<i class="${menuIcon}"></i> 
+								${menuTitle} 
+						</h3>
+					</div>
 				</div>
-				<!-- end col -->
 				
-
-			<!-- end row -->
-			
-			<!-- END #MAIN CONTENT -->
-
+				<section id="widget-grid" class="">
+					<div class="row">
+						<article class="col-sm-12">
+							<div class="jarviswidget jarviswidget-color-darken" id="notice" data-widget-editbutton="false" data-widget-deletebutton="false">
+								<header>
+									<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+									<h2>공지사항</h2>
+									&nbsp;&nbsp;<a class="btn btn-success btn-xs" href="javascript:moveNoticePage();" style="margin-top:5px;"><i class="fa fa-gear"></i> &nbsp;&nbsp;관리</a>
+								</header>
+								<div>
+									<div class="jarviswidget-editbox">
+									</div>
+									<div class="widget-body no-padding">
+										<div class="table-responsive">
+											<table class="table table-bordered table-striped">
+												<thead>
+													<tr>
+														<th style="width:10%;">번호</th>
+														<th style="width:40%;">제목</th>
+														<th style="width:25%;">작성자</th>
+														<th style="width:25%;">작성일</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>Row 1</td>
+														<td>Row 2</td>
+														<td>Row 3</td>
+														<td>Row 4</td>
+													</tr>
+													<tr>
+														<td>Row 1</td>
+														<td>Row 2</td>
+														<td>Row 3</td>
+														<td>Row 4</td>
+													</tr>
+													<tr>
+														<td>Row 1</td>
+														<td>Row 2</td>
+														<td>Row 3</td>
+														<td>Row 4</td>
+													</tr>
+													<tr>
+														<td>Row 1</td>
+														<td>Row 2</td>
+														<td>Row 3</td>
+														<td>Row 4</td>
+													</tr>
+													<tr>
+														<td>Row 1</td>
+														<td>Row 2</td>
+														<td>Row 3</td>
+														<td>Row 4</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="jarviswidget jarviswidget-color-darken" id="month_support" data-widget-editbutton="false" data-widget-deletebutton="false">
+								<header>
+									<span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+									<h2>월별 유지보수 지원사항 통계</h2>
+								</header>
+								<div class="no-padding">
+									<div class="jarviswidget-editbox">
+									</div>
+									<div class="widget-body">
+										<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+											<div id="normal-bar-graph" class="chart no-padding"></div>
+										</div>
+										<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 show-stats">
+											<div class="row">
+												<div class="col-xs-6 col-sm-6 col-md-12 col-lg-12" style="margin-top:25px; margin-bottom:35px;">
+													<strong>10월 유지보수 지원 현황</strong>
+												</div>
+												<div class="col-xs-6 col-sm-6 col-md-12 col-lg-12"> <span class="text"> <strong>접수량</strong> <span class="pull-right"><strong>78/100</strong></span> </span>
+													<div class="progress">
+														<div class="progress-bar bg-color-blueDark" style="width: 65%;"></div>
+													</div> 
+												</div>
+												<div class="col-xs-6 col-sm-6 col-md-12 col-lg-12"> <span class="text"> <strong>지원량</strong> <span class="pull-right"><strong>50/100</strong></span> </span>
+													<div class="progress">
+														<div class="progress-bar bg-color-blue" style="width: 34%;"></div>
+													</div> 
+												</div>
+												<div class="col-xs-6 col-sm-6 col-md-12 col-lg-12"> <span class="text"> <strong>미지원량</strong> <span class="pull-right"><strong>28/100</strong></span> </span>
+													<div class="progress">
+														<div class="progress-bar bg-color-greenLight" style="width: 84%;"></div>
+													</div> 
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</article>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="well well-light">
+								<h1>10월 우수사원, <small>4명
+									<a class="btn btn-success" href="#"><i class="fa fa-gear"></i> &nbsp;&nbsp;관리</a>
+								</h1>
+								<div class="row">
+									<div class="col-xs-12 col-sm-6 col-md-3">
+						            <div class="panel panel-success pricing-big">
+						            	
+						                <div class="panel-heading">
+						                    <h3 class="panel-title">
+						                    	사업수행부
+						                    </h3>
+						                </div>
+						                <div class="panel-body no-padding text-align-center">
+						                    <div class="the-price">
+						                        <h1>
+						                            <strong>김기범 연구원</strong></h1>
+						                    </div>
+											<div class="price-features">
+												<i class="fa fa-user" style="font-size:190px;"></i>
+											</div>
+						                </div>
+						                <div class="panel-footer text-align-center">
+						                         감사합니다
+						                </div>
+						            </div>
+						        </div>
+						        
+						        <div class="col-xs-12 col-sm-6 col-md-3">
+						            <div class="panel panel-teal pricing-big">
+						            	
+						                <div class="panel-heading">
+						                    <h3 class="panel-title">
+						                    	사업수행부
+						                    </h3>
+						                </div>
+						                <div class="panel-body no-padding text-align-center">
+						                    <div class="the-price">
+						                        <h1>
+						                            <strong>한진웅 연구원</strong></h1>
+						                    </div>
+											<div class="price-features">
+												<i class="fa fa-user" style="font-size:190px;"></i>
+											</div>
+						                </div>
+						                <div class="panel-footer text-align-center">
+						                        감사합니다
+						                </div>
+						            </div>
+						        </div>
+						        
+						        <div class="col-xs-12 col-sm-6 col-md-3">
+						            <div class="panel panel-primary pricing-big">
+						                <div class="panel-heading">
+						                    <h3 class="panel-title">
+						                    	사업수행부
+						                    </h3>
+						                </div>
+						                <div class="panel-body no-padding text-align-center">
+						                    <div class="the-price">
+						                        <h1>
+						                            <strong>김준호 연구원</strong></h1>
+						                    </div>
+											<div class="price-features">
+												<i class="fa fa-user" style="font-size:190px;"></i>
+											</div>
+						                </div>
+						                <div class="panel-footer text-align-center">
+						                         감사합니다
+						                </div>
+						            </div>
+						        </div>
+						        
+						        <div class="col-xs-12 col-sm-6 col-md-3">
+						            <div class="panel panel-darken pricing-big">
+						            	
+						                <div class="panel-heading">
+						                    <h3 class="panel-title">
+						                    	플랫폼연구부
+						                    </h3>
+						                </div>
+						                <div class="panel-body no-padding text-align-center">
+						                    <div class="the-price">
+						                        <h1>
+						                            <strong>장준환 연구원</strong></h1>
+						                    </div>
+											<div class="price-features">
+												<i class="fa fa-user" style="font-size:190px;"></i>
+											</div>
+						                </div>
+						                <div class="panel-footer text-align-center">
+						                         감사합니다
+						                </div>
+						            </div>
+						        </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="well well-light">
+								<h1>10월 신입사원, <small>4명</small>
+									<a class="btn btn-success" href="javascript:void(0);"><i class="fa fa-gear"></i> &nbsp;&nbsp;관리</a>
+								</h1>
+								<div class="row">
+									<div class="col-xs-12 col-sm-6 col-md-3">
+						            <div class="panel panel-success pricing-big">
+						            	
+						                <div class="panel-heading">
+						                    <h3 class="panel-title">
+						                    	사업수행부
+						                    </h3>
+						                </div>
+						                <div class="panel-body no-padding text-align-center">
+						                    <div class="the-price">
+						                        <h1>
+						                            <strong>김기범 연구원</strong></h1>
+						                    </div>
+											<div class="price-features">
+												<i class="fa fa-user" style="font-size:190px;"></i>
+											</div>
+						                </div>
+						                <div class="panel-footer text-align-center">
+						                   	 열심히 하겠습니다
+						                </div>
+						            </div>
+						        </div>
+						        
+						        <div class="col-xs-12 col-sm-6 col-md-3">
+						            <div class="panel panel-teal pricing-big">
+						            	
+						                <div class="panel-heading">
+						                    <h3 class="panel-title">
+						                    	사업수행부
+						                    </h3>
+						                </div>
+						                <div class="panel-body no-padding text-align-center">
+						                    <div class="the-price">
+						                        <h1>
+						                            <strong>한진웅 연구원</strong></h1>
+						                    </div>
+											<div class="price-features">
+												<i class="fa fa-user" style="font-size:190px;"></i>
+											</div>
+						                </div>
+						                <div class="panel-footer text-align-center">
+						                        열심히 하겠습니다
+						                </div>
+						            </div>
+						        </div>
+						        
+						        <div class="col-xs-12 col-sm-6 col-md-3">
+						            <div class="panel panel-primary pricing-big">
+						                <div class="panel-heading">
+						                    <h3 class="panel-title">
+						                    	사업수행부
+						                    </h3>
+						                </div>
+						                <div class="panel-body no-padding text-align-center">
+						                    <div class="the-price">
+						                        <h1>
+						                            <strong>김준호 연구원</strong></h1>
+						                    </div>
+											<div class="price-features">
+												<i class="fa fa-user" style="font-size:190px;"></i>
+											</div>
+						                </div>
+						                <div class="panel-footer text-align-center">
+						                         열심히 하겠습니다
+						                </div>
+						            </div>
+						        </div>
+						        
+						        <div class="col-xs-12 col-sm-6 col-md-3">
+						            <div class="panel panel-darken pricing-big">
+						            	
+						                <div class="panel-heading">
+						                    <h3 class="panel-title">
+						                    	플랫폼연구부
+						                    </h3>
+						                </div>
+						                <div class="panel-body no-padding text-align-center">
+						                    <div class="the-price">
+						                        <h1>
+						                            <strong>장준환 연구원</strong></h1>
+						                    </div>
+											<div class="price-features">
+												<i class="fa fa-user" style="font-size:190px;"></i>
+											</div>
+						                </div>
+						                <div class="panel-footer text-align-center">
+						                         열심히 하겠습니다
+						                </div>
+						            </div>
+						        </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>	
 		</div>
 		<!-- END #MAIN PANEL -->
 
@@ -181,6 +478,10 @@
 		<script src="/metelSOS/resources/js/plugin/moment/moment.min.js"></script>
 		<script src="/metelSOS/resources/js/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
 		
+		<!-- Morris Chart Dependencies -->
+		<script src="/metelSOS/resources/js/plugin/morris/raphael.min.js"></script>
+		<script src="/metelSOS/resources/js/plugin/morris/morris.min.js"></script>
+		
 		<!-- Your GOOGLE ANALYTICS CODE Below -->
 		<script type="text/javascript">
 		 	 var _gaq = _gaq || [];
@@ -193,6 +494,16 @@
 		   	 	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		  	})();
 		  
+		  	function moveNoticePage(){
+		  		var form = document.noticePageParamForm;
+		  		form.userType.value = "engineer";
+		  		form.menuTitle.value = encodeURI("공지사항 관리");
+		  		form.menuIcon.value = "fa fa-lg fa-fw fa-bell";
+		  		form.action = "/metelSOS/noticePageMove.do";
+		  		form.method = "get";
+		  		form.submit();
+		  	}
+		  	
 		  	$(document).ready(function(){
 		  		$(document).keydown(function(e){   
 	    			if(e.target.nodeName != "INPUT" && e.target.nodeName != "TEXTAREA"){       
@@ -203,6 +514,46 @@
 				});
 		  		
 		  		$("#left-panel nav ul li").first().addClass("active");
+		  		
+		  		pageSetUp();
+		  		
+		  		if ($('#normal-bar-graph').length) {
+
+					Morris.Bar({
+						element : 'normal-bar-graph',
+						data : [{
+							period : '2016-05',
+							접수량 : 78,
+							지원량 : 40,
+							미지원량 : 38
+						}, {
+							period : '2016-06',
+							접수량 : 35,
+							지원량 : 24,
+							미지원량 : 11
+						}, {
+							period : '2016-07',
+							접수량 : 62,
+							지원량 : 36,
+							미지원량 : 26
+						}, {
+							period : '2016-08',
+							접수량 : 48,
+							지원량 : 48,
+							미지원량 : 0
+						}, {
+							period : '2016-09',
+							접수량 : 37,
+							지원량 : 13,
+							미지원량 : 24
+						}],
+						xkey : 'period',
+						ykeys : ['접수량', '지원량', '미지원량'],
+						labels : ['접수량', '지원량', '미지원량'],
+						hideHover : 'auto'
+					});
+
+				}
 		 	 });
 		
 		</script>

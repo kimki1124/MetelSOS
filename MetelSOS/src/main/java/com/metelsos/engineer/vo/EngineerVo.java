@@ -10,6 +10,7 @@ public class EngineerVo {
 	private String engineer_phone;
 	private String engineer_create_date;
 	private String last_connect_date;
+	private String engineer_position;
 	
 	public int getEngineer_num() {
 		return engineer_num;
@@ -64,6 +65,12 @@ public class EngineerVo {
 	}
 	public void setLast_connect_date(String last_connect_date) {
 		this.last_connect_date = last_connect_date;
+	}
+	public String getEngineer_position() {
+		return engineer_position;
+	}
+	public void setEngineer_position(String engineer_position) {
+		this.engineer_position = engineer_position;
 	}
 	
 	

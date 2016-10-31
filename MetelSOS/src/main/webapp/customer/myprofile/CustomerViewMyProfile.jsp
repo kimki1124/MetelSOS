@@ -302,7 +302,7 @@
 							<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false">
 								<header>
 									<span class="widget-icon"> <i class="fa fa-table"></i> </span>
-									<h2>지원 히스토리</h2>
+									<h2>최근 요청한 유지보수 지원 사항</h2>
 								</header>
 								<div>
 									<div class="jarviswidget-editbox">
@@ -310,12 +310,12 @@
 
 									</div>
 									<div class="widget-body">
-										<p>2016-10-25 기준</p>
+										<p>${currDate} 기준</p>
 										<div class="table-responsive">
 											<table class="table table-bordered">
 												<thead>
 													<tr>
-														<th style="width:40%;">지원 명</th>
+														<th style="width:40%;">기술지원 명</th>
 														<th style="width:20%;">고객사명</th>
 														<th style="width:10%;">담당자</th>
 														<th style="width:10%;">담당 엔지니어</th>
@@ -323,50 +323,21 @@
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td>Row 1</td>
-														<td>Row 2</td>
-														<td>Row 3</td>
-														<td>Row 4</td>
-														<td>Row 5</td>
-													</tr>
-													<tr>
-														<td>Row 1</td>
-														<td>Row 2</td>
-														<td>Row 3</td>
-														<td>Row 4</td>
-														<td>Row 5</td>
-													</tr>
-													<tr>
-														<td>Row 1</td>
-														<td>Row 2</td>
-														<td>Row 3</td>
-														<td>Row 4</td>
-														<td>Row 5</td>
-													</tr>
-													<tr>
-														<td>Row 1</td>
-														<td>Row 2</td>
-														<td>Row 3</td>
-														<td>Row 4</td>
-														<td>Row 5</td>
-													</tr>
-													<tr>
-														<td>Row 1</td>
-														<td>Row 2</td>
-														<td>Row 3</td>
-														<td>Row 4</td>
-														<td>Row 5</td>
-													</tr>
-													<tr>
-														<td>Row 1</td>
-														<td>Row 2</td>
-														<td>Row 3</td>
-														<td>Row 4</td>
-														<td>Row 5</td>
-													</tr>
+													<c:forEach var="item" items="${supportHistoryList }" varStatus="status">
+														<tr>
+															<td>${item.support_title }</td>
+															<td>${item.company_name}</td>
+															<td>${item.customer_name }</td>
+															<td>${item.support_engineer }</td>
+															<td>${item.support_accept_date }</td>
+															<td style="display:none;">${item.support_num }</td>
+														</tr>
+													</c:forEach>
 												</tbody>
 											</table>
+										</div>
+										<div class="note" style="margin-top:-10px;">
+											최근 5개의 내용까지 표시됩니다.
 										</div>
 									</div>
 								</div>

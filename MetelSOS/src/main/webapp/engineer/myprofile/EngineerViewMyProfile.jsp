@@ -186,7 +186,7 @@
 				<section id="widget-grid" class="">
 					<div class="row">
 						<article class="col-sm-12 col-md-12 col-lg-6">
-							<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false" data-widget-custombutton="false" data-widget-fullscreenbutton="true">
+							<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-0">
 								<header>
 									<span class="widget-icon"> <i class="fa fa-edit"></i> </span>
 									<h2>개인정보 </h2>
@@ -248,6 +248,22 @@
 														</select> <i></i> </label>
 												</section>
 												<section>
+													<label class="label">직급</label>
+													<label class="select state-disabled">
+														<select class="input-sm" name="engineerPosition" id="engineerPosition" disabled="disabled">
+															<option value="default" selected="" disabled="">직급을 선택해 주세요.</option>
+															<option value="연구원">연구원</option>
+															<option value="주임연구원">주임연구원</option>
+															<option value="전임연구원">전임연구원</option>
+															<option value="선임연구원">선임연구원</option>
+															<option value="책임연구원">책임연구원</option>
+															<option value="수석연구원">수석연구원</option>
+															<option value="실장">실장</option>
+														</select>
+														<i></i>
+													</label>
+												</section>
+												<section>
 													<label class="label">이메일</label>
 													<label class="input state_disabled">
 														<input type="text" name="engineerEmail" id="engineerEmail" disabled="disabled" value="${engineerVo.engineer_email }">
@@ -284,7 +300,7 @@
 					</div>
 					<div class="row">
 						<article class="col-sm-12 col-md-12 col-lg-12">
-							<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false">
+							<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
 								<header>
 									<span class="widget-icon"> <i class="fa fa-table"></i> </span>
 									<h2>최근 담당 유지보수 지원 사항</h2>
@@ -331,7 +347,7 @@
 					</div>
 					<div class="row">
 						<article class="col-sm-12 col-md-12 col-lg-12">
-							<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false">
+							<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
 								<header>
 									<span class="widget-icon"> <i class="fa fa-table"></i> </span>
 									<h2>최근 참여한 고객사 회의</h2>
@@ -362,6 +378,53 @@
 															<td>${item.customer_name }</td>
 															<td>${item.engineer_name }</td>
 															<td>${item.meeting_accept_date }</td>
+															<td style="display:none;">${item.meeting_num }</td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
+										<div class="note" style="margin-top:-10px;">
+											최근 5개의 내용까지 표시됩니다.
+										</div>
+									</div>
+								</div>
+							</div>
+						</article>
+					</div>
+					<div class="row">
+						<article class="col-sm-12 col-md-12 col-lg-12">
+							<div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1">
+								<header>
+									<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+									<h2>최근 참여한 내부 회의</h2>
+								</header>
+								<div>
+									<div class="jarviswidget-editbox">
+										<!-- This area used as dropdown edit box -->
+
+									</div>
+									<div class="widget-body">
+										<p>${currDate} 기준</p>
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th style="width:40%;">회의 제목</th>
+														<th style="width:20%;">대상 부서</th>
+														<th style="width:10%;">회의 날짜</th>
+														<th style="width:10%;">회의 장소</th>
+														<th style="width:20%;">작성자</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="item" items="${INRMeetingList }" varStatus="status">
+														<tr>
+															<td>${item.meeting_title }</td>
+															<td>${item.meeting_dept}</td>
+															<td>${item.meeting_date }</td>
+															<td>${item.meeting_location }</td>
+															<td>${item.writer_name }</td>
 															<td style="display:none;">${item.meeting_num }</td>
 														</tr>
 													</c:forEach>
@@ -508,6 +571,12 @@
 		  		//engineer의 dept에 맞는 옵션에 selected 속성 부여
 		  		$("#engineerDept").find("option").each(function(){
 		  			if(this.value == '${engineerVo.engineer_dept}'){
+		  				$(this).attr("selected", "selected");
+		  			}
+		  		});
+		  		
+		  		$("#engineerPosition").find("option").each(function(){
+		  			if(this.value == '${engineerVo.engineer_position}'){
 		  				$(this).attr("selected", "selected");
 		  			}
 		  		});

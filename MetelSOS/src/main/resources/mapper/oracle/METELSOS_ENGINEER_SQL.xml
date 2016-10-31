@@ -21,7 +21,7 @@
 	<insert id="insertEngineer" parameterType="hashmap">
 		<![CDATA[
 			INSERT INTO METELSOS_ENGINEER
-			VALUES(SEQ_ENGINEER_NUM.NEXTVAL, #{engineerId}, #{engineerPasswd}, #{engineerName}, #{engineerDept}, #{engineerEmail}, #{engineerPhone}, #{engineerCreateDate}, null)
+			VALUES(SEQ_ENGINEER_NUM.NEXTVAL, #{engineerId}, #{engineerPasswd}, #{engineerName}, #{engineerDept}, #{engineerEmail}, #{engineerPhone}, #{engineerCreateDate}, null, #{engineerPosition})
 		]]>
 	</insert>
 	

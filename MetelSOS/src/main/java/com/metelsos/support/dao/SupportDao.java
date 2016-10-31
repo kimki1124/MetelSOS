@@ -12,7 +12,11 @@ import com.metelsos.support.vo.SupportVo;
 public class SupportDao extends AbstractDAO{
 
 	public List<SupportVo> getSupportHistory(HashMap<String, String> paramMap) throws Exception{
-		return (List<SupportVo>)selectList("support.getSupportListByEngineerName", paramMap);
+		if("engineer".equals(paramMap.get("userType"))){
+			return (List<SupportVo>)selectList("support.getSupportListByEngineerName", paramMap);
+		}else{
+			return (List<SupportVo>)selectList("support.getSupportListByCustomerName", paramMap);
+		}
 	}
 
 }

@@ -273,6 +273,22 @@
 									</section>
 									
 									<section>
+										<label class="select">
+											<select name="engineerPosition">
+												<option value="default" selected="" disabled="">직급을 선택해 주세요.</option>
+												<option value="연구원">연구원</option>
+												<option value="주임연구원">주임연구원</option>
+												<option value="전임연구원">전임연구원</option>
+												<option value="선임연구원">선임연구원</option>
+												<option value="책임연구원">책임연구원</option>
+												<option value="수석연구원">수석연구원</option>
+												<option value="실장">실장</option>
+											</select>
+											<i></i>
+										</label>
+									</section>
+									
+									<section>
 										<label class="input"> <i class="icon-append fa fa-user"></i>
 											<input type="text" name="engineerName" placeholder="이름">
 											<b class="tooltip tooltip-bottom-right">이름을 입력해 주세요.</b> </label>
@@ -425,6 +441,10 @@
 						engineerDept : {
 							valueNotEquals : 'default'
 						},
+						
+						engineerPosition : {
+							valueNotEquals : 'default'
+						},
 						engineerPhone : {
 							required : true,
 							digits : true
@@ -450,6 +470,9 @@
 						},
 						engineerDept : {
 							valueNotEquals : '부서를 선택해주세요.'
+						},
+						engineerPosition : {
+							valueNotEquals : '직급을 선택해주세요.'
 						},
 						engineerPhone : {
 							digits : '숫자만 입력해주세요.'
