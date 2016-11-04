@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="exclntstf">
+	<resultMap id="exclntstfResult" type="ExclntStf">
+		<result property="impression_speech" column="IMPRESSION_SPEECH" jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
+	<resultMap id="exclntstfMapResult" type="java.util.HashMap">
+		<result property="exclnt_year_month" column="EXCLNT_YEAR_MONTH" jdbcType="DATE" javaType="java.lang.String" />
+		<result property="engineer_name" column="ENGINEER_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="engineer_position" column="ENGINEER_POSITION" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="engineer_dept" column="ENGINEER_DEPT" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="engineer_image" column="ENGINEER_IMAGE" jdbcType="BLOB" javaType="[B" />
+		<result property="impression_speech" column="IMPRESSION_SPEECH" jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
+	
+	<select id="getExclntStfList" parameterType="hashmap" resultMap="exclntstfResult">
+		<![CDATA[
+			SELECT EXCLNT_YEAR_MONTH, ENGINEER_NAME, ENGINEER_POSITION, ENGINEER_DEPT, IMPRESSION_SPEECH
+			FROM METELSOS_EXCLNT_STF
+			WHERE TO_CHAR(ADD_MONTHS(EXCLNT_YEAR_MONTH, 0),'MM') = #{selectMonth} AND TO_CHAR(EXCLNT_YEAR_MONTH,'YYYY') = #{currYear}
+		]]>
+	</select>
+	
+	<delete id="deleteExclntStf" parameterType="hashmap">
+		<![CDATA[
+			DELETE
+			FROM METELSOS_EXCLNT_STF
+			WHERE ENGINEER_DEPT = #{engineer_dept} AND ENGINEER_NAME = #{engineer_name}
+		]]>
+	</delete>
+	
+	<insert id="insertExclntStf" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO METELSOS_EXCLNT_STF
+			VALUES(#{exclnt_year_month}, #{engineer_name}, #{engineer_position}, #{engineer_dept}, #{engineer_image}, #{impression_speech})
+		]]>
+	</insert>
+	
+	<select id="selectCurrExclntStf" parameterType="hashmap" resultMap="exclntstfMapResult">
+		<![CDATA[
+			SELECT *
+			FROM METELSOS_EXCLNT_STF
+			WHERE TO_CHAR(EXCLNT_YEAR_MONTH, 'MM-YYYY') = #{year_month}
+		]]>
+	</select>
+	
+	<select id="getExclntStfImage" parameterType="hashmap" resultMap="exclntstfMapResult">
+		SELECT EXCLNT_YEAR_MONTH, ENGINEER_NAME, ENGINEER_POSITION, ENGINEER_DEPT, ENGINEER_IMAGE, IMPRESSION_SPEECH
+		FROM METELSOS_EXCLNT_STF
+		WHERE ENGINEER_DEPT = #{engineer_dept} AND ENGINEER_NAME = #{engineer_name}
+	</select>
+</mapper>

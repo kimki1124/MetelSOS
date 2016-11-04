@@ -4,69 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
 		<title>+++ 엔지니어 회원가입 +++</title>
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		
-		<!-- #CSS Links -->
-		<!-- Basic Styles -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/font-awesome.min.css">
-
-		<!-- SmartAdmin Styles : Caution! DO NOT change the order -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-production-plugins.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-production.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-skins.min.css">
-
-		<!-- SmartAdmin RTL Support -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-rtl.min.css"> 
-		
-		<!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/demo.min.css">
-
-		<!-- We recommend you use "your_style.css" to override SmartAdmin
-		     specific styles this will also ensure you retrain your customization with each SmartAdmin update.
-		<link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
-		<!-- #GOOGLE FONT -->
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
-		
-		<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script> if (!window.jQuery) { document.write('<script src="/metelSOS/resources/js/libs/jquery-2.1.1.min.js"><\/script>');} </script>
-
-	    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-		<script> if (!window.jQuery.ui) { document.write('<script src="/metelSOS/resources/js/libs/jquery-ui-1.10.3.min.js"><\/script>');} </script>
-		
-		<script src="/metelSOS/resources/js/plugin/pace/pace.min.js"></script>
-
-		<!-- IMPORTANT: APP CONFIG -->
-		<script src="/metelSOS/resources/js/app.config.js"></script>
-
-		<!-- JS TOUCH : include this plugin for mobile drag / drop touch events 		
-		<script src="js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> -->
-
-		<!-- BOOTSTRAP JS -->		
-		<script src="/metelSOS/resources/js/bootstrap/bootstrap.min.js"></script>
-
-		<!-- JQUERY VALIDATE -->
-		<script src="/metelSOS/resources/js/plugin/jquery-validate/jquery.validate.min.js"></script>
-		
-		<!-- JQUERY MASKED INPUT -->
-		<script src="/metelSOS/resources/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
-		
-		<!-- JQUERY FORM -->
-		<script src="/metelSOS/resources/js/plugin/jquery-form/jquery-form.min.js"></script>
-		
-		<!--[if IE 8]>
-			
-			<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
-			
-		<![endif]-->
-
-		<!-- MAIN APP JS FILE -->
-		<script src="/metelSOS/resources/js/app.min.js"></script>
+		<%@ include file="/common/include/include-header.jsp" %>
 		
 		
 		<script>
@@ -368,7 +307,7 @@
 		<!--================================================== -->	
 
 		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
-		
+		<%@ include file="/common/include/include-body.jsp" %>
 		<script type="text/javascript">
 			runAllForms();
 			

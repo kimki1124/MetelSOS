@@ -2,7 +2,9 @@ package com.metelsos.menu.service;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,12 +20,16 @@ import com.metelsos.customer.dao.CustomerDao;
 import com.metelsos.customer.vo.CustomerVo;
 import com.metelsos.engineer.dao.EngineerDao;
 import com.metelsos.engineer.vo.EngineerVo;
+import com.metelsos.exclntstf.dao.ExclntStfDao;
+import com.metelsos.exclntstf.vo.ExclntStfVo;
 import com.metelsos.meeting.dao.CSTMRMeetingDao;
 import com.metelsos.meeting.dao.INRMeetingDao;
 import com.metelsos.meeting.vo.CSTMRMeetingVo;
 import com.metelsos.meeting.vo.INRMeetingVo;
 import com.metelsos.menu.dao.MenuDao;
 import com.metelsos.menu.vo.MenuVo;
+import com.metelsos.newemplyd.dao.NewemplydDao;
+import com.metelsos.newemplyd.vo.NewemplydVo;
 import com.metelsos.notice.dao.NoticeDao;
 import com.metelsos.notice.vo.FileVo;
 import com.metelsos.notice.vo.NoticeVo;
@@ -56,6 +62,12 @@ public class MenuServiceImpl implements MenuService{
 	
 	@Resource(name="noticeDao")
 	private NoticeDao noticeDao;
+	
+	@Resource(name="exclntstfDao")
+	private ExclntStfDao exclntstfDao;
+	
+	@Resource(name="newemplydDao")
+	private NewemplydDao newemplydDao;
 
 	@Override
 	public List<MenuVo> getEngineerLeftMenuList() throws Exception {
@@ -164,6 +176,14 @@ public class MenuServiceImpl implements MenuService{
 			menuPath += "/"+menuEngTitleList.get(i);
 		}
 		
+		//menuTitle이 engineerMain이면 공지사항, 월별 유지보수 지원사항, 우수사원, 신입사원 item set
+		if("EngineerMain".equals(paramMap.get("menuTitle"))){
+			setNoticeBoard(returnMap);
+			setMonthSupportStats(returnMap);
+			setExclntStfItems(returnMap);
+			setNewEmplydItems(returnMap);
+		}
+		
 		//set breadcrumb value
 		returnMap.put("menuList", filterList);
 		returnMap.put("breadcrumbList", breadcrumbList);
@@ -175,6 +195,138 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuIcon", paramMap.get("menuIcon"));
 		
 		return returnMap;
+	}
+
+	private void setNewEmplydItems(HashMap<String, Object> returnMap) throws Exception{
+		Date date= new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);
+		String year_month = String.valueOf(year)+String.valueOf(month+1);
+		List<HashMap<String, Object>> newEmplydList = newemplydDao.getCurrNewEmplydList(year_month);
+		
+		if(newEmplydList.size() > 0){
+			returnMap.put("newEmplydListCount", newEmplydList.size());
+		}else{
+			returnMap.put("newEmplydListCount", 0);
+		}
+		
+		returnMap.put("newEmplydList", newEmplydList);
+	}
+
+	private void setExclntStfItems(HashMap<String, Object> returnMap) throws Exception{
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		int exclntStfCount = 0;
+		Date date= new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);
+		String stringMonth = String.valueOf(month+1);
+		if(stringMonth.length() < 2){
+			stringMonth = "0"+stringMonth;
+		}
+		String stringYear = String.valueOf(year);
+		paramMap.put("year_month", stringMonth+"-"+stringYear);
+		
+		List<HashMap<String, Object>> list = exclntstfDao.selectCurrExclntStf(paramMap);
+		if(list.size() > 0){
+			exclntStfCount = list.size();
+		}
+		returnMap.put("exclntStfCount", exclntStfCount);
+		returnMap.put("currExclntStfList", list);
+	}
+
+	private void setMonthSupportStats(HashMap<String, Object> returnMap) throws Exception{
+		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		int supportCompleteCount;
+		int supportNotCompleteCount;
+		//Calender의 MONTH는 0부터 시작 ex) 10월 - MONTH + 1
+		Date date= new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);
+		month = month + 1;
+		
+		supportCompleteCount = getSupportCompleteCount(0);
+		supportNotCompleteCount = getSupportNotCompleteCount(0);
+		returnMap.put("curr_support_complete_count", supportCompleteCount);
+		returnMap.put("percent_curr_support_complete_count", ((double)supportCompleteCount/100) * 100);
+		returnMap.put("curr_support_not_complete_count", supportNotCompleteCount);
+		returnMap.put("percent_curr_support_not_complete_count", ((double)supportNotCompleteCount/100) * 100);
+		returnMap.put("curr_support_total_count", supportCompleteCount + supportNotCompleteCount);
+		returnMap.put("percent_curr_support_total_count", ((double)(supportCompleteCount + supportNotCompleteCount)/100) * 100);
+
+			//현재 6월 이후일때
+		for(int i=-5;i<0;i++){
+			HashMap<String, Object> statsMap = new HashMap<String, Object>();
+			int filterMonth = month + i;
+			
+			supportCompleteCount = getSupportCompleteCount(i);
+			supportNotCompleteCount = getSupportNotCompleteCount(i);
+			
+			if(filterMonth == 0){
+				year = year - 1;
+				filterMonth = 12;
+			}else if(filterMonth == -1){
+				year = year - 1;
+				filterMonth = 11;
+			}else if(filterMonth == -2){
+				year = year - 1;
+				filterMonth = 10;
+			}else if(filterMonth == -3){
+				year = year - 1;
+				filterMonth = 9;
+			}else if(filterMonth == -4){
+				year = year - 1;
+				filterMonth = 8;
+			}
+			
+			if(String.valueOf(filterMonth).length() == 1){
+				statsMap.put("yearMonth", year+"-0"+filterMonth);
+			}else{
+				statsMap.put("yearMonth", year+"-"+filterMonth);
+			}
+			statsMap.put("support_complete_count", supportCompleteCount);
+			statsMap.put("support_not_complete_count", supportNotCompleteCount);
+			statsMap.put("support_total_count", supportCompleteCount + supportNotCompleteCount);
+			list.add(statsMap);
+		}
+			
+		returnMap.put("prevSupportCountList", list);
+
+		
+		returnMap.put("currMonth", month);
+	}
+
+	private int getSupportNotCompleteCount(int interval) throws Exception{
+		return supportDao.selectSupportNotCompleteCount(interval);
+	}
+
+	private int getSupportCompleteCount(int interval) throws Exception{
+		return supportDao.selectSupportCompleteCount(interval);
+	}
+
+	private void setNoticeBoard(HashMap<String, Object> returnMap) throws Exception{
+		MetelSOSUtil util = new MetelSOSUtil();
+		List<NoticeVo> noticeList = noticeDao.selectNotice5Rows();
+		for(int i=0;i<noticeList.size();i++){
+			NoticeVo vo = noticeList.get(i);
+			vo.setNotice_date(util.changeDatePattern(vo.getNotice_date(), "yyyyMMddHHmmss", "yyyy-MM-dd"));
+			
+			int boardNum = vo.getNotice_num();
+			List<FileVo> fileList = noticeDao.getNoticeFileList(boardNum);
+			
+			if(fileList.size() > 0){
+				vo.setHas_file("Y");
+			}else{
+				vo.setHas_file("N");
+			}
+		}
+		
+		returnMap.put("noticeList", noticeList);
 	}
 
 	private void setMainBreadcrumb(List<MenuVo> menuList, List<String> breadcrumbList, List<String> menuEngTitleList, String menu_title) throws Exception{
@@ -309,6 +461,88 @@ public class MenuServiceImpl implements MenuService{
 		List<String> list = new ArrayList<String>();
 		list.add("공지사항 관리");
 		
+		returnMap.put("breadcrumbList", list);
+		returnMap.put("menuTitle", paramMap.get("menuTitle"));
+	}
+
+	@Override
+	public void setManageExclntStfPageItem(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception {
+		Date date= new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int year = cal.get(Calendar.YEAR);
+		
+		List<String> list = new ArrayList<String>();
+		list.add(paramMap.get("menuTitle"));
+		
+		returnMap.put("currYear", year);
+		returnMap.put("breadcrumbList", list);
+		returnMap.put("menuTitle", paramMap.get("menuTitle"));
+	}
+
+	@Override
+	public void setExclntStfListItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception {
+		String selectMonth = null;
+		returnMap.put("selectMonth", paramMap.get("selectMonth"));
+		returnMap.put("currYear", paramMap.get("currYear"));
+		
+		if(paramMap.get("selectMonth").length() < 2){
+			selectMonth = "0"+paramMap.get("selectMonth");
+			paramMap.put("selectMonth", selectMonth);
+		}
+		
+		//우수사원 리스트
+		List<ExclntStfVo> exclntstfList = exclntstfDao.getExclntStfList(paramMap);
+		
+		//부서 셀렉트박스에 들어갈 부서 리스트
+		List<String> deptList = engineerDao.getDeptList();
+		
+		List<String> list = new ArrayList<String>();
+		list.add(paramMap.get("menuTitle"));
+		
+		returnMap.put("deptList", deptList);
+		returnMap.put("exclntstfList", exclntstfList);
+		returnMap.put("breadcrumbList", list);
+		returnMap.put("menuTitle", paramMap.get("menuTitle"));
+	}
+
+	@Override
+	public void setManageNewEmplydPageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
+			throws Exception {
+		Date date= new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int year = cal.get(Calendar.YEAR);
+		
+		List<String> list = new ArrayList<String>();
+		list.add(paramMap.get("menuTitle"));
+		
+		returnMap.put("currYear", year);
+		returnMap.put("breadcrumbList", list);
+		returnMap.put("menuTitle", paramMap.get("menuTitle"));
+	}
+
+	@Override
+	public void setNewEmplydListItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
+			throws Exception {
+		String year_month = null;
+		returnMap.put("selectMonth", paramMap.get("selectMonth"));
+		returnMap.put("currYear", paramMap.get("currYear"));
+		
+		if(paramMap.get("selectMonth").length() < 2){
+			paramMap.put("selectMonth", "0"+paramMap.get("selectMonth"));
+		}
+		
+		year_month = paramMap.get("currYear")+paramMap.get("selectMonth");
+		paramMap.put("year_month", year_month);
+		
+		List<HashMap<String, Object>> newEmplydList = newemplydDao.getNewEmplydList(paramMap);
+		List<String> deptList = engineerDao.getDeptList();
+		
+		List<String> list = new ArrayList<String>();
+		list.add(paramMap.get("menuTitle"));
+		returnMap.put("deptList", deptList);
+		returnMap.put("newEmplydList", newEmplydList);
 		returnMap.put("breadcrumbList", list);
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}

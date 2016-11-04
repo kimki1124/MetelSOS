@@ -30,9 +30,12 @@
 	</insert>
 	
 	<insert id="uploadNoticeFile" parameterType="hashmap">
+		<selectKey keyProperty="noticeFileNum" resultType="string" order="BEFORE">
+        	SELECT SEQ_NOTICE_NUM.NEXTVAL FROM DUAL
+    	</selectKey>
 		<![CDATA[
 			INSERT INTO METELSOS_NOTICE_FILE
-			VALUES(SEQ_NOTICE_FILE_NUM.NEXTVAL, #{BOARD_IDX}, #{ORIGINAL_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, SYSDATE, #{CREA_ID}, 'N')
+			VALUES(#{noticeFileNum}, #{BOARD_IDX}, #{ORIGINAL_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, SYSDATE, #{CREA_ID}, 'N')
 		]]>
 	</insert>
 	
@@ -83,4 +86,37 @@
 			WHERE BOARD_NUM = #{boardNum}
 		]]>
 	</select>
+	
+	<delete id="deleteNoticeFileByFileNum" parameterType="int">
+		<![CDATA[
+			DELETE
+			FROM METELSOS_NOTICE_FILE
+			WHERE FILE_NUM = #{file_num}
+		]]>
+	</delete>
+	
+	<update id="updateNotice" parameterType="hashmap">
+		<![CDATA[
+			UPDATE METELSOS_NOTICE
+			SET NOTICE_TITLE = #{noticeTitle}, NOTICE_CONTENT = #{noticeContent}
+			WHERE NOTICE_NUM = #{noticeNum}
+		]]>
+	</update>
+	
+	<select id="selectNotice5Rows" resultMap="noticeResult">
+		<![CDATA[
+			SELECT * 
+			FROM METELSOS_NOTICE
+			WHERE NOTICE_DEL_GB = 'N' AND ROWNUM <= 5
+			ORDER BY NOTICE_NUM DESC
+		]]>
+	</select>
+	
+	<update id="updateNoticeHit" parameterType="hashmap">
+		<![CDATA[
+			UPDATE METELSOS_NOTICE
+			SET NOTICE_HIT = NOTICE_HIT+1
+			WHERE NOTICE_NUM = #{notice_num}
+		]]>
+	</update>
 </mapper>

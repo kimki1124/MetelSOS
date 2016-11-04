@@ -32,7 +32,7 @@ public class MetelSOSUtil {
 	private Log log = LogFactory.getLog(MetelSOSUtil.class);
 	
 	//파일이 저장될 경로
-	private static final String filePath = "C:\\dev\\file\\";
+	private static final String noticeFilePath = "C:\\dev\\file\\notice\\";
 	
 	/**
 	 * 임시 비밀번호 생성 
@@ -200,7 +200,7 @@ public class MetelSOSUtil {
          
         String boardIdx = (String)paramMap.get("boardNum");
          
-        File file = new File(filePath);
+        File file = new File(noticeFilePath);
         if(file.exists() == false){
             file.mkdirs();
         }
@@ -212,7 +212,7 @@ public class MetelSOSUtil {
                 originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 storedFileName = getRandomString() + originalFileExtension;
                  
-                file = new File(filePath + storedFileName);
+                file = new File(noticeFilePath + storedFileName);
                 multipartFile.transferTo(file);
                  
                 listMap = new HashMap<String,Object>();

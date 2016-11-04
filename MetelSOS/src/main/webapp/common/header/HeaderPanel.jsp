@@ -24,7 +24,7 @@
 
 				<!-- logout button -->
 				<div id="logout" class="btn-header transparent pull-right">
-					<span> <a href="/metelSOS/logout.do" title="로그 아웃" data-action="userLogout" data-logout-msg="로그아웃 하시겠습니까?"><i class="fa fa-sign-out"></i></a> </span>
+					<span> <a href="/metelSOS/logout.do" title="로그 아웃" data-action="userLogout" data-logout-msg="로그아웃 하시겠습니까?"><i class="fa fa-sign-out"></i></a> </span><!-- /metelSOS/logout.do -->
 				</div>
 				<!-- end logout button -->
 				

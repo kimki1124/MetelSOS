@@ -45,6 +45,7 @@ public class NoticeServiceImpl implements NoticeService{
 		List<HashMap<String, Object>> list = util.parseInsertFileInfo(paramMap, request);
 		for(int i=0;i<list.size();i++){
 			noticeDao.uploadNoticeFile(list.get(i));
+			returnMap.put("file_num", list.get(i).get("noticeFileNum"));
 		}
 		
 		return returnMap;
@@ -56,6 +57,10 @@ public class NoticeServiceImpl implements NoticeService{
 		NoticeVo vo = noticeDao.selectDetailNotice(paramMap);
 		
 		if(vo != null){
+			if(paramMap.containsKey("userId")){
+				returnMap.put("userId", paramMap.get("userId"));
+				noticeDao.updateNoticeHit(paramMap);
+			}
 			returnMap.put("resultMsg", "SUCCESS");
 		}else{
 			returnMap.put("resultMsg", "FAILED");
@@ -106,6 +111,30 @@ public class NoticeServiceImpl implements NoticeService{
 			returnMap.put("resultMsg", "FAILED");
 		}
 		
+		return returnMap;
+	}
+
+	@Override
+	public HashMap<String, Object> deleteNoticeFile(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		
+		int result = noticeDao.deleteNoticeFileByFileNum(paramMap);
+		
+		if(result > 0){
+			returnMap.put("resultMsg", "SUCCESS");
+		}else{
+			returnMap.put("resultMsg", "FAILED");
+		}
+		
+		return returnMap;
+	}
+
+	@Override
+	public HashMap<String, Object> updateNotice(HashMap<String, String> paramMap) throws Exception {
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		
+		noticeDao.updateNotice(paramMap);
+		returnMap.put("resultMsg", "SUCCESS");
 		return returnMap;
 	}
 

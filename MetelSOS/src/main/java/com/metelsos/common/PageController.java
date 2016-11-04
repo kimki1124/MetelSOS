@@ -1,6 +1,8 @@
 package com.metelsos.common;
 
 import java.net.URLDecoder;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -26,10 +28,11 @@ public class PageController {
 	private MenuService menuService;
 	
 	@RequestMapping(value="/leftMenuPageMove.do")
-	public ModelAndView movePage(@RequestParam HashMap<String, String> paramMap) throws Exception{
+	public ModelAndView movePage(@RequestParam HashMap<String, String> paramMap, HttpServletRequest request) throws Exception{
 		log.info("#operation => movePage");
 		ModelAndView modelAndView = new ModelAndView();
 		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		returnMap.put("userId", request.getSession().getAttribute("SESSION_LOGIN_USER_ID"));
 		modelAndView.addAllObjects(returnMap);
 		String menuPath = String.valueOf(returnMap.get("menuPath"));
 		String path = "/"+paramMap.get("userType")+menuPath;
@@ -90,6 +93,58 @@ public class PageController {
 		modelAndView.setViewName("/admin/notice/NoticeForm");
 		
 		return modelAndView;
+	}
+	
+	@RequestMapping(value="/moveManageExclntStfPage.do")
+	public ModelAndView moveManageExclntStfPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => moveManageExclntStfPage");
+		ModelAndView model = new ModelAndView();
+		paramMap.put("menuTitle", URLDecoder.decode(paramMap.get("menuTitle"), "UTF-8"));
+		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		menuService.setManageExclntStfPageItem(returnMap, paramMap);
+		
+		model.addAllObjects(returnMap);
+		model.setViewName("/admin/exclntstf/YearMonthList");
+		return model;
+	}
+	
+	@RequestMapping(value="/moveExclntStfListPage.do")
+	public ModelAndView moveExclntStfListPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => moveExclntStfListPage");
+		ModelAndView model = new ModelAndView();
+		paramMap.put("menuTitle", URLDecoder.decode(paramMap.get("menuTitle"), "UTF-8"));
+		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		menuService.setExclntStfListItems(returnMap, paramMap);
+		
+		model.addAllObjects(returnMap);
+		model.setViewName("/admin/exclntstf/ExclntStfList");
+		return model;
+	}
+	
+	@RequestMapping(value="/moveManageNewEmplydPage.do")
+	public ModelAndView moveManageNewEmplydPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => moveManageNewEmplydPage");
+		ModelAndView model = new ModelAndView();
+		paramMap.put("menuTitle", URLDecoder.decode(paramMap.get("menuTitle"), "UTF-8"));
+		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		menuService.setManageNewEmplydPageItems(returnMap, paramMap);
+		
+		model.addAllObjects(returnMap);
+		model.setViewName("/admin/newemplyd/YearMonthList");
+		return model;
+	}
+	
+	@RequestMapping(value="/moveNewEmplydListPage.do")
+	public ModelAndView moveNewEmplydListPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => moveNewEmplydListPage");
+		ModelAndView model = new ModelAndView();
+		paramMap.put("menuTitle", URLDecoder.decode(paramMap.get("menuTitle"), "UTF-8"));
+		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		menuService.setNewEmplydListItems(returnMap, paramMap);
+		
+		model.addAllObjects(returnMap);
+		model.setViewName("/admin/newemplyd/NewEmplydList");
+		return model;
 	}
 	
 }

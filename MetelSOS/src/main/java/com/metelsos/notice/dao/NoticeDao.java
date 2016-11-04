@@ -57,4 +57,21 @@ public class NoticeDao extends AbstractDAO{
 		return (FileVo)selectOne("notice.selectHasNoticeFile", boardNum);
 	}
 
+	public int deleteNoticeFileByFileNum(HashMap<String, Object> paramMap) throws Exception{
+		int file_num = Integer.parseInt(String.valueOf(paramMap.get("file_num")));
+		return (int)delete("notice.deleteNoticeFileByFileNum", file_num);
+	}
+
+	public void updateNotice(HashMap<String, String> paramMap) throws Exception{
+		update("notice.updateNotice", paramMap);
+	}
+
+	public List<NoticeVo> selectNotice5Rows() throws Exception{
+		return (List<NoticeVo>)selectList("notice.selectNotice5Rows");
+	}
+
+	public void updateNoticeHit(HashMap<String, String> paramMap) throws Exception{
+		update("notice.updateNoticeHit", paramMap);
+	}
+
 }

@@ -4,48 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<meta charset="utf-8">
 		<title>+++  MetelSOS  +++</title>
-		<meta name="description" content="">
-		<meta name="author" content="">
-			
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		
-		<!-- Basic Styles -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/font-awesome.min.css">
-
-		<!-- SmartAdmin Styles : Caution! DO NOT change the order -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-production-plugins.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-production.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-skins.min.css">
-
-		<!-- SmartAdmin RTL Support  -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-rtl.min.css">
-
-		<!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/demo.min.css">
-		
-		<!-- FAVICONS -->
-		<link rel="shortcut icon" href="/metelSOS/resources/img/favicon/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="/metelSOS/resources/img/favicon/favicon.ico" type="image/x-icon">
-
-		<!-- #GOOGLE FONT -->
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
-		
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script>
-			if (!window.jQuery) {
-				document.write('<script src="/metelSOS/resources/js/libs/jquery-2.1.1.min.js"><\/script>');
-			}
-		</script>
-
-		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-		<script>
-			if (!window.jQuery.ui) {
-				document.write('<script src="/metelSOS/resources/js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-			}
-		</script>
+		<%@ include file="/common/include/include-header.jsp" %>
 		<script src="/metelSOS/resources/js/common.js" charset="utf-8"></script>
 		<script>
 			//세션없으면 로그인 페이지로 이동
@@ -55,7 +15,39 @@
 			}
 			
 			$(document).ready(function(){
+				//다이얼로그 title에 html을 적용하기 위한 코드
+				 $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+						_title : function(title) {
+							if (!this.options.title) {
+								title.html("&#160;");
+							} else {
+								title.html(this.options.title);
+							}
+						}
+				}));
 				
+				 $('#empty_dialog').dialog({
+						autoOpen : false,
+						width: 300,
+						height:200,
+						resizable: false,
+						modal : true,
+						title:"<div class='widget-header'><h4><i class='fa fa-warning'></i>&nbsp;공지사항 수정 실패</h4></div>",
+						buttons:[{
+							html:"<i class='fa fa-check'></i>&nbsp; 확인",
+							"class": "btn btn-default",
+							click:function(){
+								$('#empty_dialog').dialog("close");
+								if($("#noticeTitle").val() == ''){
+									$("#noticeTitle").focus();
+								}else if($("#noticeContent").val() == ''){
+									$("#noticeContent").focus();
+								}
+								
+								return false;
+							}
+						}]
+					});
 			});
 		</script>
 </head>
@@ -110,6 +102,7 @@
 									<div class="widget-body no-padding">
 				
 										<form class="smart-form" name="writeNoticeForm">
+											<input type="hidden" name="noticeNum" value="${noticeVo.notice_num}">
 											<fieldset>
 												<section>
 													<label class="label">작성자</label>
@@ -136,10 +129,16 @@
 									</div>
 									<div class="widget-body">
 										<p>첨부파일</p>
-										
+										<div class="alert alert-info no-margin fade in">
+											<button class="close" data-dismiss="alert">
+												×
+											</button>
+											<i class="fa-fw fa fa-info"></i>
+											첨부파일을 삭제하시면 복구할 수 없습니다.
+										</div>
 										<div class="table-responsive">
 										
-											<table class="table table-bordered">
+											<table id="fileTable" class="table table-bordered">
 												<thead>
 													<tr>
 														<th style="width:10%;">번호</th>
@@ -152,7 +151,7 @@
 												</thead>
 												<tbody>
 													<c:forEach var="item" items="${fileList}" varStatus="status">
-														<tr>
+														<tr class="item${status.count}">
 															<td style="display:none;">
 																<input type="hidden" id="file_num" value="${item.file_num }">
 															</td>
@@ -161,7 +160,7 @@
 															<td>${item.file_size }kb</td>
 															<td>${item.crea_dtm }</td>
 															<td style="text-align:center;"><i class="fa fa-file fa-lg" aria-hidden="true"></i></td>
-															<td style="text-align:center;"><i class="fa fa-ban fa-lg" aria-hidden="true"></i></td>
+															<td style="text-align:center;"><a href="#" class="deleteFile"><i class="fa fa-ban fa-lg" aria-hidden="true"></i></a></td>
 														</tr>
 													</c:forEach>
 												</tbody>
@@ -192,10 +191,7 @@
 				</section>
 				<section id="widget-grid" class="">
 					<button id="modify" class="btn btn-success">
-						수정하기
-					</button>
-					<button id="delete" class="btn btn-danger">
-						삭제하기
+						완료
 					</button>
 					<button id="cancel" class="btn btn-primary" onclick="window.history.back();">
 						목록으로
@@ -206,84 +202,12 @@
 		<!-- END #MAIN PANEL -->
 		<jsp:include page = "/common/bottom/BottomPanel.jsp" flush="false"/>
 		<jsp:include page="/common/form/commonForm.jsp" flush="false" />
-		<!--================================================== -->
-
-		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
-		<script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
-		
-
-		<!-- IMPORTANT: APP CONFIG -->
-		<script src="/metelSOS/resources/js/app.config.js"></script>
-
-		<!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
-		<script src="/metelSOS/resources/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> 
-
-		<!-- BOOTSTRAP JS -->
-		<script src="/metelSOS/resources/js/bootstrap/bootstrap.min.js"></script>
-
-		<!-- CUSTOM NOTIFICATION -->
-		<script src="/metelSOS/resources/js/notification/SmartNotification.min.js"></script>
-
-		<!-- JARVIS WIDGETS -->
-		<script src="/metelSOS/resources/js/smartwidgets/jarvis.widget.min.js"></script>
-
-		<!-- EASY PIE CHARTS -->
-		<script src="/metelSOS/resources/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
-
-		<!-- SPARKLINES -->
-		<script src="/metelSOS/resources/js/plugin/sparkline/jquery.sparkline.min.js"></script>
-
-		<!-- JQUERY VALIDATE -->
-		<script src="/metelSOS/resources/js/plugin/jquery-validate/jquery.validate.min.js"></script>
-
-		<!-- JQUERY MASKED INPUT -->
-		<script src="/metelSOS/resources/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
-
-		<!-- JQUERY SELECT2 INPUT -->
-		<script src="/metelSOS/resources/js/plugin/select2/select2.min.js"></script>
-
-		<!-- JQUERY UI + Bootstrap Slider -->
-		<script src="/metelSOS/resources/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
-
-		<!-- browser msie issue fix -->
-		<script src="/metelSOS/resources/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
-
-		<!-- FastClick: For mobile devices -->
-		<script src="/metelSOS/resources/js/plugin/fastclick/fastclick.min.js"></script>
-
-		<!-- MAIN APP JS FILE -->
-		<script src="/metelSOS/resources/js/app.min.js"></script>
-
-		<!-- ENHANCEMENT PLUGINS : NOT A REQUIREMENT -->
-		<!-- Voice command : plugin -->
-		<script src="/metelSOS/resources/js/speech/voicecommand.min.js"></script>
-
-		<!-- SmartChat UI : plugin -->
-		<script src="/metelSOS/resources/js/smart-chat-ui/smart.chat.ui.min.js"></script>
-		<script src="/metelSOS/resources/js/smart-chat-ui/smart.chat.manager.min.js"></script>
-		
-		<!-- PAGE RELATED PLUGIN(S) -->
-		
-		<!-- Flot Chart Plugin: Flot Engine, Flot Resizer, Flot Tooltip -->
-		<script src="/metelSOS/resources/js/plugin/flot/jquery.flot.cust.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/flot/jquery.flot.resize.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/flot/jquery.flot.time.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/flot/jquery.flot.tooltip.min.js"></script>
-		
-		<!-- Vector Maps Plugin: Vectormap engine, Vectormap language -->
-		<script src="/metelSOS/resources/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
-		
-		<!-- Full Calendar -->
-		<script src="/metelSOS/resources/js/plugin/moment/moment.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
-		
-		<!-- Morris Chart Dependencies -->
-		<script src="/metelSOS/resources/js/plugin/morris/raphael.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/morris/morris.min.js"></script>
-		
-		<script src="/metelSOS/resources/js/plugin/dropzone/dropzone.min.js"></script>
-		
+		<div id="empty_dialog" title="empty dialog title">
+			<p>
+				<span>빈 칸을 입력해주세요.</span>
+			</p>
+		</div>
+		<%@ include file="/common/include/include-body.jsp" %>
 		<!-- Your GOOGLE ANALYTICS CODE Below -->
 		<script type="text/javascript">
 		 	 var _gaq = _gaq || [];
@@ -308,7 +232,7 @@
 		  			
 		  			$("#mydropzone").dropzone({
 		  				url: url,
-						addRemoveLinks : true,
+						addRemoveLinks : false,
 						maxFilesize: 256,
 						maxFiles: 5,
 						autoProcessQueue:true,
@@ -325,19 +249,87 @@
 							
 							this.on('complete', function(file, xhr, formData){
 								//file 정보 이용해서 테이블 row 추가 로직 구현 
-								console.log(file);
-							});
-							
-							this.on('removedfile', function(file, xhr, formData){
-								//${noticeVo.notice_num } 이거랑 file 정보 이용해서 삭제 로직, 테이블 row 삭제 구현
-								console.log(file);
+								var jsonObj = JSON.parse(file.xhr.responseText);
+								var lastItemNo = parseInt($("#fileTable tr:last").attr("class").replace("item", "")) + 1;
+								var fileSize = Math.round(file.size/1024);
+								
+								$("#fileTable tr:last").after('<tr class="item'+lastItemNo+'"><td style="display:none;"><input type="hidden" id="file_num" value="'+jsonObj.file_num+'"></td><td>'+lastItemNo+'</td><td>'+file.name+'</td><td>'+fileSize+'kb</td><td>'+new Date().yyyymmdd()+'</td><td style="text-align:center;"><i class="fa fa-file fa-lg" aria-hidden="true"></i></td><td style="text-align:center;"><a href="#" class="deleteFile"><i class="fa fa-ban fa-lg" aria-hidden="true"></i></a></td></tr>');
 							});
 						}
 						
 		  			});
 		  			
 		  		});
+		  		
+		  		Date.prototype.yyyymmdd = function(){
+		  		    var yyyy = this.getFullYear().toString();
+		  		    var mm = (this.getMonth() + 1).toString();
+		  		    var dd = this.getDate().toString();
+		  		    return yyyy + '-' + (mm[1] ? mm : '0'+mm[0]) + '-' + (dd[1] ? dd : '0'+dd[0]);
+		  		}
 		 	 });
+		  	
+		  	$(".deleteFile").click(function(e){
+	  			e.preventDefault();
+	  			
+	  			var file_num = $(this).parent().parent()[0].children[0].children[0].defaultValue;
+	  			
+	  			$.ajax({
+					url:"/metelSOS/deleteNoticeFile.do",
+					type:'POST',
+					dataType:'json',
+					data:{ "file_num" : file_num },
+					success:function(msg){
+						if(msg.resultMsg == 'SUCCESS'){
+							for(var i=0;i<$("#fileTable tr").length;i++){
+				  				if($("#fileTable tr")[i].children[0].children[0] != undefined && $("#fileTable tr")[i].children[0].children[0].defaultValue == file_num){
+				  					$("#fileTable tr")[i].remove();
+				  				}
+				  			}
+						}
+					},
+					error:function(request,status,error){
+				        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				    }
+				});
+	  		});
+		  	
+		  	$("#modify").click(function(e){
+		  		e.preventDefault();
+		  		
+		  		if($("#noticeTitle").val() == '' || $("#noticeContent").val() == ''){
+		  			$('#empty_dialog').dialog("open");
+		  			return false;
+				}
+		  		
+		  		 $.ajax({
+					url:"/metelSOS/updateNotice.do",
+					type:'POST',
+					dataType:'json',
+					data:$(".smart-form").serialize(),
+					success:function(msg){
+						if(msg.resultMsg == 'SUCCESS'){
+							var comSubmit = new ComSubmit();
+	        				comSubmit.addParam('userType', "engineer");
+	    		  			comSubmit.addParam('menuTitle', encodeURI("공지사항 관리"));
+	    		  			comSubmit.addParam('menuIcon', "fa fa-lg fa-fw fa-bell");
+	    		  			comSubmit.setUrl("/metelSOS/noticePageMove.do");
+	    		  			comSubmit.getSubmit();
+						}
+					},
+					error:function(request,status,error){
+				        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				    }
+				});
+		  		
+		  		/* var comSubmit = new ComSubmit();
+			    comSubmit.setUrl("/metelSOS/updateNotice.do");
+			    comSubmit.addParam("notice_num", "${noticeVo.notice_num }");
+			    comSubmit.addParam("userType", "engineer");
+			    comSubmit.addParam("menuTitle", encodeURI("공지사항"));
+			    comSubmit.addParam("menuIcon", "fa fa-lg fa-fw fa-bell");
+			    comSubmit.getSubmit(); */
+		  	});
 		
 		</script>
 

@@ -30,4 +30,20 @@
             ORDER BY SUPPORT_NUM DESC
 		]]>
 	</select>
+	
+	<select id="getSupportCompleteCount" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM METELSOS_SUPPORT_HISTORY
+			WHERE TO_CHAR(ADD_MONTHS(TO_DATE(SUPPORT_ACCEPT_DATE, 'YYYYMMDD HH24:MI:SS'), 0),'MM') = TO_CHAR(ADD_MONTHS(SYSDATE, #{interval}),'MM') AND SUPPORT_STATE = '지원 완료'
+		]]>
+	</select>
+	
+	<select id="getSupportNotCompleteCount" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM METELSOS_SUPPORT_HISTORY
+			WHERE TO_CHAR(ADD_MONTHS(TO_DATE(SUPPORT_ACCEPT_DATE, 'YYYYMMDD HH24:MI:SS'), 0),'MM') = TO_CHAR(ADD_MONTHS(SYSDATE, #{interval}),'MM') AND SUPPORT_STATE != '지원 완료'
+		]]>
+	</select>
 </mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="newemplyd">
+	<resultMap id="newemplydMapResult" type="java.util.HashMap">
+		<result property="new_emply_year_month" column="NEW_EMPLY_YEAR_MONTH" jdbcType="DATE" javaType="java.lang.String" />
+		<result property="engineer_name" column="ENGINEER_NAME" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="engineer_position" column="ENGINEER_POSITION" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="engineer_dept" column="ENGINEER_DEPT" jdbcType="VARCHAR" javaType="java.lang.String" />
+		<result property="engineer_image" column="ENGINEER_IMAGE" jdbcType="BLOB" javaType="[B" />
+		<result property="impression_speech" column="IMPRESSION_SPEECH" jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
+
+	<select id="getCurrNewEmplydList" parameterType="string" resultMap="newemplydMapResult">
+		<![CDATA[
+			SELECT * FROM METELSOS_NEW_EMPLYD WHERE TO_CHAR(NEW_EMPLY_YEAR_MONTH, 'YYYYMM') = #{year_month}
+		]]>
+	</select>
+	
+	<select id="getNewEmplydList" parameterType="hashmap" resultMap="newemplydMapResult">
+		<![CDATA[
+			SELECT * FROM METELSOS_NEW_EMPLYD WHERE TO_CHAR(NEW_EMPLY_YEAR_MONTH, 'YYYYMM') = #{year_month}
+		]]>
+	</select>
+	
+	<delete id="deleteNewEmplyd" parameterType="hashmap">
+		<![CDATA[
+			DELETE
+			FROM METELSOS_NEW_EMPLYD
+			WHERE ENGINEER_DEPT = #{engineer_dept} AND ENGINEER_NAME = #{engineer_name}
+		]]>
+	</delete>
+	
+	<insert id="enrollNewEmplyd" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO METELSOS_NEW_EMPLYD
+			VALUES(#{new_emply_year_month}, #{engineer_name}, #{engineer_position}, #{engineer_dept}, #{engineer_image}, #{impression_speech})
+		]]>
+	</insert>
+	
+	<select id="getNewEmplydImage" parameterType="hashmap" resultMap="newemplydMapResult">
+		<![CDATA[
+			SELECT NEW_EMPLY_YEAR_MONTH, ENGINEER_NAME, ENGINEER_POSITION, ENGINEER_DEPT, ENGINEER_IMAGE, IMPRESSION_SPEECH
+			FROM METELSOS_NEW_EMPLYD
+			WHERE ENGINEER_DEPT = #{engineer_dept} AND ENGINEER_NAME = #{engineer_name}
+		]]>
+	</select>
+</mapper>

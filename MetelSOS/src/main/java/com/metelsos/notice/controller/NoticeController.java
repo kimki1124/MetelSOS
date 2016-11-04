@@ -113,4 +113,26 @@ public class NoticeController {
 		return model;
 	}
 	
+	@RequestMapping(value="/deleteNoticeFile.do")
+	public ModelAndView deleteNoticeFile(@RequestParam HashMap<String, Object> paramMap) throws Exception{
+		log.info("#operation => deleteNoticeFile");
+		MetelSOSJsonModel jsonModel = null;
+		
+		HashMap<String, Object> returnMap = noticeService.deleteNoticeFile(paramMap);
+		jsonModel = new MetelSOSJsonModel(returnMap);
+		
+		return jsonModel;
+	}
+	
+	@RequestMapping(value="/updateNotice.do")
+	public ModelAndView updateNotice(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => updateNotice");
+		MetelSOSJsonModel jsonModel = null;
+		
+		HashMap<String, Object> returnMap = noticeService.updateNotice(paramMap);
+		jsonModel = new MetelSOSJsonModel(returnMap);
+		
+		return jsonModel;
+	}
+	
 }

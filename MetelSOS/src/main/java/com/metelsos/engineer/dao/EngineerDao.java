@@ -43,4 +43,20 @@ public class EngineerDao extends AbstractDAO{
 		return (int)delete("engineer.deleteEngineer", paramMap);
 	}
 
+	public List<String> getDeptList() throws Exception{
+		return (List<String>)selectList("engineer.getDeptList");
+	}
+
+	public List<String> getEngineerNameListByDept(HashMap<String, String> paramMap) throws Exception{
+		return (List<String>)selectList("engineer.getEngineerNameListByDept", paramMap);
+	}
+
+	public String getEngineerPosition(HashMap<String, Object> paramMap) throws Exception{
+		return (String)selectOne("engineer.getEngineerPosition", paramMap);
+	}
+
+	public List<String> getNewEmplydNameList(HashMap<String, String> paramMap) throws Exception{
+		return (List<String>)selectList("engineer.getNewEmplydNameList", paramMap);
+	}
+
 }

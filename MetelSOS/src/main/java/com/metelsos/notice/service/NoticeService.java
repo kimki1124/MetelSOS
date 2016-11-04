@@ -16,4 +16,8 @@ public interface NoticeService {
 
 	HashMap<String, Object> deleteNotice(HashMap<String, Object> paramMap) throws Exception;
 
+	HashMap<String, Object> deleteNoticeFile(HashMap<String, Object> paramMap) throws Exception;
+
+	HashMap<String, Object> updateNotice(HashMap<String, String> paramMap) throws Exception;
+
 }

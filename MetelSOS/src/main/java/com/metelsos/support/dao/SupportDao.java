@@ -19,4 +19,12 @@ public class SupportDao extends AbstractDAO{
 		}
 	}
 
+	public int selectSupportCompleteCount(int interval) throws Exception{
+		return (int)selectOne("support.getSupportCompleteCount", interval);
+	}
+
+	public int selectSupportNotCompleteCount(int interval) {
+		return (int)selectOne("support.getSupportNotCompleteCount", interval);
+	}
+
 }

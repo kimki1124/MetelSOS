@@ -12,5 +12,7 @@
 		<typeAlias type="com.metelsos.meeting.vo.INRMeetingVo" alias="INRMeeting" />
 		<typeAlias type="com.metelsos.notice.vo.NoticeVo" alias="Notice" />
 		<typeAlias type="com.metelsos.notice.vo.FileVo" alias="NoticeFile" />
+		<typeAlias type="com.metelsos.exclntstf.vo.ExclntStfVo" alias="ExclntStf" />
+		<typeAlias type="com.metelsos.newemplyd.vo.NewemplydVo" alias="Newemplyd" />
 	</typeAliases>
 </configuration>

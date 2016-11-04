@@ -24,4 +24,12 @@ public interface MenuService {
 
 	void setWriteNoticePageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception;
 
+	void setManageExclntStfPageItem(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception;
+
+	void setExclntStfListItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception;
+
+	void setManageNewEmplydPageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception;
+
+	void setNewEmplydListItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception;
+
 }
