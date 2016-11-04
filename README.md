@@ -8,3 +8,5 @@ Ver 1.0.1
 Login operation implement
 Logout operation implement
 Join operation implement
+
+로컬에서 readme.md 커밋 테스트
