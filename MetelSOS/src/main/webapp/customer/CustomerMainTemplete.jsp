@@ -6,6 +6,7 @@
 <head>
 		<title>+++  MetelSOS  +++</title>
 		<%@ include file="/common/include/include-header.jsp" %>
+		<script src="/metelSOS/resources/js/common.js" charset="utf-8"></script>
 		<script>
 			//세션없으면 로그인 페이지로 이동
 			var sessionId = '<%=session.getAttribute("SESSION_LOGIN_USER_ID")%>';
@@ -16,7 +17,7 @@
 </head>
 <body class="">
 		<jsp:include page = "/common/header/HeaderPanel.jsp" flush="false"/>
-		<jsp:include page = "/common/left/engineer/EngineerLeftPanel.jsp" flush="false"/>
+		<jsp:include page = "/common/left/customer/CustomerLeftPanel.jsp" flush="false"/>
 		<div id="main" role="main">
 
 			<div id="ribbon">
@@ -42,6 +43,7 @@
 		</div>
 		
 		<jsp:include page = "/common/bottom/BottomPanel.jsp" flush="false"/>
+		<jsp:include page="/common/form/commonForm.jsp" flush="false" />
 		<%@ include file="/common/include/include-body.jsp" %>
 		<script type="text/javascript">
 		 	 var _gaq = _gaq || [];

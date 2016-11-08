@@ -14,5 +14,7 @@
 		<typeAlias type="com.metelsos.notice.vo.FileVo" alias="NoticeFile" />
 		<typeAlias type="com.metelsos.exclntstf.vo.ExclntStfVo" alias="ExclntStf" />
 		<typeAlias type="com.metelsos.newemplyd.vo.NewemplydVo" alias="Newemplyd" />
+		<typeAlias type="com.metelsos.qna.vo.QnaVo" alias="Qna" />
+		<typeAlias type="com.metelsos.support.vo.FileVo" alias="SupportFile" />
 	</typeAliases>
 </configuration>

@@ -230,7 +230,6 @@
 		  	
 		  	$("#exclntstf_add_form").validate({
 
-				// Rules for form validation
 				rules : {
 					engineer_dept : {
 						valueNotEquals : 'default'
@@ -242,7 +241,6 @@
 					
 				},
 
-				// Messages for form validation
 				messages : {
 					engineer_dept : {
 						valueNotEquals : '부서를 선택해주세요.'

@@ -298,18 +298,6 @@
 			</div>
 
 		</div>
-		
-		<div id="empty_dialog" title="empty dialog title">
-			<p>
-				<span>빈 칸을 입력해주세요.</span>
-			</p>
-		</div>
-		
-		<div id="login_fail_dialog" title="login fail dialog">
-			<p>
-				<span id="dialog-text"></span>
-			</p>
-		</div>
 		<script>
 		$(document).ready(function(){
 			$("#engineerId").focus();
@@ -391,7 +379,7 @@
 						success:function(msg){
 							if(msg.resultMsg == 'SUCCESS'){
 								//로그인 성공
-								document.location.href="/metelSOS/leftMenuPageMove.do?userType=customer&menuTitle=CustomerMain&menuIcon=fa fa-lg fa-fw fa-home";
+								document.location.href="/metelSOS/leftMenuPageMove.do?userId="+msg.customerId+"&userType=customer&menuTitle=CustomerMain&menuIcon=fa fa-lg fa-fw fa-home";
 							}else{
 								//로그인 실패
 								var errMsg = '로그인에 실패했습니다. <br /> 아이디와 비밀번호를 확인해주세요.';
@@ -407,5 +395,16 @@
 				
 		});
 		</script>
+		<div id="empty_dialog" title="empty dialog title">
+			<p>
+				<span>빈 칸을 입력해주세요.</span>
+			</p>
+		</div>
+		
+		<div id="login_fail_dialog" title="login fail dialog">
+			<p>
+				<span id="dialog-text"></span>
+			</p>
+		</div>
 </body>
 </html>

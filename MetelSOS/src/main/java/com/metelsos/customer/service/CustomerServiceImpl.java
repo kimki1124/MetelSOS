@@ -41,6 +41,7 @@ public class CustomerServiceImpl implements CustomerService{
 			session.setAttribute("SESSION_LOGIN_USER_TYPE", "customer");
 			returnMap.put("resultMsg", "SUCCESS");
 			returnMap.put("customerName", customerVo.getCustomer_name());
+			returnMap.put("customerId", customerVo.getCustomer_id());
 		}else{
 			returnMap.put("resultMsg", "FAILED");
 		}

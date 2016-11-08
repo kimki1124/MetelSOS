@@ -32,6 +32,16 @@ public class NoticeController {
 	@Resource(name="menuService")
 	private MenuService menuService;
 	
+	@RequestMapping(value="/selectNoticeList.do")
+	public ModelAndView selectNoticeList(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => selectNoticeList");
+		MetelSOSJsonModel jsonModel = null;
+		HashMap<String, Object> returnMap = noticeService.selectNoticeList(paramMap);
+		jsonModel = new MetelSOSJsonModel(returnMap);
+		
+		return jsonModel;
+	}
+	
 	@RequestMapping(value="/insertNotice.do")
 	public ModelAndView insertNoticeBoard(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => insertNoticeBoard");

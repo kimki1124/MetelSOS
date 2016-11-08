@@ -31,8 +31,9 @@ public class PageController {
 	public ModelAndView movePage(@RequestParam HashMap<String, String> paramMap, HttpServletRequest request) throws Exception{
 		log.info("#operation => movePage");
 		ModelAndView modelAndView = new ModelAndView();
-		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
-		returnMap.put("userId", request.getSession().getAttribute("SESSION_LOGIN_USER_ID"));
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		paramMap.put("userId", (String) request.getSession().getAttribute("SESSION_LOGIN_USER_ID"));
+		returnMap = menuService.getMainPanelItems(paramMap);
 		modelAndView.addAllObjects(returnMap);
 		String menuPath = String.valueOf(returnMap.get("menuPath"));
 		String path = "/"+paramMap.get("userType")+menuPath;
@@ -144,6 +145,20 @@ public class PageController {
 		
 		model.addAllObjects(returnMap);
 		model.setViewName("/admin/newemplyd/NewEmplydList");
+		return model;
+	}
+	
+	@RequestMapping(value="/moveNewSupportReqPage.do")
+	public ModelAndView moveNewSupportReqPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
+		log.info("#operation => moveNewSupportReqPage");
+		ModelAndView model = new ModelAndView();
+		paramMap.put("menuTitle", URLDecoder.decode(paramMap.get("menuTitle"), "UTF-8"));
+		HashMap<String, Object> returnMap = menuService.getMainPanelItems(paramMap);
+		menuService.setNewSupportReqPageItems(returnMap, paramMap);
+		
+		model.addAllObjects(returnMap);
+		model.setViewName("/customer/support/NewSupportReqForm");
+		
 		return model;
 	}
 	

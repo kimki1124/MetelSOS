@@ -154,78 +154,6 @@
 			</div>
 
 		</div>
-		
-		<div id="idValidateOK" title="idValidateOK">
-			<p>
-				사용하실 수 있는 아이디입니다.
-			</p>
-		</div>
-		
-		<div id="idValidateNO" title="idValidateNO">
-			<p>
-				사용하실 수 없는 아이디입니다.
-			</p>
-		</div>
-		
-		<div id="needIdValidate" title="needIdValidate">
-			<p>
-				아이디 중복확인을 해주세요.
-			</p>
-		</div>
-		
-		<div id="welcomeMsg" title="welcomeMsg">
-			<p>
-				회원가입을 축하합니다.<br />
-				로그인 페이지로 이동합니다.
-			</p>
-		</div>
-		
-		<div id="failedRegister" title="failedRegister">
-			<p>
-				회원가입에 실패했습니다. <br />
-				자세한 사항은 관리자에게 문의하세요.
-			</p>
-		</div>
-
-		<!-- Modal -->
-		<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-							&times;
-						</button>
-						<h4 class="modal-title" id="myModalLabel">Terms & Conditions</h4>
-					</div>
-					<div class="modal-body custom-scroll terms-body">
-			<br><br>
-
-            <p><strong>By using this  WEBSITE TERMS AND CONDITIONS template document, you agree to the 
-	 <a href="#">terms and conditions</a> set out on 
-	 <a href="#">SmartAdmin.com</a>.  You must retain the credit 
-	 set out in the section headed "ABOUT THESE WEBSITE TERMS AND CONDITIONS".  Subject to the licensing restrictions, you should 
-	 edit the document, adapting it to the requirements of your jurisdiction, your business and your 
-	 website.  If you are not a lawyer, we recommend that you take professional legal advice in relation to the editing and 
-	 use of the template.</strong></p>
-
-
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">
-							Cancel
-						</button>
-						<button type="button" class="btn btn-primary" id="i-agree">
-							<i class="fa fa-check"></i> I Agree
-						</button>
-						
-						<button type="button" class="btn btn-danger pull-left" id="print">
-							<i class="fa fa-print"></i> Print
-						</button>
-					</div>
-				</div>/.modal-content
-			</div>/.modal-dialog
-		</div>/.modal -->
-
 		<!--================================================== -->	
 
 		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
@@ -465,33 +393,7 @@
 						userPhone : {
 							digits : '숫자만 입력해주세요.'
 						}
-						/* firstname : {
-							required : 'Please select your first name'
-						},
-						lastname : {
-							required : 'Please select your last name'
-						},
-						gender : {
-							required : 'Please select your gender'
-						},
-						terms : {
-							required : 'You must agree with Terms and Conditions'
-						} */
 					},
-
-					// Ajax form submition
-					//submitHandler : function(form) {
-						/* $(form).ajaxSubmit({
-							success : function() {
-								$("#smart-form-register").addClass('submited');
-							}
-						});  */
-					//},  
-
-					// Do not change code below
-					// errorPlacement : function(error, element) {
-					//	error.insertAfter(element.parent());
-					//} 
 				});
 				
 				//고객사를 선택하면 hidden인 소속 콤보박스가 show
@@ -532,22 +434,37 @@
 					
 				});
 			});
-			
-			/* registerFormSubmit = function(){
-				var isValidateCheck = $("#isValidateCheck").val();
-				
-				if(isValidateCheck == 'false'){
-					$('#needIdValidate').dialog("open");
-					return false;
-				}else{
-					return true;
-				}
-				//console.log(isValidateCheck);
-				/* if(isValidateCheck){
-					return true;
-				} */
-			//} */
 		</script>
-
+<div id="idValidateOK" title="idValidateOK">
+			<p>
+				사용하실 수 있는 아이디입니다.
+			</p>
+		</div>
+		
+		<div id="idValidateNO" title="idValidateNO">
+			<p>
+				사용하실 수 없는 아이디입니다.
+			</p>
+		</div>
+		
+		<div id="needIdValidate" title="needIdValidate">
+			<p>
+				아이디 중복확인을 해주세요.
+			</p>
+		</div>
+		
+		<div id="welcomeMsg" title="welcomeMsg">
+			<p>
+				회원가입을 축하합니다.<br />
+				로그인 페이지로 이동합니다.
+			</p>
+		</div>
+		
+		<div id="failedRegister" title="failedRegister">
+			<p>
+				회원가입에 실패했습니다. <br />
+				자세한 사항은 관리자에게 문의하세요.
+			</p>
+		</div>
 	</body>
 </html>

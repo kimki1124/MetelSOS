@@ -29,10 +29,11 @@ import com.metelsos.meeting.vo.INRMeetingVo;
 import com.metelsos.menu.dao.MenuDao;
 import com.metelsos.menu.vo.MenuVo;
 import com.metelsos.newemplyd.dao.NewemplydDao;
-import com.metelsos.newemplyd.vo.NewemplydVo;
 import com.metelsos.notice.dao.NoticeDao;
 import com.metelsos.notice.vo.FileVo;
 import com.metelsos.notice.vo.NoticeVo;
+import com.metelsos.qna.dao.QnaDao;
+import com.metelsos.qna.vo.QnaVo;
 import com.metelsos.support.dao.SupportDao;
 import com.metelsos.support.vo.SupportVo;
 
@@ -68,6 +69,9 @@ public class MenuServiceImpl implements MenuService{
 	
 	@Resource(name="newemplydDao")
 	private NewemplydDao newemplydDao;
+	
+	@Resource(name="qnaDao")
+	private QnaDao qnaDao;
 
 	@Override
 	public List<MenuVo> getEngineerLeftMenuList() throws Exception {
@@ -139,6 +143,8 @@ public class MenuServiceImpl implements MenuService{
 		List<String> breadcrumbList = new ArrayList<String>();
 		List<String> menuEngTitleList = new ArrayList<String>();
 		
+		returnMap.put("userId", paramMap.get("userId"));
+		
 		if("engineer".equals(paramMap.get("userType"))){
 			//엔지니어일 때
 			menuList = menuDao.getEngineerLeftMenuList();
@@ -176,12 +182,17 @@ public class MenuServiceImpl implements MenuService{
 			menuPath += "/"+menuEngTitleList.get(i);
 		}
 		
-		//menuTitle이 engineerMain이면 공지사항, 월별 유지보수 지원사항, 우수사원, 신입사원 item set
+		
 		if("EngineerMain".equals(paramMap.get("menuTitle"))){
-			setNoticeBoard(returnMap);
+			//menuTitle이 engineerMain이면 공지사항, 월별 유지보수 지원사항, 우수사원, 신입사원 item set
 			setMonthSupportStats(returnMap);
 			setExclntStfItems(returnMap);
 			setNewEmplydItems(returnMap);
+		}else if("CustomerMain".equals(paramMap.get("menuTitle"))){
+			//menuTitle이 customerMain이면 최근 지원 요청사항, 최근 지원 히스토리, QnA Best 5 item set
+			setCurrWaitSupportHistory(returnMap, paramMap);
+			setCurrCompleteSupportHistory(returnMap, paramMap);
+			setQnABest5(returnMap);
 		}
 		
 		//set breadcrumb value
@@ -195,6 +206,37 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuIcon", paramMap.get("menuIcon"));
 		
 		return returnMap;
+	}
+
+	private void setQnABest5(HashMap<String, Object> returnMap) throws Exception{
+		List<QnaVo> qnaBest5List = qnaDao.getQnaBest5();
+		returnMap.put("qnaBest5List", qnaBest5List);
+	}
+
+	private void setCurrCompleteSupportHistory(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception{
+		MetelSOSUtil util = new MetelSOSUtil();
+		List<SupportVo> supportList = supportDao.selectCompleteSupportListByCustomerId(paramMap.get("userId"));
+		for(int i=0;i<supportList.size();i++){
+			SupportVo supportVo = supportList.get(i);
+			supportVo.setSupport_accept_date(util.changeDatePattern(supportVo.getSupport_accept_date(), "yyyyMMddHHmmss", "yyyy-MM-dd HH:mm:ss"));
+			if(supportVo.getSupport_date() != null){
+				supportVo.setSupport_date(util.changeDatePattern(supportVo.getSupport_date(), "yyyyMMddHHmmss", "yyyy-MM-dd HH:mm:ss"));
+			}
+		}
+		returnMap.put("supportCompleteList", supportList);
+	}
+
+	private void setCurrWaitSupportHistory(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception{
+		MetelSOSUtil util = new MetelSOSUtil();
+		List<SupportVo> supportList = supportDao.selectSupportListByCustomerId(paramMap.get("userId"));
+		for(int i=0;i<supportList.size();i++){
+			SupportVo supportVo = supportList.get(i);
+			supportVo.setSupport_accept_date(util.changeDatePattern(supportVo.getSupport_accept_date(), "yyyyMMddHHmmss", "yyyy-MM-dd HH:mm:ss"));
+			if(supportVo.getSupport_date() != null){
+				supportVo.setSupport_date(util.changeDatePattern(supportVo.getSupport_date(), "yyyyMMddHHmmss", "yyyy-MM-dd HH:mm:ss"));
+			}
+		}
+		returnMap.put("supportList", supportList);
 	}
 
 	private void setNewEmplydItems(HashMap<String, Object> returnMap) throws Exception{
@@ -307,26 +349,6 @@ public class MenuServiceImpl implements MenuService{
 
 	private int getSupportCompleteCount(int interval) throws Exception{
 		return supportDao.selectSupportCompleteCount(interval);
-	}
-
-	private void setNoticeBoard(HashMap<String, Object> returnMap) throws Exception{
-		MetelSOSUtil util = new MetelSOSUtil();
-		List<NoticeVo> noticeList = noticeDao.selectNotice5Rows();
-		for(int i=0;i<noticeList.size();i++){
-			NoticeVo vo = noticeList.get(i);
-			vo.setNotice_date(util.changeDatePattern(vo.getNotice_date(), "yyyyMMddHHmmss", "yyyy-MM-dd"));
-			
-			int boardNum = vo.getNotice_num();
-			List<FileVo> fileList = noticeDao.getNoticeFileList(boardNum);
-			
-			if(fileList.size() > 0){
-				vo.setHas_file("Y");
-			}else{
-				vo.setHas_file("N");
-			}
-		}
-		
-		returnMap.put("noticeList", noticeList);
 	}
 
 	private void setMainBreadcrumb(List<MenuVo> menuList, List<String> breadcrumbList, List<String> menuEngTitleList, String menu_title) throws Exception{
@@ -545,5 +567,31 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("newEmplydList", newEmplydList);
 		returnMap.put("breadcrumbList", list);
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
+	}
+
+	@Override
+	public void setNewSupportReqPageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
+			throws Exception {
+		HashMap<String, Object> customerInfoMap = customerDao.getCustomerInfo(paramMap.get("userId"));
+		
+		String customerPhone = String.valueOf(customerInfoMap.get("CUSTOMER_PHONE"));
+		StringBuffer sb = new StringBuffer(customerPhone);
+		if(customerPhone.length() == 11){
+			//XXX-XXXX-XXXX
+			sb.insert(3, "-");
+			sb.insert(8, "-");
+		}else{
+			//XXX-XXX-XXXX
+			sb.insert(3, "-");
+			sb.insert(7, "-");
+		}
+		
+		customerInfoMap.put("CUSTOMER_PHONE", sb.toString());
+		
+		List<String> list = new ArrayList<String>();
+		list.add(paramMap.get("menuTitle"));
+		returnMap.put("breadcrumbList", list);
+		returnMap.put("menuTitle", paramMap.get("menuTitle"));
+		returnMap.put("customerInfo", customerInfoMap);
 	}
 }

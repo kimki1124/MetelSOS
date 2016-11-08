@@ -43,4 +43,8 @@ public class CustomerDao extends AbstractDAO{
 		return (int)delete("customer.deleteCustomer", paramMap);
 	}
 
+	public HashMap<String, Object> getCustomerInfo(String userId) throws Exception{
+		return (HashMap<String, Object>)selectOne("customer.getCustomerInfo", userId);
+	}
+
 }

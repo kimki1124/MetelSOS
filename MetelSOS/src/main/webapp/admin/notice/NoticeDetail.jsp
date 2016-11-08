@@ -235,9 +235,9 @@
 		  	
 		  	$(document).ready(function(){
 		  		pageSetUp();
-		  		
+		  		var content = "${noticeVo.notice_content }";
 		  		//로딩 후 textarea에 notice_content 값 세팅
-		  		$("#noticeContent").val('${noticeVo.notice_content }');
+		  		$("#noticeContent").val(content.replace(/<br\s?\/?>/g,"\n"));
 		  		
 		  		//첨부파일 다운로드 클릭 이벤트
 		  		$(".noticeFile").click(function(e){
@@ -255,9 +255,6 @@
 		  //수정 버튼 클릭 이벤트
 		  $("#modify").click(function(e){
 			  e.preventDefault();
-			 /*  paramMap.put("userType", "engineer");
-				paramMap.put("menuTitle", "공지사항");
-				paramMap.put("menuIcon", "fa fa-lg fa-fw fa-bell"); */
 			  var comSubmit = new ComSubmit();
 		      comSubmit.setUrl("/metelSOS/moveNoticeUpdatePage.do");
 		      comSubmit.addParam("notice_num", "${noticeVo.notice_num }");

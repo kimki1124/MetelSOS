@@ -64,4 +64,12 @@
 			WHERE CUSTOMER_ID = #{userId} AND CUSTOMER_PASSWD = #{userPasswd}
 		]]>
 	</delete>
+	
+	<select id="getCustomerInfo" parameterType="string" resultType="hashmap">
+		<![CDATA[
+			SELECT COMPANY_NAME, CUSTOMER_NAME, CUSTOMER_POSITION, CUSTOMER_PHONE
+			FROM METELSOS_CUSTOMER
+			WHERE CUSTOMER_ID = #{userId}
+		]]>
+	</select>
 </mapper>

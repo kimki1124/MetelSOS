@@ -4,53 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<meta charset="utf-8">
 		<title>+++  MetelSOS  +++</title>
-		<meta name="description" content="">
-		<meta name="author" content="">
-			
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		
-		<!-- Basic Styles -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/font-awesome.min.css">
-
-		<!-- SmartAdmin Styles : Caution! DO NOT change the order -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-production-plugins.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-production.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-skins.min.css">
-
-		<!-- SmartAdmin RTL Support  -->
-		<link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/smartadmin-rtl.min.css">
-
-		<!-- We recommend you use "your_style.css" to override SmartAdmin
-		     specific styles this will also ensure you retrain your customization with each SmartAdmin update.
-		<link rel="stylesheet" type="text/css" media="screen" href="css/your_style.css"> -->
-
-		<!-- Demo purpose only: goes with demo.js, you can delete this css when designing your own WebApp -->
-		<!-- <link rel="stylesheet" type="text/css" media="screen" href="/metelSOS/resources/css/demo.min.css"> -->
-		
-		<!-- FAVICONS -->
-		<link rel="shortcut icon" href="/metelSOS/resources/img/favicon/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="/metelSOS/resources/img/favicon/favicon.ico" type="image/x-icon">
-
-		<!-- #GOOGLE FONT -->
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
-		<!-- #PLUGINS -->
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script>
-			if (!window.jQuery) {
-				document.write('<script src="/metelSOS/resources/js/libs/jquery-2.1.1.min.js"><\/script>');
-			}
-		</script>
-
-		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-		<script>
-			if (!window.jQuery.ui) {
-				document.write('<script src="/metelSOS/resources/js/libs/jquery-ui-1.10.3.min.js"><\/script>');
-			}
-		</script>
-
+		<%@ include file="/common/include/include-header.jsp" %>
+		<script src="/metelSOS/resources/js/common.js" charset="utf-8"></script>
 		
 		<script>
 			//뒤로가기 막기
@@ -70,128 +26,179 @@
 		<jsp:include page = "/common/header/HeaderPanel.jsp" flush="false"/>
 		<jsp:include page = "/common/left/customer/CustomerLeftPanel.jsp" flush="false"/>
 		
-		<!-- #MAIN PANEL -->
 		<div id="main" role="main">
-
-			<!-- RIBBON -->
 			<div id="ribbon">
-
-				<!-- breadcrumb -->
 				<ol class="breadcrumb">
 					<li>Home</li>
-					<li>메인화면</li>
+					<c:forEach var="item" items="${breadcrumbList}" varStatus="status">
+						<li>${item}</li>
+					</c:forEach>
 				</ol>
-				<!-- end breadcrumb -->
 			</div>
-			<!-- END RIBBON -->
-
-			<!-- #MAIN CONTENT -->
-
-				
-				<!-- col -->
-				<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-					<h3 class="page-title txt-color-blueDark">
-						
-						<!-- PAGE HEADER -->
-						<i class="fa-fw fa fa-home"></i> 
-							메인화면 
-						<!-- <span>>  
-							Subtitle
-						</span> -->
-					</h3>
-				</div>
-				<!-- end col -->
-				
-
-			<!-- end row -->
 			
-			<!-- END #MAIN CONTENT -->
+			<div id="content">
+			
+				<div class="row">
+					<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+						<h3 class="page-title txt-color-blueDark">
+							<i class="${menuIcon}"></i> 
+								${menuTitle} 
+						</h3>
+					</div>
+				</div>
+				
+				<section id="widget-grid" class="">
+					<div class="row">
+						<div class="col-sm-6 col-md-6 col-lg-12">
+							<div class="well well-sm well-light">
+								<h3>METELSOS 사용 가이드
+								<br>
+								<small>처음 이용하시는 분은 이용하기 전에 한번씩 읽어보세요.</small></h3>
+								<div id="guide-accordion">
+									<div>
+										<h4>지원 요청</h4>
+										<div class="padding-10">
+											<ul>
+												<li>솔루션에 문제가 생기는 경우, 회의가 필요한 경우, 교육이 필요한 경우 이곳에서 온라인으로 지원을 요청할 수 있습니다.</li><br />
+												<li>신청을 하게 되는 경우, 엔지니어에게 지원 요청이 왔다는 문자가 전송됩니다. 따로 엔지니어에게 연락을 하지 않아도 됩니다.</li><br />
+												<li>엔지니어가 지원 요청을 받으면 사이트 담당자에게 연락을 합니다. 그 때 구체적인 지원 일정을 잡으시면 됩니다.</li><br />
+												<li>지원 일정을 맞추면 담당 엔지니어가 일정에 맞춰서 사이트를 방문할 것입니다.</li>
+											</ul>
+										</div>
+									</div>
+				
+									<div>
+										<h4>지원 히스토리</h4>
+										<div class="padding-10">
+											<ul>
+												<li>지원 히스토리 메뉴에서 그동안 지원받았던 히스토리를 볼 수 있습니다.</li><br />
+												<li>이 메뉴를 통해 지원받았던 담당 엔지니어, 엔지니어가 남긴 코멘트 등을 확인할 수 있습니다.</li>
+											</ul>
+										</div>
+									</div>
+									<div>
+										<h4>엔지니어 검색</h4>
+										<div class="padding-10">
+											<ul>
+												<li>엔지니어 검색 메뉴로 지원이 가능한 엔지니어를 검색할 수 있습니다.</li><br />
+												<li>각 엔지니어들의 일정을 확인할 수 있으며, 대략적인 지원 요청 날짜를 정하실 수 있습니다.</li><br />
+												<li>물론 구체적인 지원 날짜는 엔지니어와의 연락을 통해 정하셔야 확실한 날짜에 지원받으실 수 있습니다.</li>
+											</ul>
+										</div>
+									</div>
+								</div>
 
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<article class="col-sm-12">
+							<div class="jarviswidget jarviswidget-color-darken" id="currNonCompleteSupport" data-widget-editbutton="false" data-widget-deletebutton="false">
+								<header>
+									<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+									<h2>최근 지원 요청사항</h2>
+								</header>
+								<div>
+									<div class="jarviswidget-editbox">
+									</div>
+									<div class="widget-body">
+										<p style="color:#999;">최대 5개까지 표시됩니다.</p>
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th style="width:30%;">기술지원 명</th>
+														<th style="width:20%;">고객사명</th>
+														<th style="width:10%;">담당자</th>
+														<th style="width:10%;">담당 엔지니어</th>
+														<th style="width:20%;">접수일</th>
+														<th style="width:10%;">상태</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="item" items="${supportList}" varStatus="status">
+														<tr>
+															<td>${item.support_title }</td>
+															<td>${item.company_name }</td>
+															<td>${item.customer_name }</td>
+															<td>${item.support_engineer }</td>
+															<td>${item.support_accept_date }</td>
+															<td>${item.support_state }</td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="jarviswidget jarviswidget-color-darken" id="currCompleteSupport" data-widget-editbutton="false" data-widget-deletebutton="false">
+								<header>
+									<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+									<h2>최근 지원 히스토리</h2>
+								</header>
+								<div>
+									<div class="jarviswidget-editbox">
+									</div>
+									<div class="widget-body">
+										<p style="color:#999;">최대 5개까지 표시됩니다.</p>
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th style="width:30%;">기술지원 명</th>
+														<th style="width:20%;">고객사명</th>
+														<th style="width:10%;">담당자</th>
+														<th style="width:10%;">담당 엔지니어</th>
+														<th style="width:20%;">접수일</th>
+														<th style="width:10%;">상태</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach var="item" items="${supportCompleteList}" varStatus="status">
+														<tr>
+															<td>${item.support_title }</td>
+															<td>${item.company_name }</td>
+															<td>${item.customer_name }</td>
+															<td>${item.support_engineer }</td>
+															<td>${item.support_accept_date }</td>
+															<td>${item.support_state }</td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</article>
+					</div>
+					<div class="row">
+						<div class="col-sm-6 col-md-6 col-lg-12">
+							<div class="well well-sm well-light">
+								<h3>자주묻는 질문 Best 5
+								<br>
+								<small>고객님들께서 자주 묻는 질문들 중 가장 빈도가 높은 질문 5개입니다.</small></h3>
+								<div id="qnabest-accordion">
+									<c:forEach var="item" items="${qnaBest5List}" varStatus="status">
+										<div>
+											<h4 style="background-color:#d6dde7;">${item.qna_question }</h4>
+											<div class="padding-10" style="background-color:#efe1b3;">
+												${item.qna_answer }
+											</div>
+										</div>
+									</c:forEach>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
 		</div>
-		<!-- END #MAIN PANEL -->
 		<jsp:include page = "/common/bottom/BottomPanel.jsp" flush="false"/>
+		<jsp:include page="/common/form/commonForm.jsp" flush="false" />
+		<%@ include file="/common/include/include-body.jsp" %>
 
-		<!--================================================== -->
-
-		<!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)
-		<script data-pace-options='{ "restartOnRequestAfter": true }' src="js/plugin/pace/pace.min.js"></script>-->
-
-		
-		<!-- IMPORTANT: APP CONFIG -->
-		<script src="/metelSOS/resources/js/app.config.js"></script>
-
-		<!-- JS TOUCH : include this plugin for mobile drag / drop touch events-->
-		<script src="/metelSOS/resources/js/plugin/jquery-touch/jquery.ui.touch-punch.min.js"></script> 
-
-		<!-- BOOTSTRAP JS -->
-		<script src="/metelSOS/resources/js/bootstrap/bootstrap.min.js"></script>
-
-		<!-- CUSTOM NOTIFICATION -->
-		<script src="/metelSOS/resources/js/notification/SmartNotification.min.js"></script>
-
-		<!-- JARVIS WIDGETS -->
-		<script src="/metelSOS/resources/js/smartwidgets/jarvis.widget.min.js"></script>
-
-		<!-- EASY PIE CHARTS -->
-		<script src="/metelSOS/resources/js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>
-
-		<!-- SPARKLINES -->
-		<script src="/metelSOS/resources/js/plugin/sparkline/jquery.sparkline.min.js"></script>
-
-		<!-- JQUERY VALIDATE -->
-		<script src="/metelSOS/resources/js/plugin/jquery-validate/jquery.validate.min.js"></script>
-
-		<!-- JQUERY MASKED INPUT -->
-		<script src="/metelSOS/resources/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
-
-		<!-- JQUERY SELECT2 INPUT -->
-		<script src="/metelSOS/resources/js/plugin/select2/select2.min.js"></script>
-
-		<!-- JQUERY UI + Bootstrap Slider -->
-		<script src="/metelSOS/resources/js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>
-
-		<!-- browser msie issue fix -->
-		<script src="/metelSOS/resources/js/plugin/msie-fix/jquery.mb.browser.min.js"></script>
-
-		<!-- FastClick: For mobile devices -->
-		<script src="/metelSOS/resources/js/plugin/fastclick/fastclick.min.js"></script>
-
-		<!--[if IE 8]>
-
-		<h1>Your browser is out of date, please update your browser by going to www.microsoft.com/download</h1>
-
-		<![endif]-->
-
-		<!-- Demo purpose only -->
-		<!-- <script src="/metelSOS/resources/js/demo.min.js"></script> -->
-
-		<!-- MAIN APP JS FILE -->
-		<script src="/metelSOS/resources/js/app.min.js"></script>
-
-		<!-- ENHANCEMENT PLUGINS : NOT A REQUIREMENT -->
-		<!-- Voice command : plugin -->
-		<script src="/metelSOS/resources/js/speech/voicecommand.min.js"></script>
-
-		<!-- SmartChat UI : plugin -->
-		<script src="/metelSOS/resources/js/smart-chat-ui/smart.chat.ui.min.js"></script>
-		<script src="/metelSOS/resources/js/smart-chat-ui/smart.chat.manager.min.js"></script>
-		
-		<!-- PAGE RELATED PLUGIN(S) -->
-		
-		<!-- Flot Chart Plugin: Flot Engine, Flot Resizer, Flot Tooltip -->
-		<script src="/metelSOS/resources/js/plugin/flot/jquery.flot.cust.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/flot/jquery.flot.resize.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/flot/jquery.flot.time.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/flot/jquery.flot.tooltip.min.js"></script>
-		
-		<!-- Vector Maps Plugin: Vectormap engine, Vectormap language -->
-		<script src="/metelSOS/resources/js/plugin/vectormap/jquery-jvectormap-1.2.2.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/vectormap/jquery-jvectormap-world-mill-en.js"></script>
-		
-		<!-- Full Calendar -->
-		<script src="/metelSOS/resources/js/plugin/moment/moment.min.js"></script>
-		<script src="/metelSOS/resources/js/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>
-		<!-- Your GOOGLE ANALYTICS CODE Below -->
 		<script type="text/javascript">
 	
 		  var _gaq = _gaq || [];
@@ -205,6 +212,9 @@
 		  })();
 		  
 		  $(document).ready(function(){
+			  pageSetUp();
+			  $("#left-panel nav ul li").first().addClass("active");
+			  
 			  $(document).keydown(function(e){   
 	    			if(e.target.nodeName != "INPUT" && e.target.nodeName != "TEXTAREA"){       
 	        			if(e.keyCode === 8){   
@@ -212,6 +222,29 @@
 	        			}
 	    			}
 				});
+			  
+			  var accordionIcons = {
+			  		header: "fa fa-plus",    // custom icon class
+				    activeHeader: "fa fa-minus" // custom icon class
+			   };
+
+			  $("#guide-accordion").accordion({
+				autoHeight : false,
+				heightStyle : "content",
+				collapsible : true,
+				animate : 300,
+				icons: accordionIcons,
+				header : "h4",
+			  });
+			  
+			  $("#qnabest-accordion").accordion({
+					autoHeight : false,
+					heightStyle : "content",
+					collapsible : true,
+					animate : 300,
+					icons: accordionIcons,
+					header : "h4",
+				  });
 		  });
 		
 		</script>

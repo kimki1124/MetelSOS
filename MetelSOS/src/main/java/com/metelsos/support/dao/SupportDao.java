@@ -27,4 +27,24 @@ public class SupportDao extends AbstractDAO{
 		return (int)selectOne("support.getSupportNotCompleteCount", interval);
 	}
 
+	public List<SupportVo> selectSupportListByCustomerId(String userId) throws Exception{
+		return (List<SupportVo>)selectList("support.selectSupportListByCustomerId", userId);
+	}
+
+	public List<SupportVo> selectCompleteSupportListByCustomerId(String userId) throws Exception{
+		return (List<SupportVo>)selectList("support.selectCompleteSupportListByCustomerId", userId);
+	}
+
+	public List<HashMap<String, Object>> selectAllSupportListByCustomerId(HashMap<String, String> paramMap) throws Exception{
+		return (List<HashMap<String, Object>>)selectPagingList("support.selectAllSupportListByCustomerId", paramMap);
+	}
+
+	public int insertSupportRequest(HashMap<String, String> paramMap) throws Exception{
+		return (int)insert("support.insertSupportRequest", paramMap);
+	}
+
+	public int uploadSupportFile(HashMap<String, Object> paramMap) throws Exception{
+		return (int)insert("support.uploadSupportFile", paramMap);
+	}
+
 }

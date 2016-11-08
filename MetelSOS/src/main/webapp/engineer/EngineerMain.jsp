@@ -6,6 +6,7 @@
 <head>
 		<title>+++  MetelSOS  +++</title>
 		<%@ include file="/common/include/include-header.jsp" %>
+		<script src="/metelSOS/resources/js/common.js" charset="utf-8"></script>
 		<script>
 			//뒤로가기 막기
 			history.pushState(null, null, location.href); 
@@ -30,23 +31,14 @@
 		</form>
 		<!-- #MAIN PANEL -->
 		<div id="main" role="main">
-
-			<!-- RIBBON -->
 			<div id="ribbon">
-
-				<!-- breadcrumb -->
 				<ol class="breadcrumb">
 					<li>Home</li>
 					<c:forEach var="item" items="${breadcrumbList}" varStatus="status">
 						<li>${item}</li>
 					</c:forEach>
-					<!-- <li>메인화면</li> -->
 				</ol>
-				<!-- end breadcrumb -->
 			</div>
-			<!-- END RIBBON -->
-
-			<!-- #MAIN CONTENT -->
 			<div id="content">
 				
 				<div class="row">
@@ -72,7 +64,7 @@
 								<div>
 									<div class="jarviswidget-editbox">
 									</div>
-									<div class="widget-body no-padding">
+									<div class="widget-body">
 										<div class="table-responsive">
 											<table class="table table-bordered table-striped">
 												<thead>
@@ -86,21 +78,11 @@
 													</tr>
 												</thead>
 												<tbody>
-													<c:forEach var="item" items="${noticeList}" varStatus="status">
-														<tr>
-															<td>${status.count }</td>
-															<td><a href="javascript:moveNoticeDetailPage('${item.notice_num }');">${item.notice_title }</a></td>
-															<td style="text-align:center;"><c:if test="${item.has_file == 'Y' }">
-																	<i class="fa fa-file fa-lg" aria-hidden="true"></i>
-																</c:if></td>
-															<td>${item.notice_author }</td>
-															<td>${item.notice_date }</td>
-															<td>${item.notice_hit }</td>
-														</tr>
-													</c:forEach>
 												</tbody>
 											</table>
 										</div>
+										<div id="PAGE_NAVI" class="text-center"></div>
+										<input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX"/>
 									</div>
 								</div>
 							</div>
@@ -221,17 +203,6 @@
 														</c:otherwise>
 													</c:choose>
 												</div>
-												<%-- <div class="price-features" style="display: table; margin-left: auto; margin-right: auto;">
-												<c:choose>
-													<c:when test="${item.engineer_image ne null}">
-														<img alt="" class="img-responsive" src="/metelSOS/getExclntStfImage.do?engineer_dept=${item.engineer_dept }&engineer_name=${item.engineer_name}" height="270" />
-													</c:when>
-													<c:otherwise>
-														<i class="fa fa-user" style="font-size:190px; height:270px;"></i>
-													</c:otherwise>
-												</c:choose>
-												
-												</div> --%>
 							                </div>
 							                <div class="panel-footer text-align-center">
 							                   	 ${item.impression_speech }
@@ -249,6 +220,7 @@
 		<!-- END #MAIN PANEL -->
 
 		<jsp:include page = "/common/bottom/BottomPanel.jsp" flush="false"/>
+		<jsp:include page="/common/form/commonForm.jsp" flush="false" />
 		<%@ include file="/common/include/include-body.jsp" %>
 		<!-- Your GOOGLE ANALYTICS CODE Below -->
 		<script type="text/javascript">
@@ -301,6 +273,9 @@
 	    			}
 				});
 		  		
+		  		//공지사항 로드
+		  		selectNoticeList(1);
+		  		
 		  		$("#left-panel nav ul li").first().addClass("active");
 		  		
 		  		pageSetUp();
@@ -327,9 +302,65 @@
 				}
 		 	 });
 		  	
+		  	function selectNoticeList(pageNo){
+		  		var comAjax = new ComAjax();
+	            comAjax.setUrl("/metelSOS/selectNoticeList.do");
+	            comAjax.setCallback("selectBoardListCallback");
+	            comAjax.addParam("PAGE_INDEX",pageNo);
+	            comAjax.addParam("PAGE_ROW", 5);
+	            comAjax.syncAjax();
+		  	};
+		  	
+		  	function selectBoardListCallback(data){
+		  		var total = data.TOTAL;
+	            var body = $("table>tbody");
+	            body.empty();
+	            if(total == 0){
+	                var str = "<tr>" + 
+	                                "<td colspan='6'>조회된 결과가 없습니다.</td>" + 
+	                            "</tr>";
+	                body.append(str);
+	            }
+	            else{
+	                var params = {
+	                    divId : "PAGE_NAVI",
+	                    pageIndex : "PAGE_INDEX",
+	                    totalCount : total,
+	                    eventName : "selectNoticeList"
+	                };
+	                gfn_renderPaging(params);
+	                 
+	                var str = "";
+	                $.each(data.noticeList, function(key, value){
+	                	var tempTag;
+	                	
+	                	if(value.HAS_FILE == 'Y'){
+	                		tempTag = "<td style='text-align:center;'><i class='fa fa-file fa-lg' aria-hidden='true'></i></td>";
+	                	}else{
+	                		tempTag = "<td style='text-align:center;'></td>";
+	                	}
+	                	
+	                	var hrefTag = '<a href="javascript:moveNoticeDetailPage('+value.NOTICE_NUM+');" name='+'title>' + value.NOTICE_TITLE + '</a>';
+	                	
+	                    str += "<tr>" + 
+	                                "<td>" + value.RNUM + "</td>" + 
+	                                "<td class='title'>" +
+	                                hrefTag  +
+	                                "</td>" +
+	                                tempTag + 
+	                                "<td>" + value.NOTICE_AUTHOR + "</td>" + 
+	                                "<td>" + value.NOTICE_DATE + "</td>" + 
+	                                "<td>" + value.NOTICE_HIT + "</td>" + 
+	                            "</tr>";
+	                });
+	                
+	                body.append(str);
+	            }
+		  	}
+		  	
 		  	function moveNoticeDetailPage(notice_num){
 		  		document.location.href="/metelSOS/moveNoticeDetailPage.do?notice_num="+notice_num+"&userId="+"${userId}";
-		  	}
+		  	};
 		
 		</script>
 

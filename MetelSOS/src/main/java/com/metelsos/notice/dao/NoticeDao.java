@@ -74,4 +74,8 @@ public class NoticeDao extends AbstractDAO{
 		update("notice.updateNoticeHit", paramMap);
 	}
 
+	public List<HashMap<String, Object>> selectNoticeList(HashMap<String, String> paramMap) throws Exception{
+		return (List<HashMap<String, Object>>)selectPagingList("notice.selectNoticeList", paramMap);
+	}
+
 }

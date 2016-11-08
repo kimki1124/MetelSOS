@@ -8,6 +8,13 @@
 		<result property="support_response" column="SUPPORT_RESPONSE" jdbcType="CLOB" javaType="java.lang.String" />
 		<result property="support_engineer_comment" column="SUPPORT_ENGINEER_COMMENT" jdbcType="CLOB" javaType="java.lang.String" />
 	</resultMap>
+	
+	<resultMap id="supportMapResult" type="java.util.HashMap">
+		<result property="PURPOSE_OF_VISIT" column="PURPOSE_OF_VISIT" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="SUPPORT_REQUEST" column="SUPPORT_REQUEST" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="SUPPORT_RESPONSE" column="SUPPORT_RESPONSE" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="SUPPORT_ENGINEER_COMMENT" column="SUPPORT_ENGINEER_COMMENT" jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
 
 	<select id="getSupportListByEngineerName" parameterType="hashmap" resultMap="supportResult">
 		<![CDATA[
@@ -46,4 +53,69 @@
 			WHERE TO_CHAR(ADD_MONTHS(TO_DATE(SUPPORT_ACCEPT_DATE, 'YYYYMMDD HH24:MI:SS'), 0),'MM') = TO_CHAR(ADD_MONTHS(SYSDATE, #{interval}),'MM') AND SUPPORT_STATE != '지원 완료'
 		]]>
 	</select>
+	
+	<select id="selectSupportListByCustomerId" parameterType="string" resultMap="supportResult">
+		<![CDATA[
+			SELECT A.* FROM METELSOS_SUPPORT_HISTORY A, METELSOS_CUSTOMER B
+			WHERE A.CUSTOMER_NAME = (SELECT CUSTOMER_NAME FROM METELSOS_CUSTOMER WHERE CUSTOMER_ID = #{userId}) 
+			AND A.CUSTOMER_PHONE = (SELECT CUSTOMER_PHONE FROM METELSOS_CUSTOMER WHERE CUSTOMER_ID = #{userId}) AND SUPPORT_STATE != '지원 완료' AND ROWNUM <=5
+			ORDER BY SUPPORT_NUM DESC
+		]]>
+	</select>
+	
+	<select id="selectCompleteSupportListByCustomerId" parameterType="string" resultMap="supportResult">
+		<![CDATA[
+			SELECT A.* FROM METELSOS_SUPPORT_HISTORY A, METELSOS_CUSTOMER B
+			WHERE A.CUSTOMER_NAME = (SELECT CUSTOMER_NAME FROM METELSOS_CUSTOMER WHERE CUSTOMER_ID = #{userId}) 
+			AND A.CUSTOMER_PHONE = (SELECT CUSTOMER_PHONE FROM METELSOS_CUSTOMER WHERE CUSTOMER_ID = #{userId}) AND SUPPORT_STATE = '지원 완료' AND ROWNUM <=5
+			ORDER BY SUPPORT_NUM DESC
+		]]>
+	</select>
+	
+	<select id="selectAllSupportListByCustomerId" parameterType="hashmap" resultMap="supportMapResult">
+		<include refid="common.pagingPre"/>
+		<![CDATA[
+			SELECT 
+				ROW_NUMBER() OVER (ORDER BY A.SUPPORT_NUM DESC) RNUM, 
+				A.SUPPORT_NUM, 
+				A.SUPPORT_TITLE, 
+				A.COMPANY_NAME, 
+				A.CUSTOMER_NAME, 
+				A.SUPPORT_ENGINEER, 
+				A.SUPPORT_ACCEPT_DATE, 
+				A.SUPPORT_STATE  
+			FROM METELSOS_SUPPORT_HISTORY A, METELSOS_CUSTOMER B
+			WHERE A.CUSTOMER_NAME = (SELECT CUSTOMER_NAME FROM METELSOS_CUSTOMER WHERE CUSTOMER_ID = #{userId}) 
+			AND A.CUSTOMER_PHONE = (SELECT CUSTOMER_PHONE FROM METELSOS_CUSTOMER WHERE CUSTOMER_ID = #{userId})
+		]]>
+			<if test="searchValue != null">
+				<if test="searchValue != ''">
+    				AND A.SUPPORT_TITLE LIKE '%'||#{searchValue}||'%'
+				</if>
+			</if>
+		<![CDATA[
+			ORDER BY SUPPORT_NUM DESC
+		]]>
+		<include refid="common.pagingPost"/>
+	</select>
+	
+	<insert id="insertSupportRequest" parameterType="hashmap">
+		<selectKey keyProperty="supportNum" resultType="string" order="BEFORE">
+        	SELECT SEQ_SUPPORT_NUM.NEXTVAL FROM DUAL
+    	</selectKey>
+		<![CDATA[
+			INSERT INTO METELSOS_SUPPORT_HISTORY(SUPPORT_NUM, SUPPORT_TITLE, COMPANY_NAME, CUSTOMER_NAME, CUSTOMER_PHONE, SUPPORT_ACCEPT_DATE, SUPPORT_REQUEST, SUPPORT_STATE, HOPE_SUPPORT_DATE)
+			VALUES(#{supportNum}, #{support_title}, #{company_name}, #{customer_name}, #{customer_phone}, #{support_accept_date}, #{support_request}, '접수대기', #{hope_support_date})
+		]]>
+	</insert>
+	
+	<insert id="uploadSupportFile" parameterType="hashmap">
+		<selectKey keyProperty="supportFileNum" resultType="string" order="BEFORE">
+        	SELECT SEQ_SUPPORT_FILE_NUM.NEXTVAL FROM DUAL
+    	</selectKey>
+		<![CDATA[
+			INSERT INTO METELSOS_SUPPORT_FILE
+			VALUES(#{supportFileNum}, #{BOARD_IDX}, #{ORIGINAL_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, SYSDATE, #{CREA_ID}, 'N')
+		]]>
+	</insert>
 </mapper>

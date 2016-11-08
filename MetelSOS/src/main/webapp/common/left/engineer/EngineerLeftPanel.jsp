@@ -40,6 +40,7 @@
 		
 		<script>
 			function pageMove(title, icon){
+				console.log('gggg');
 				document.location.href="/metelSOS/leftMenuPageMove.do?userType=engineer&menuTitle="+title+"&menuIcon="+icon;
 			}
 		

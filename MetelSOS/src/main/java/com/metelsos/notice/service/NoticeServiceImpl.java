@@ -25,6 +25,11 @@ public class NoticeServiceImpl implements NoticeService{
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		MetelSOSUtil util = new MetelSOSUtil();
 		paramMap.put("currDate", util.currDatetoString("yyyyMMddHHmmss"));
+		
+		String content = paramMap.get("noticeContent");
+		content = content.replace(System.getProperty("line.separator"), "<br />");
+		paramMap.put("noticeContent", content);
+		
 		int result = noticeDao.insertNoticeBoard(paramMap);
 		
 		if(result > 0){
@@ -135,6 +140,36 @@ public class NoticeServiceImpl implements NoticeService{
 		
 		noticeDao.updateNotice(paramMap);
 		returnMap.put("resultMsg", "SUCCESS");
+		return returnMap;
+	}
+
+	@Override
+	public HashMap<String, Object> selectNoticeList(HashMap<String, String> paramMap) throws Exception {
+		MetelSOSUtil util = new MetelSOSUtil();
+		HashMap<String, Object> returnMap = new HashMap<String, Object>();
+		List<HashMap<String, Object>> noticeList = noticeDao.selectNoticeList(paramMap);
+		
+		for(int i=0;i<noticeList.size();i++){
+			HashMap<String, Object> noticeMap = noticeList.get(i);
+			noticeMap.put("NOTICE_DATE", util.changeDatePattern(String.valueOf(noticeMap.get("NOTICE_DATE")), "yyyyMMddHHmmss", "yyyy-MM-dd"));
+			
+			int boardNum = Integer.parseInt(String.valueOf(noticeMap.get("NOTICE_NUM")));
+			List<FileVo> fileList = noticeDao.getNoticeFileList(boardNum);
+			
+			if(fileList.size() > 0){
+				noticeMap.put("HAS_FILE", "Y");
+			}else{
+				noticeMap.put("HAS_FILE", "N");
+			}
+		}
+		
+		if(noticeList.size() > 0){
+			returnMap.put("TOTAL", noticeList.get(0).get("TOTAL_COUNT"));
+		}else{
+			returnMap.put("TOTAL", 0);
+		}
+		
+		returnMap.put("noticeList", noticeList);
 		return returnMap;
 	}
 

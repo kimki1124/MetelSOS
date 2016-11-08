@@ -10,6 +10,10 @@
 		<result property="crea_dtm" column="CREA_DTM" jdbcType="DATE" javaType="java.lang.String" />
 	</resultMap>
 	
+	<resultMap id="noticeMapResult" type="java.util.HashMap">
+		<result property="NOTICE_CONTENT" column="NOTICE_CONTENT" jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
+	
 	<select id="getNoticeList" resultMap="noticeResult">
 		<![CDATA[
 			SELECT NOTICE_NUM, NOTICE_TITLE, NOTICE_AUTHOR, NOTICE_DATE 
@@ -31,7 +35,7 @@
 	
 	<insert id="uploadNoticeFile" parameterType="hashmap">
 		<selectKey keyProperty="noticeFileNum" resultType="string" order="BEFORE">
-        	SELECT SEQ_NOTICE_NUM.NEXTVAL FROM DUAL
+        	SELECT SEQ_NOTICE_FILE_NUM.NEXTVAL FROM DUAL
     	</selectKey>
 		<![CDATA[
 			INSERT INTO METELSOS_NOTICE_FILE
@@ -119,4 +123,22 @@
 			WHERE NOTICE_NUM = #{notice_num}
 		]]>
 	</update>
+	
+	<select id="selectNoticeList" parameterType="hashmap" resultMap="noticeMapResult">
+		<include refid="common.pagingPre"/>
+		<![CDATA[
+			SELECT
+            	ROW_NUMBER() OVER (ORDER BY NOTICE_NUM DESC) RNUM,
+            	NOTICE_NUM,
+            	PARENT_NOTICE_NUM,
+            	NOTICE_TITLE,
+            	NOTICE_AUTHOR,
+            	NOTICE_DATE,
+            	NOTICE_CONTENT,
+            	NOTICE_HIT
+        	FROM
+            	METELSOS_NOTICE
+		]]>
+		<include refid="common.pagingPost"/>
+	</select>
 </mapper>

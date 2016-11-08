@@ -20,4 +20,6 @@ public interface NoticeService {
 
 	HashMap<String, Object> updateNotice(HashMap<String, String> paramMap) throws Exception;
 
+	HashMap<String, Object> selectNoticeList(HashMap<String, String> paramMap) throws Exception;
+
 }

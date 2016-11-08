@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qna">
+	<resultMap id="qnaResult" type="Qna">
+		<result property="qna_question" column="QNA_QUESTION" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="qna_answer" column="QNA_ANSWER" jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
+	
+	<select id="getQnaBest5" resultMap="qnaResult">
+		<![CDATA[
+			SELECT * 
+			FROM METELSOS_QNA
+			WHERE ROWNUM <= 5
+			ORDER BY QNA_HIT DESC
+		]]>
+	</select>
+</mapper>
