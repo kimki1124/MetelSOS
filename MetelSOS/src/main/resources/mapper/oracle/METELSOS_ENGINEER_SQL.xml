@@ -95,4 +95,12 @@
 			WHERE ENGINEER_DEPT = #{engineer_dept} AND TO_CHAR(TO_DATE(ENGINEER_CREATE_DATE, 'YYYYMMDDHH24MISS'), 'YYYYMM') = #{year_month}
 		]]>
 	</select>
+	
+	<select id="selectEngineerPosition" parameterType="hashmap" resultType="string">
+		<![CDATA[
+			SELECT ENGINEER_POSITION
+			FROM METELSOS_ENGINEER
+			WHERE ENGINEER_NAME = #{engineer_name} AND ENGINEER_PHONE = #{engineer_phone}
+		]]>
+	</select>
 </mapper>

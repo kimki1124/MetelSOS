@@ -72,4 +72,12 @@
 			WHERE CUSTOMER_ID = #{userId}
 		]]>
 	</select>
+	
+	<select id="selectCustomerPosition" parameterType="hashmap" resultType="string">
+		<![CDATA[
+			SELECT CUSTOMER_POSITION
+			FROM METELSOS_CUSTOMER
+			WHERE CUSTOMER_NAME = #{customer_name} AND CUSTOMER_PHONE = #{customer_phone}
+		]]>
+	</select>
 </mapper>

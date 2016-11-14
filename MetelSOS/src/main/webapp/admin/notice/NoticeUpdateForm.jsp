@@ -321,14 +321,6 @@
 				        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				    }
 				});
-		  		
-		  		/* var comSubmit = new ComSubmit();
-			    comSubmit.setUrl("/metelSOS/updateNotice.do");
-			    comSubmit.addParam("notice_num", "${noticeVo.notice_num }");
-			    comSubmit.addParam("userType", "engineer");
-			    comSubmit.addParam("menuTitle", encodeURI("공지사항"));
-			    comSubmit.addParam("menuIcon", "fa fa-lg fa-fw fa-bell");
-			    comSubmit.getSubmit(); */
 		  	});
 		
 		</script>

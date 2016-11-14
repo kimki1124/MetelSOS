@@ -34,6 +34,10 @@
 	href="/metelSOS/resources/img/favicon/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/metelSOS/resources/img/favicon/favicon.ico"
 	type="image/x-icon">
+	
+<!-- CUSTOM -->
+<link rel="stylesheet" type="text/css" media="screen"
+	href="/metelSOS/resources/css/your_style.css">
 
 <!-- #GOOGLE FONT -->
 <link rel="stylesheet"

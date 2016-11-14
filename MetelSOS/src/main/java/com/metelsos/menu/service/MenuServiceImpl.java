@@ -192,10 +192,14 @@ public class MenuServiceImpl implements MenuService{
 			//menuTitle이 customerMain이면 최근 지원 요청사항, 최근 지원 히스토리, QnA Best 5 item set
 			setCurrWaitSupportHistory(returnMap, paramMap);
 			setCurrCompleteSupportHistory(returnMap, paramMap);
-			setQnABest5(returnMap);
+			setQnABest5(returnMap);	
+		}else if("RequestSupport".equals(paramMap.get("menuTitle"))){
+			//지원 요청 시 customerInfo 가져오기
+			setNewSupportReqPageItems(returnMap, paramMap);
 		}
 		
 		//set breadcrumb value
+		returnMap.put("menu_eng_title", paramMap.get("menuTitle"));
 		returnMap.put("menuList", filterList);
 		returnMap.put("breadcrumbList", breadcrumbList);
 		returnMap.put("menuPath", menuPath);
@@ -206,6 +210,16 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuIcon", paramMap.get("menuIcon"));
 		
 		return returnMap;
+	}
+
+	private void getRequestCompanyList(HashMap<String, Object> returnMap) throws Exception{
+		List<String> acceptReqCompanyList = supportDao.getReqCompanyList("접수완료");
+		List<String> supportingReqCompanyList = supportDao.getReqCompanyList("지원 중");
+		List<String> completeReqCompanyList = supportDao.getReqCompanyList("지원 완료");
+		
+		returnMap.put("acceptReqCompanyList", acceptReqCompanyList);
+		returnMap.put("supportingReqCompanyList", supportingReqCompanyList);
+		returnMap.put("completeReqCompanyList", completeReqCompanyList);
 	}
 
 	private void setQnABest5(HashMap<String, Object> returnMap) throws Exception{
@@ -364,7 +378,7 @@ public class MenuServiceImpl implements MenuService{
 					for(int j=0;j<menuList.size();j++){
 						tempVo = menuList.get(j);
 						if(vo.getMenu_parent_code() == tempVo.getMenu_code()){
-							setMainBreadcrumb(menuList, breadcrumbList, menuEngTitleList, tempVo.getMenu_title());
+							setMainBreadcrumb(menuList, breadcrumbList, menuEngTitleList, tempVo.getMenu_eng_title());
 						}
 					}
 				}
@@ -569,8 +583,7 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 
-	@Override
-	public void setNewSupportReqPageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
+	private void setNewSupportReqPageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
 		HashMap<String, Object> customerInfoMap = customerDao.getCustomerInfo(paramMap.get("userId"));
 		

@@ -47,4 +47,8 @@ public class CustomerDao extends AbstractDAO{
 		return (HashMap<String, Object>)selectOne("customer.getCustomerInfo", userId);
 	}
 
+	public String selectCustomerPosition(HashMap<String, String> supportMap) throws Exception{
+		return (String)selectOne("customer.selectCustomerPosition", supportMap);
+	}
+
 }

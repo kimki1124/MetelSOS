@@ -175,14 +175,11 @@
 												<tbody>
 													<c:forEach var="item" items="${fileList}" varStatus="status">
 														<tr>
-															<td style="display:none;">
-																<input type="hidden" id="file_num" value="${item.file_num }">
-															</td>
 															<td>${status.count }</td>
 															<td>${item.original_file_name }</td>
 															<td>${item.file_size }kb</td>
 															<td>${item.crea_dtm }</td>
-															<td style="text-align:center;"><a href="#" class="noticeFile"><i class="fa fa-file fa-lg" aria-hidden="true"></i></a></td>
+															<td style="text-align:center;"><a href="javascript:downloadFile('${item.file_num }')" class="noticeFile"><i class="fa fa-file fa-lg" aria-hidden="true"></i></a></td>
 														</tr>
 													</c:forEach>
 												</tbody>
@@ -238,13 +235,6 @@
 		  		var content = "${noticeVo.notice_content }";
 		  		//로딩 후 textarea에 notice_content 값 세팅
 		  		$("#noticeContent").val(content.replace(/<br\s?\/?>/g,"\n"));
-		  		
-		  		//첨부파일 다운로드 클릭 이벤트
-		  		$(".noticeFile").click(function(e){
-		  			e.preventDefault();
-		  			downloadFile($(this));
-		  		});
-		  		
 		 	 });
 		  //삭제 버튼 클릭 이벤트 
 	  		$("#delete").click(function(e){
@@ -263,14 +253,13 @@
 		      comSubmit.addParam("menuIcon", "fa fa-lg fa-fw fa-bell");
 		      comSubmit.getSubmit();
 		  });
-		  	
-		  	function downloadFile(obj){
-		  		var file_num = $("#file_num").val();
-		       var comSubmit = new ComSubmit();
-		        comSubmit.setUrl("/metelSOS/downloadNoticeFile.do");
-		        comSubmit.addParam("file_num", file_num);
-		        comSubmit.postSubmit();
-		  	}
+		  
+		  	function downloadFile(file_num){
+			       var comSubmit = new ComSubmit();
+			       comSubmit.setUrl("/metelSOS/downloadNoticeFile.do");
+			       comSubmit.addParam("file_num", file_num);
+			       comSubmit.postSubmit();
+			}
 		
 		</script>
 

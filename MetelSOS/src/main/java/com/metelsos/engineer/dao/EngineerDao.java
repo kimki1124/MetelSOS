@@ -59,4 +59,8 @@ public class EngineerDao extends AbstractDAO{
 		return (List<String>)selectList("engineer.getNewEmplydNameList", paramMap);
 	}
 
+	public String selectEngineerPosition(HashMap<String, String> paramMap) throws Exception{
+		return (String)selectOne("engineer.selectEngineerPosition", paramMap);
+	}
+
 }

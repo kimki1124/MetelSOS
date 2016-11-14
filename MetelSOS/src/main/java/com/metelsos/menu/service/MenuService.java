@@ -31,7 +31,4 @@ public interface MenuService {
 	void setManageNewEmplydPageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception;
 
 	void setNewEmplydListItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception;
-
-	void setNewSupportReqPageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception;
-
 }

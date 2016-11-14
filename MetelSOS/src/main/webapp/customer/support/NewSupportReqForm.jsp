@@ -70,6 +70,23 @@
 						}
 					}]
 				});
+				
+				$('#date_error_dialog').dialog({
+					autoOpen : false,
+					width: 300,
+					height:200,
+					resizable: false,
+					modal : true,
+					title:"<div class='widget-header'><h4><i class='fa fa-warning'></i>&nbsp;새 지원 요청 등록 실패</h4></div>",
+					buttons:[{
+						html:"<i class='fa fa-check'></i>&nbsp; 확인",
+						"class": "btn btn-default",
+						click:function(){
+							$('#date_error_dialog').dialog("close");
+							return false;
+						}
+					}]
+				});
 			});
 		</script>
 </head>
@@ -161,16 +178,13 @@
 													<label class="input">
 														<input type="text" name="hope_support_date" placeholder="날짜를 선택해주세요." class="form-control datepicker" data-dateformat="yy/mm/dd">
 													</label>
-													<div class="note">
-														<strong>참고:</strong>지원을 희망하는 날짜를 선택해주세요.
-													</div>
 													</div>
 												</section>
 											</fieldset>
 											<fieldset>
 												<section>
 													<label class="label"><strong>요청사항</strong></label>
-													<label class="textarea textarea-resizable"> <i class="icon-append fa fa-question-circle"></i> 										
+													<label class="textarea textarea-resizable"> <i class="icon-append fa fa-question-circle"></i>
 														<textarea rows="10" name="support_request"></textarea>
 														<b class="tooltip tooltip-top-right"> 
 															<i class="fa fa-warning txt-color-teal"></i> 
@@ -203,7 +217,7 @@
 					<button id="enroll" class="btn btn-success">
 						등록하기
 					</button>
-					<button id="moveSupportList" class="btn btn-danger">
+					<button id="moveSupportList" class="btn btn-primary">
 						목록으로
 					</button>
 				</section>
@@ -221,6 +235,11 @@
 		<div id="err_500_dialog" title="err 500 dialog">
 			<p>
 				<span id="err-dialog-text"></span>
+			</p>
+		</div>
+		<div id="date_error_dialog" title="date error dialog">
+			<p>
+				<span>희망 지원일은 오늘 이전 날짜는 선택할 수 없습니다.</span>
 			</p>
 		</div>
 		<script type="text/javascript">
@@ -258,25 +277,32 @@
 						init : function(){
 							var myDropzone = this;
 							$("#enroll").click(function(){
-								if($("input[name=support_title]").val() == ''){
+								if($("input[name=support_title]").val() == '' || $("input[name=customer_phone]").val() == '' || $("input[name=hope_support_date]").val() == '' || $("textarea[name=support_request]").val() == ''){
 									$('#empty_dialog').dialog("open");
 									return false;
 								}
 								
-								if($("input[name=customer_phone]").val() == ''){
-									$('#empty_dialog').dialog("open");
+								var today = new Date();
+								var dd = today.getDate();
+								var mm = today.getMonth();
+								var yyyy = today.getFullYear();
+
+								if(dd<10) {
+								    dd='0'+dd;
+								} 
+
+								if(mm<10) {
+								    mm='0'+mm;
+								} 
+
+								today = new Date(yyyy, mm, dd);
+								var hope_support_date = new Date($("input[name=hope_support_date]").val());
+								
+								if(today > hope_support_date){
+									$('#date_error_dialog').dialog("open");
 									return false;
 								}
 								
-								if($("input[name=hope_support_date]").val() == ''){
-									$('#empty_dialog').dialog("open");
-									return false;
-								}
-								
-								if($("textarea[name=support_request]").val() == ''){
-									$('#empty_dialog').dialog("open");
-									return false;
-								}
 								
 								$.ajax({
 					        		url:'/metelSOS/insertSupportRequest.do',
@@ -313,86 +339,11 @@
 		  			});
 		  			
 		  		});
-		  		
-		  		/* $("#supportReqForm").validate({
-
-					rules : {
-						support_title : {
-							required : true
-						},
-						
-						customer_phone : {
-							required : true
-						},
-						
-						hope_support_date : {
-							required : true
-						},
-						
-						support_request : {
-							required : true
-						}
-						
-					},
-
-					messages : {
-						support_title : {
-							required : '제목을 입력해주세요.',
-						},
-						
-						customer_phone : {
-							required : '담당자 번호를 입력해주세요.',
-						},
-						
-						hope_support_date : {
-							required : '희망 지원일자를 선택해주세요.',
-						},
-						
-						support_request : {
-							required : '요청사항을 입력해주세요.',
-						}
-					},
-					
-					invalidHandler: function(form, validator) {
-			             return false;
-			        },
-			        
-			        submitHandler: function (form) {
-			        	/* var formData = new FormData();
-			        	var specifyDate = '${currYear}-${selectMonth}-01';
-			        	formData.append("exclnt_year_month", specifyDate);
-			        	formData.append("engineer_dept", $("#deptSelect").val());
-			        	formData.append("engineer_name", $("#nameSelect").val());
-			        	formData.append("engineer_image", $("input[name=engineer_image]")[0].files[0]);
-			        	formData.append("impression_speech", $("#impression_speech").val());
-			        	$.ajax({
-							url:'/metelSOS/enrollExclntStf.do',
-							type:'POST',
-							processData: false,
-			        	    contentType: false,
-							data: formData,
-							success:function(msg){
-								var obj = eval("("+msg+")");
-								if(obj.resultMsg == 'SUCCESS'){
-									var comSubmit = new ComSubmit();
-						  			comSubmit.setUrl("/metelSOS/moveExclntStfListPage.do");
-						  			comSubmit.addParam('currYear', '${currYear}');
-						  			comSubmit.addParam('selectMonth', '${selectMonth}');
-						  			comSubmit.addParam('userType', 'engineer');
-						  			comSubmit.addParam('menuTitle', encodeURI("${currYear}년 ${selectMonth}월 우수사원 "));
-						  			comSubmit.addParam('menuIcon', 'fa fa-lg fa-fw fa-thumbs-up');
-						  			comSubmit.getSubmit();
-								}
-							},
-							error:function(request,status,error){
-								alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-						    }
-						}); 
-			            
-			        }
-				});*/
 		 	 });
 		  	
+		  	$("#moveSupportList").click(function(e){
+		  		document.location.href="/metelSOS/leftMenuPageMove.do?userType=customer&menuTitle=RequestSupport&menuIcon=fa fa-lg fa-fw fa-info-circle";
+		  	});
 		
 		</script>
 

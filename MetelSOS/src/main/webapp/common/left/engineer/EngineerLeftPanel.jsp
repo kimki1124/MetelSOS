@@ -15,7 +15,6 @@
 						<c:choose>
 							<c:when test="${fn:length(item.children) > 0}">
 								<a href="#"><i class="${item.menu_icon}"></i><span class="menu-item-parent">${item.menu_title}</span></a>
-								<c:if test="${fn:length(item.children) > 0}">
 									<ul>
 										<c:forEach var="childItem" items="${item.children}" varStatus="childStatus">
 											<li>
@@ -23,7 +22,6 @@
 											</li>
 										</c:forEach>
 									</ul>
-								</c:if>
 							</c:when>
 							<c:otherwise>
 								<a href="javascript:pageMove('${item.menu_eng_title}', '${item.menu_icon}')"><i class="${item.menu_icon}"></i><span class="menu-item-parent">${item.menu_title}</span></a>
@@ -40,7 +38,6 @@
 		
 		<script>
 			function pageMove(title, icon){
-				console.log('gggg');
 				document.location.href="/metelSOS/leftMenuPageMove.do?userType=engineer&menuTitle="+title+"&menuIcon="+icon;
 			}
 		

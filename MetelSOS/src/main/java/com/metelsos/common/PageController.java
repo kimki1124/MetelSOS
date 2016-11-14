@@ -148,7 +148,7 @@ public class PageController {
 		return model;
 	}
 	
-	@RequestMapping(value="/moveNewSupportReqPage.do")
+	/*@RequestMapping(value="/moveNewSupportReqPage.do")
 	public ModelAndView moveNewSupportReqPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => moveNewSupportReqPage");
 		ModelAndView model = new ModelAndView();
@@ -160,6 +160,6 @@ public class PageController {
 		model.setViewName("/customer/support/NewSupportReqForm");
 		
 		return model;
-	}
+	}*/
 	
 }

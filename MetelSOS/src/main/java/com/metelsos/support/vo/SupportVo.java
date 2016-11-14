@@ -7,7 +7,8 @@ public class SupportVo {
 	private String support_engineer;              
 	private String support_engineer_phone;        
 	private String customer_name;                    
-	private String customer_phone;                
+	private String customer_phone;
+	private String customer_position;
 	private String support_accept_date;     
 	private String support_way;                       
 	private String purpose_of_visit;                  
@@ -16,7 +17,16 @@ public class SupportVo {
 	private String support_response;                  
 	private String support_state;                   
 	private String support_engineer_comment;
+	private String hope_support_date;
+	private String engineer_position;
 	
+	
+	public String getEngineer_position() {
+		return engineer_position;
+	}
+	public void setEngineer_position(String engineer_position) {
+		this.engineer_position = engineer_position;
+	}
 	public int getSupport_num() {
 		return support_num;
 	}
@@ -107,4 +117,17 @@ public class SupportVo {
 	public void setSupport_engineer_comment(String support_engineer_comment) {
 		this.support_engineer_comment = support_engineer_comment;
 	}
+	public String getHope_support_date() {
+		return hope_support_date;
+	}
+	public void setHope_support_date(String hope_support_date) {
+		this.hope_support_date = hope_support_date;
+	}
+	public String getCustomer_position() {
+		return customer_position;
+	}
+	public void setCustomer_position(String customer_position) {
+		this.customer_position = customer_position;
+	}
+	
 }

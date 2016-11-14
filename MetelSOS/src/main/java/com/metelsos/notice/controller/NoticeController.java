@@ -86,7 +86,7 @@ public class NoticeController {
 		String storedFileName = vo.getStored_file_name();
 		String originalFileName = vo.getOriginal_file_name();
 		
-		byte fileByte[] = FileUtils.readFileToByteArray(new File("C:\\dev\\file\\"+storedFileName));	
+		byte fileByte[] = FileUtils.readFileToByteArray(new File("C:\\dev\\file\\notice\\"+storedFileName));	
 		
 		response.setContentType("application/octet-stream");
 	    response.setContentLength(fileByte.length);

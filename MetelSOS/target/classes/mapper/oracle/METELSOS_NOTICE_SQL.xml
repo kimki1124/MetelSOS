@@ -141,4 +141,5 @@
 		]]>
 		<include refid="common.pagingPost"/>
 	</select>
+	
 </mapper>

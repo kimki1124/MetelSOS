@@ -14,7 +14,7 @@ function ComSubmit(opt_formId) {
     this.url = "";
      
     if(this.formId == "commonForm"){
-        $("#commonForm")[0].reset();
+        $("#commonForm").empty();
     }
      
     this.setUrl = function setUrl(url){
@@ -127,10 +127,13 @@ var gfv_pageIndex = null;
 var gfv_eventName = null;
 var gfv_searchValue = null;
 var gfv_searchValueId = null;
+var gfv_companyNameId = null;
+var gfv_companyName = null;
 function gfn_renderPaging(params){
     var divId = params.divId; //페이징이 그려질 div id
     gfv_pageIndex = params.pageIndex; //현재 위치가 저장될 input 태그
     gfv_searchValueId = params.searchValueId;
+    gfv_companyNameId = params.companyNameId;
     var totalCount = params.totalCount; //전체 조회 건수
     var currentIndex = $("#"+params.pageIndex).val(); //현재 위치
     if($("#"+params.pageIndex).length == 0 || gfn_isNull(currentIndex) == true){
@@ -144,7 +147,8 @@ function gfn_renderPaging(params){
     var totalIndexCount = Math.ceil(totalCount / recordCount); // 전체 인덱스 수
     gfv_eventName = params.eventName;
     gfv_searchValue = params.searchValue;
-     
+    gfv_companyName = params.companyName;
+    
     $("#"+divId).empty();
     var preStr = "";
     var postStr = "";
@@ -154,29 +158,36 @@ function gfn_renderPaging(params){
     var last = (parseInt(totalIndexCount/10) == parseInt(currentIndex/10)) ? totalIndexCount%10 : 10;
     var prev = (parseInt((currentIndex-1)/10)*10) - 9 > 0 ? (parseInt((currentIndex-1)/10)*10) - 9 : 1; 
     var next = (parseInt((currentIndex-1)/10)+1) * 10 + 1 < totalIndexCount ? (parseInt((currentIndex-1)/10)+1) * 10 + 1 : totalIndexCount;
-     
-    preStr += '<ul class="pagination pagination-alt"><li><a href="#this" onclick="_movePage('+prev+', '+gfv_searchValue+')" ><i class="fa fa-angle-left"></i></a></li>';
     
-    postStr += '<li><a href="#this" onclick="_movePage('+next+', '+gfv_searchValue+')" ><i class="fa fa-angle-right"></i></a></li></ul>';
+    var prevMethod = "_movePage(this.id, '"+prev+"', '"+gfv_searchValue+"', '"+gfv_companyName+"')";
+    var nextMethod = "_movePage(this.id, '"+next+"', '"+gfv_searchValue+"', '"+gfv_companyName+"')";
+    
+     
+    preStr += '<ul class="pagination pagination-alt"><li><a id="prev" href="#this" onclick="'+prevMethod+'" ><i class="fa fa-angle-left"></i></a></li>';
+    
+    postStr += '<li><a id="next" href="#this" onclick="'+nextMethod+'" ><i class="fa fa-angle-right"></i></a></li></ul>';
      
     for(var i=first; i<(first+last); i++){
+    	var iMethod = "_movePage(this.id, '"+i+"', '"+gfv_searchValue+"', '"+gfv_companyName+"')";
+    	
         if(i != currentIndex){
-        	str += '<li><a href="#this" onclick="_movePage('+i+', '+gfv_searchValue+')" >'+i+'</a></li>';
+        	str += '<li><a id="'+i+'" href="#this" onclick="'+iMethod+'" >'+i+'</a></li>';
         }
         else{
-        	str += '<li class="active"><a href="#this" onclick="_movePage('+i+', '+gfv_searchValue+')" >'+i+'</a></li>';
+        	str += '<li class="active"><a id="'+i+'" href="#this" onclick="'+iMethod+'" >'+i+'</a></li>';
         }
     }
     $("#"+divId).append(preStr + str + postStr);
 }
  
-function _movePage(value, searchValue){
+function _movePage(id, value, searchValue, companyName){
     $("#"+gfv_pageIndex).val(value);
     $("#"+gfv_searchValueId).val(searchValue);
+    $("#"+gfv_companyNameId).val(companyName);
     if(typeof(gfv_eventName) == "function"){
-        gfv_eventName(value, searchValue);
+        gfv_eventName(value, searchValue, companyName);
     }
     else {
-        eval(gfv_eventName + "(value, searchValue);");
+        eval(gfv_eventName + "(value, searchValue, companyName);");
     }
 }
