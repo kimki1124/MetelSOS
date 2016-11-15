@@ -4,7 +4,18 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+/**
+ * 
+* <pre>
+* com.metelsos.customer.service
+*   |_ CustomerService.java
+* </pre>
+* 
+* Desc : 고객사 고객회원 관련 서비스 인터페이스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 5:53:27
+* @Version :
+ */
 public interface CustomerService {
 
 	HashMap<String, Object> checkLogin(HashMap<String, String> paramMap, HttpServletRequest request,

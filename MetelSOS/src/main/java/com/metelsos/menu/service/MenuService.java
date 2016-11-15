@@ -7,7 +7,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.metelsos.menu.vo.MenuVo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.menu.service
+*   |_ MenuService.java
+* </pre>
+* 
+* Desc : LEFTMENU 관련 서비스 인터페이스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 9:18:47
+* @Version :
+ */
 public interface MenuService {
 
 	List<MenuVo> getEngineerLeftMenuList() throws Exception;

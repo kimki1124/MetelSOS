@@ -26,7 +26,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
+/**
+ * 
+* <pre>
+* com.metelsos.common.util
+*   |_ MetelSOSUtil.java
+* </pre>
+* 
+* Desc : 공통 유틸 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 3:05:39
+* @Version :
+ */
 public class MetelSOSUtil {
 	
 	private Log log = LogFactory.getLog(MetelSOSUtil.class);
@@ -35,10 +46,12 @@ public class MetelSOSUtil {
 	private static final String noticeFilePath = "C:\\dev\\file\\notice\\";
 	
 	/**
-	 * 임시 비밀번호 생성 
+	 * 
+	 * Desc : 비밀번호 분실 시 임시 비밀번호 생성하는 메서드
+	 * @Method Name : generateTempPasswd
 	 * @param type - 임시 비밀번호 타입
 	 * @param cnt - 임시 비밀번호 사이즈
-	 * @return
+	 * @return 임시 비밀번호
 	 */
 	public String generateTempPasswd(String type, int cnt){
 		StringBuffer strPwd = new StringBuffer();
@@ -83,13 +96,16 @@ public class MetelSOSUtil {
 		
 		return strPwd.toString();
 	}
-
+	
 	/**
-	 * 메일 전송
-	 * @param engineer_email - 수신자 메일주소
-	 * @param tempPasswd - 메일 내용
+	 * 
+	 * Desc : 메일 전송 메서드
+	 * @Method Name : sendEmail
+	 * @param receiver - 수신자 메일 주소
+	 * @param title - 메일 제목
+	 * @param content - 메일 내용
 	 */
-	public void sendEmail(String receiver, String title, String content, String tempPasswd) {
+	public void sendEmail(String receiver, String title, String content) {
 		Properties p = System.getProperties();
 		p.put("mail.smtp.starttls.enable", "true");     // gmail은 무조건 true 고정
         p.put("mail.smtp.host", "smtp.gmail.com");      // smtp 서버 주소
@@ -180,9 +196,9 @@ public class MetelSOSUtil {
     }
 	
 	/**
-	 * 
-	 * @param map
-	 * @param request
+	 * 파일을 로컬 경로에 저장하고 파일 정보를 Map에 담아서 Map List를 반환함
+	 * @param map - 파라미터를 담고있는 Map 객체
+	 * @param request - 파일 데이터를 담고있는 HttpServletRequest 객체
 	 * @return
 	 * @throws Exception
 	 */

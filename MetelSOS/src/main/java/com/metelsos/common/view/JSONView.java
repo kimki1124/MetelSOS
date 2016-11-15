@@ -14,10 +14,24 @@ import org.springframework.web.servlet.view.AbstractView;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+/**
+* <pre>
+* com.metelsos.common.view
+*   |_ JSONView.java
+* </pre>
+* 
+* Desc : AJAX를 보내기 위한 JSONView 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 3:10:58
+* @Version :
+ */
 public class JSONView extends AbstractView{
 	
 	protected final Log logger = LogFactory.getLog(getClass());
 
+	/**
+	 * AJAX로 내보낼 데이터 가공
+	 */
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> map, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {

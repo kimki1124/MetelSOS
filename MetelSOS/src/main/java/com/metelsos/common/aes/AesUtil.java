@@ -3,16 +3,28 @@ package com.metelsos.common.aes;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
-
+/**
+ * 
+* <pre>
+* com.metelsos.common.aes
+*   |_ AesUtil.java
+* </pre>
+* 
+* Desc : 암호화 유틸 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 2:52:11
+* @Version :
+ */
 public class AesUtil {
 	/** 암호화 키 16자리 */
 	private String key = "fe8025947de7cd71";
 
     /**
-     * hex to byte[] : 16진수 문자열을 바이트 배열로 변환한다.
-     *
-     * @param hex    hex string
-     * @return
+     * 
+     * Desc : 16진수 문자열을 바이트 배열로 변환한다.
+     * @Method Name : hexToByteArray
+     * @param hex - 16진수 문자열
+     * @return byte[]
      */
     public byte[] hexToByteArray(String hex) {
     	
@@ -30,10 +42,11 @@ public class AesUtil {
     }
 
     /**
-     * byte[] to hex : unsigned byte(바이트) 배열을 16진수 문자열로 바꾼다.
-     *
-     * @param ba        byte[]
-     * @return
+     * 
+     * Desc : unsigned byte(바이트) 배열을 16진수 문자열로 바꾼다.
+     * @Method Name : byteArrayToHex
+     * @param ba - unsigned byte[]
+     * @return 16진수 문자열
      */
     public String byteArrayToHex(byte[] ba) {
     	
@@ -52,11 +65,11 @@ public class AesUtil {
         return sb.toString();
     }
 
-
     /**
-     * AES 방식의 암호화
-     *
-     * @param message 암호화 대상 문자열
+     * 
+     * Desc : AES 방식의 암호화
+     * @Method Name : encrypt
+     * @param message - message 암호화 대상 문자열
      * @return String 암호화 된 문자열
      * @throws Exception
      */
@@ -75,9 +88,10 @@ public class AesUtil {
     }
     
     /**
-     * AES 방식의 복호화
-     *
-     * @param message 복호화 대상 문자열
+     * 
+     * Desc : AES 방식의 복호화
+     * @Method Name : decrypt
+     * @param encrypted - message 복호화 대상 문자열
      * @return String 복호화 된 문자열
      * @throws Exception
      */

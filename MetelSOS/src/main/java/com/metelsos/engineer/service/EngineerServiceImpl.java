@@ -17,13 +17,34 @@ import com.metelsos.common.aes.AesUtil;
 import com.metelsos.common.util.MetelSOSUtil;
 import com.metelsos.engineer.dao.EngineerDao;
 import com.metelsos.engineer.vo.EngineerVo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.engineer.service
+*   |_ EngineerServiceImpl.java
+* </pre>
+* 
+* Desc : 엔지니어 회원관련 서비스 구현 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 6:10:40
+* @Version :
+ */
 @Service("engineerService")
 public class EngineerServiceImpl implements EngineerService{
 
 	@Resource(name="engineerDao")
 	private EngineerDao engineerDao;
 	
+	/**
+	 * 
+	 * Desc : 입력받은 ID와 비밀번호로 DB에 조회해서 회원이 있으면 세션 부여하고 로그인 처리
+	 * @Method Name : checkLogin
+	 * @param paramMap
+	 * @param request
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> checkLogin(HashMap<String, String> paramMap, HttpServletRequest request,
 			HttpSession session) throws Exception {
@@ -48,6 +69,14 @@ public class EngineerServiceImpl implements EngineerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어회원 ID validation
+	 * @Method Name : validateEngineerId
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> validateEngineerId(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -63,6 +92,14 @@ public class EngineerServiceImpl implements EngineerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어 회원 가입 시 회원가입 폼에 받은 정보 DB에 INSERT
+	 * @Method Name : insertEngineer
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> insertEngineer(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -88,6 +125,14 @@ public class EngineerServiceImpl implements EngineerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어 회원 아이디 찾기
+	 * @Method Name : findEngineerId
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> findEngineerId(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -100,6 +145,14 @@ public class EngineerServiceImpl implements EngineerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어 회원에게 이메일로 임시 비밀번호 보내기
+	 * @Method Name : sendTempEngineerPasswd
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> sendTempEngineerPasswd(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -125,7 +178,7 @@ public class EngineerServiceImpl implements EngineerService{
 			content.append("<br /><br />");
 			content.append("임시 비밀번호로 접속 후 마이프로필에서 비밀번호를 변경해 주시기 바랍니다. <br />");
 			content.append("from. MetelSOS ADMIN");
-			util.sendEmail(vo.getEngineer_email(), title, content.toString(), tempPasswd);
+			util.sendEmail(vo.getEngineer_email(), title, content.toString());
 			returnMap.put("tempPasswd", tempPasswd);
 			returnMap.put("resultMsg", "SUCCESS");
 		}else{
@@ -135,6 +188,14 @@ public class EngineerServiceImpl implements EngineerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어회원 개인정보 수정 
+	 * @Method Name : updateEngineerInfo
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> updateEngineerInfo(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -161,6 +222,14 @@ public class EngineerServiceImpl implements EngineerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어 회원 탈퇴 시 해당 회원의 정보 DB에서 DELETE
+	 * @Method Name : deleteEngineerAccount
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> deleteEngineerAccount(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();

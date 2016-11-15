@@ -1,5 +1,16 @@
 package com.metelsos.notice.vo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.notice.vo
+*   |_ NoticeVo.java
+* </pre>
+* 
+* Desc : 공지사항 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 11:13:13
+* @Version :
+ */
 public class NoticeVo {
 	private int notice_num;
 	private int parent_notice_num;

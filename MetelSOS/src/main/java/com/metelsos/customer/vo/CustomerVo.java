@@ -1,5 +1,16 @@
 package com.metelsos.customer.vo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.customer.vo
+*   |_ CustomerVo.java
+* </pre>
+* 
+* Desc : 고객회원정보 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 6:00:31
+* @Version :
+ */
 public class CustomerVo {
 	private int customer_num;
 	private String customer_id;

@@ -11,7 +11,18 @@ import org.springframework.stereotype.Service;
 import com.metelsos.engineer.dao.EngineerDao;
 import com.metelsos.newemplyd.dao.NewemplydDao;
 import com.metelsos.newemplyd.vo.NewemplydVo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.newemplyd.service
+*   |_ NewemplydServiceImpl.java
+* </pre>
+* 
+* Desc : 신입사원 관련 서비스 구현 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 9:50:52
+* @Version :
+ */
 @Service("newemplydService")
 public class NewemplydServiceImpl implements NewemplydService{
 	
@@ -21,6 +32,14 @@ public class NewemplydServiceImpl implements NewemplydService{
 	@Resource(name="engineerDao")
 	private EngineerDao engineerDao;
 
+	/**
+	 * 
+	 * Desc : 신입사원 정보 삭제 
+	 * @Method Name : deleteNewEmplyd
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> deleteNewEmplyd(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -40,6 +59,14 @@ public class NewemplydServiceImpl implements NewemplydService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 신입사원의 이름 리스트를 가져옴
+	 * @Method Name : setNewEmplydNameList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> setNewEmplydNameList(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -58,6 +85,14 @@ public class NewemplydServiceImpl implements NewemplydService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 신입사원의 정보를 추가
+	 * @Method Name : enrollNewEmplyd
+	 * @param vo
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> enrollNewEmplyd(NewemplydVo vo) throws Exception {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
@@ -83,6 +118,14 @@ public class NewemplydServiceImpl implements NewemplydService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 신입사원 테이블에서 신입사원 이미지 가져옴
+	 * @Method Name : getNewEmplydImage
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> getNewEmplydImage(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();

@@ -8,13 +8,27 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+/**
+ * 
+* <pre>
+* com.metelsos.common.logger
+*   |_ LoggerInterceptor.java
+* </pre>
+* 
+* Desc : 인터셉터 클래스, 프론트에서 서버 호출 시 세션 체크 역할 수행
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 3:03:10
+* @Version :
+ */
 public class LoggerInterceptor extends HandlerInterceptorAdapter{
 	protected Log log = LogFactory.getLog(LoggerInterceptor.class);
 
+	/**
+	 * 전처리기. 컨트롤러가 호출되기 전에 실행됨
+	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		// 전처리기. 컨트롤러가 호출되기 전에 실행됨
 		log.info("====================== START ======================");
 		log.info(" Request URI \t:     "+ request.getRequestURI());
 		if("/metelSOS/login.do".equals(request.getRequestURI()) || "/metelSOS/engineerRegister.do".equals(request.getRequestURI())
@@ -39,10 +53,12 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter{
 		return super.preHandle(request, response, handler);
 	}
 
+	/**
+	 * 후처리기. 컨트롤러에서 클라이언트로 응답하기 전에 실행됨
+	 */
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		//  후처리기. 컨트롤러에서 클라이언트로 응답하기 전에 실행됨
+			ModelAndView modelAndView) throws Exception { 
 		log.info("====================== END ======================");
 	}
 	

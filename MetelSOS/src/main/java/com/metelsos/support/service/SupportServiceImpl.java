@@ -31,7 +31,18 @@ import com.metelsos.support.vo.FileVo;
 import com.metelsos.support.vo.SupportVo;
 
 import net.sf.json.JSONException;
-
+/**
+ * 
+* <pre>
+* com.metelsos.support.service
+*   |_ SupportServiceImpl.java
+* </pre>
+* 
+* Desc : 지원 요청 및 지원 관련 서비스 구현 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오후 9:02:00
+* @Version :
+ */
 @Service("supportService")
 public class SupportServiceImpl implements SupportService{
 	private Log log = LogFactory.getLog(SupportServiceImpl.class);
@@ -45,6 +56,14 @@ public class SupportServiceImpl implements SupportService{
 	@Resource(name="engineerDao")
 	private EngineerDao engineerDao;
 
+	/**
+	 * 
+	 * Desc : 지원 요청 글 등록 시 INSERT 서비스
+	 * @Method Name : insertSupportRequest
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> insertSupportRequest(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -86,6 +105,11 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 요청 글 등록 시 엔지니어회원들에게 문자 전송 (문자 전송 기능만 구현, 구체적인 구현은 아직 안함)
+	 * @Method Name : sendSMSAllEngineer
+	 */
 	private void sendSMSAllEngineer() {
 		String api_key = "";
 		String api_secret = "";
@@ -116,6 +140,15 @@ public class SupportServiceImpl implements SupportService{
 		}
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 요청 글 등록 시 첨부파일 업로드
+	 * @Method Name : uploadSupportFile
+	 * @param paramMap
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> uploadSupportFile(HashMap<String, Object> paramMap, HttpServletRequest request)
 			throws Exception {
@@ -137,6 +170,15 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 요청 글의 첨부파일 로컬에 생성하고 파일 테이블에 넣을 데이터 포맷을 맞춤
+	 * @Method Name : parseInsertFileInfo
+	 * @param paramMap
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	private List<HashMap<String, Object>> parseInsertFileInfo(HashMap<String, Object> paramMap,
 			HttpServletRequest request) throws Exception{
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
@@ -180,10 +222,24 @@ public class SupportServiceImpl implements SupportService{
 		return list;
 	}
 
+	/**
+	 * 
+	 * Desc : 32글자의 랜덤한 문자열(숫자포함)을 만들어서 반환
+	 * @Method Name : getRandomString
+	 * @return
+	 */
 	private String getRandomString() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 요청 글 상세보기 페이지에 필요한 데이터 SET
+	 * @Method Name : setSupportDetailPageItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setSupportDetailPageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
@@ -229,6 +285,14 @@ public class SupportServiceImpl implements SupportService{
 		}
 	}
 
+	/**
+	 * 
+	 * Desc : 첨부파일 다운로드 시 해당 파일의 정보 가져옴
+	 * @Method Name : selectSupportFileInfo
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> selectSupportFileInfo(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -239,6 +303,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 첨부파일 삭제
+	 * @Method Name : deleteSupportFile
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> deleteSupportFile(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -254,6 +326,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 요청 글 수정 시 해당 글 정보 UPDATE
+	 * @Method Name : updateSupportRequest
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> updateSupportRequest(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -288,6 +368,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 요청 글 삭제 시 해당 글 정보 DELETE
+	 * @Method Name : deleteSupportHistory
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> deleteSupportHistory(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -303,6 +391,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 미지원 상태의 지원 요청 리스트 가져오기
+	 * @Method Name : getUnSupportList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> getUnSupportList(HashMap<String, String> paramMap) throws Exception {
 		MetelSOSUtil util = new MetelSOSUtil();
@@ -339,6 +435,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 접수 대기 상태의 지원 요청 글 상세보기 페이지에 필요한 데이터 SET
+	 * @Method Name : setUnsupportDetailItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setUnsupportDetailItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
@@ -384,6 +488,14 @@ public class SupportServiceImpl implements SupportService{
 		}
 	}
 
+	/**
+	 * 
+	 * Desc : 접수 대기 상태의 지원 요청을 접수 완료로 업데이트
+	 * @Method Name : acceptSupport
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> acceptSupport(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -399,6 +511,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 접수 완료 상태의 지원 요청 리스트 가져옴
+	 * @Method Name : getAcceptSupportList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> getAcceptSupportList(HashMap<String, String> paramMap) throws Exception {
 		MetelSOSUtil util = new MetelSOSUtil();
@@ -428,6 +548,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 중 상태의 지원 요청 리스트 가져옴
+	 * @Method Name : getSupportingList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> getSupportingList(HashMap<String, String> paramMap) throws Exception {
 		MetelSOSUtil util = new MetelSOSUtil();
@@ -464,6 +592,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 완료 상태의 지원 요청 리스트 가져옴
+	 * @Method Name : getCompleteSupportList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> getCompleteSupportList(HashMap<String, String> paramMap) throws Exception {
 		MetelSOSUtil util = new MetelSOSUtil();
@@ -500,6 +636,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 고객 회원 접속 시 본인이 요청한 지원 요청 리스트 가져옴 
+	 * @Method Name : getCusSupportList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> getCusSupportList(HashMap<String, String> paramMap) throws Exception {
 		MetelSOSUtil util = new MetelSOSUtil();
@@ -528,7 +672,13 @@ public class SupportServiceImpl implements SupportService{
 		
 		return returnMap;
 	}
-	
+	/**
+	 * 
+	 * Desc : Map List를 JSONArray로 변경 후 toString해서 리턴 (jqgrid 데이터 포맷)
+	 * @Method Name : listmap_to_json_string
+	 * @param list
+	 * @return
+	 */
 	private String listmap_to_json_string(List<HashMap<String, Object>> list)
 	{       
 	    JSONArray json_arr=new JSONArray();
@@ -549,6 +699,14 @@ public class SupportServiceImpl implements SupportService{
 	    return json_arr.toString();
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어가 접수 완료 된 지원 요청 상세보기 페이지로 넘어갈 때 필요한 데이터 SET 
+	 * @Method Name : setUpdateSupportingFormItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setUpdateSupportingFormItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
@@ -584,6 +742,14 @@ public class SupportServiceImpl implements SupportService{
 		returnMap.put("supportInfo", supportMap);
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 요청의 지원 상태 업데이트
+	 * @Method Name : updateSupportState
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> updateSupportState(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -620,6 +786,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 중 상태의 지원 요청 글 상세보기 페이지로 넘어갈 때 필요한 데이터 SET
+	 * @Method Name : setUpdateCompleteSupportFormItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setUpdateCompleteSupportFormItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
@@ -657,6 +831,14 @@ public class SupportServiceImpl implements SupportService{
 		returnMap.put("supportInfo", supportMap);
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 중 상태의 지원 요청을 지원 완료로 상태 업데이트
+	 * @Method Name : updateSupportingState
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> updateSupportingState(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -683,6 +865,14 @@ public class SupportServiceImpl implements SupportService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 지원 완료 상태의 지원 요청 글 상세보기 페이지로 넘어갈 때 필요한 데이터 SET
+	 * @Method Name : getCompleteSupDetail
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> getCompleteSupDetail(HashMap<String, String> paramMap) throws Exception {
 		MetelSOSUtil util = new MetelSOSUtil();

@@ -13,13 +13,32 @@ import com.metelsos.common.util.MetelSOSUtil;
 import com.metelsos.notice.dao.NoticeDao;
 import com.metelsos.notice.vo.FileVo;
 import com.metelsos.notice.vo.NoticeVo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.notice.service
+*   |_ NoticeServiceImpl.java
+* </pre>
+* 
+* Desc : 공지사항 관련 서비스 구현 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 10:38:21
+* @Version :
+ */
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService{
 	
 	@Resource(name="noticeDao")
 	private NoticeDao noticeDao;
 
+	/**
+	 * 
+	 * Desc : 공지 글 게시
+	 * @Method Name : insertNoticeBoard
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> insertNoticeBoard(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -42,6 +61,15 @@ public class NoticeServiceImpl implements NoticeService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 공지 글 게시할 때 첨부파일이 있으면 첨부파일 업로드 
+	 * @Method Name : uploadNoticeFile
+	 * @param paramMap
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> uploadNoticeFile(HashMap<String, Object> paramMap, HttpServletRequest request)
 			throws Exception {
@@ -56,6 +84,14 @@ public class NoticeServiceImpl implements NoticeService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 공지 글 상세보기
+	 * @Method Name : selectDetailNotice
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void selectDetailNotice(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception {
 		MetelSOSUtil util = new MetelSOSUtil();
@@ -91,6 +127,14 @@ public class NoticeServiceImpl implements NoticeService{
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 
+	/**
+	 * 
+	 * Desc : 첨부파일 다운로드를 위해 클릭한 파일 정보 가져옴
+	 * @Method Name : selectNoticeFileInfo
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> selectNoticeFileInfo(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -100,6 +144,14 @@ public class NoticeServiceImpl implements NoticeService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 공지 글 삭제
+	 * @Method Name : deleteNotice
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> deleteNotice(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -119,6 +171,14 @@ public class NoticeServiceImpl implements NoticeService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 공지 글 수정 시 첨부파일 삭제
+	 * @Method Name : deleteNoticeFile
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> deleteNoticeFile(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -134,6 +194,14 @@ public class NoticeServiceImpl implements NoticeService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 공지 글 수정
+	 * @Method Name : updateNotice
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> updateNotice(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -143,6 +211,14 @@ public class NoticeServiceImpl implements NoticeService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 공지 글 리스트 가져옴
+	 * @Method Name : selectNoticeList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> selectNoticeList(HashMap<String, String> paramMap) throws Exception {
 		MetelSOSUtil util = new MetelSOSUtil();

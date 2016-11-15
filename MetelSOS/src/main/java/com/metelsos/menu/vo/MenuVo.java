@@ -1,7 +1,18 @@
 package com.metelsos.menu.vo;
 
 import java.util.List;
-
+/**
+ * 
+* <pre>
+* com.metelsos.menu.vo
+*   |_ MenuVo.java
+* </pre>
+* 
+* Desc : LEFTMENU 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 9:19:18
+* @Version :
+ */
 public class MenuVo {
 	private int menu_code;
 	private String menu_title;

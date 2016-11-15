@@ -1,5 +1,16 @@
 package com.metelsos.qna.vo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.qna.vo
+*   |_ QnaVo.java
+* </pre>
+* 
+* Desc : 고객회원 QnA 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 11:13:52
+* @Version :
+ */
 public class QnaVo {
 	private int qna_num;
 	private String qna_question;

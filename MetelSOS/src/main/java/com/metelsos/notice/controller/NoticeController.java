@@ -21,7 +21,18 @@ import com.metelsos.common.view.MetelSOSJsonModel;
 import com.metelsos.menu.service.MenuService;
 import com.metelsos.notice.service.NoticeService;
 import com.metelsos.notice.vo.FileVo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.notice.controller
+*   |_ NoticeController.java
+* </pre>
+* 
+* Desc : 공지사항 관련 컨트롤러 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 10:27:18
+* @Version :
+ */
 @Controller
 public class NoticeController {
 	private Log log = LogFactory.getLog(NoticeController.class);
@@ -31,7 +42,14 @@ public class NoticeController {
 	
 	@Resource(name="menuService")
 	private MenuService menuService;
-	
+	/**
+	 * 
+	 * Desc : 공지사항 리스트 가져옴
+	 * @Method Name : selectNoticeList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/selectNoticeList.do")
 	public ModelAndView selectNoticeList(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => selectNoticeList");
@@ -41,7 +59,14 @@ public class NoticeController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 공지사항 작성 후 DB에 INSERT
+	 * @Method Name : insertNoticeBoard
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/insertNotice.do")
 	public ModelAndView insertNoticeBoard(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => insertNoticeBoard");
@@ -51,7 +76,15 @@ public class NoticeController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 공지사항 등록시 첨부한 파일에 대한 정보를 DB에 INSERT
+	 * @Method Name : uploaNoticeFile
+	 * @param paramMap
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/uploadNoticeFile.do")
 	public ModelAndView uploaNoticeFile(@RequestParam HashMap<String, Object> paramMap, HttpServletRequest request) throws Exception{
 		log.info("#operation => uploadNoticeFile");
@@ -62,7 +95,14 @@ public class NoticeController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 공지사항 글 상세보기 페이지로 이동할때 필요한 데이터 SET
+	 * @Method Name : moveNoticeDetailPage
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/moveNoticeDetailPage.do")
 	public ModelAndView moveNoticeDetailPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => moveNoticeDetailPage");
@@ -77,7 +117,14 @@ public class NoticeController {
 		model.setViewName("/admin/notice/NoticeDetail");
 		return model;
 	}
-	
+	/**
+	 * 
+	 * Desc : 글 상세보기에서 첨부파일 다운로드
+	 * @Method Name : downloadNoticeFile
+	 * @param paramMap
+	 * @param response
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/downloadNoticeFile.do")
 	public void downloadNoticeFile(@RequestParam HashMap<String, Object> paramMap, HttpServletResponse response) throws Exception{
 		log.info("#operation => downloadNoticeFile");
@@ -97,7 +144,14 @@ public class NoticeController {
 	    response.getOutputStream().flush();
 	    response.getOutputStream().close();
 	}
-	
+	/**
+	 * 
+	 * Desc : 공지 글 삭제
+	 * @Method Name : deleteNotice
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/deleteNotice.do")
 	public ModelAndView deleteNotice(@RequestParam HashMap<String, Object> paramMap) throws Exception{
 		log.info("#operation => deleteNotice");
@@ -108,7 +162,14 @@ public class NoticeController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 공지사항 글 수정 페이지에 뿌릴 데이터 SET
+	 * @Method Name : moveNoticeUpdatePage
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/moveNoticeUpdatePage.do")
 	public ModelAndView moveNoticeUpdatePage(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => moveNoticeUpdatePage");
@@ -122,7 +183,14 @@ public class NoticeController {
 		model.setViewName("/admin/notice/NoticeUpdateForm");
 		return model;
 	}
-	
+	/**
+	 * 
+	 * Desc : 공지 글 수정 시 업로드한 첨부파일 삭제
+	 * @Method Name : deleteNoticeFile
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/deleteNoticeFile.do")
 	public ModelAndView deleteNoticeFile(@RequestParam HashMap<String, Object> paramMap) throws Exception{
 		log.info("#operation => deleteNoticeFile");
@@ -133,7 +201,14 @@ public class NoticeController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 공지사항 글 수정 시 DB에 UPDATE
+	 * @Method Name : updateNotice
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/updateNotice.do")
 	public ModelAndView updateNotice(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => updateNotice");

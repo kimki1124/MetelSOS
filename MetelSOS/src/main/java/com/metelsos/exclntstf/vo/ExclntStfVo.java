@@ -1,7 +1,18 @@
 package com.metelsos.exclntstf.vo;
 
 import org.springframework.web.multipart.MultipartFile;
-
+/**
+ * 
+* <pre>
+* com.metelsos.exclntstf.vo
+*   |_ ExclntStfVo.java
+* </pre>
+* 
+* Desc : 우수사원 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 6:29:18
+* @Version :
+ */
 public class ExclntStfVo {
 	private String exclnt_year_month;
 	private String engineer_name;

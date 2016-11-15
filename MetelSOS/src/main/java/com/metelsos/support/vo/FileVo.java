@@ -1,5 +1,16 @@
 package com.metelsos.support.vo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.support.vo
+*   |_ FileVo.java
+* </pre>
+* 
+* Desc : 지원 요청 글 첨부파일 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오후 9:02:14
+* @Version :
+ */
 public class FileVo {
 	private int file_num;
 	private int board_num;

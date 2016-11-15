@@ -8,7 +8,18 @@ import org.apache.commons.logging.LogFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-
+/**
+ * 
+* <pre>
+* com.metelsos.common.dao
+*   |_ AbstractDAO.java
+* </pre>
+* 
+* Desc : 모든 Dao 클래스에서 공통으로 상속받는 DAO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 2:49:29
+* @Version : 
+ */
 public class AbstractDAO {
 	protected Log log = LogFactory.getLog(AbstractDAO.class);
     
@@ -58,6 +69,14 @@ public class AbstractDAO {
         return sqlSession.selectList(queryId,params);
     }
     
+    /**
+     * 
+     * Desc : 페이징 처리를 위한 selectList, START부터 END까지의 ROWNUM에 해당하는 데이터를 가져옴
+     * @Method Name : selectPagingList
+     * @param queryId
+     * @param params
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public Object selectPagingList(String queryId, Object params){
         printQueryId(queryId);

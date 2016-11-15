@@ -1,5 +1,16 @@
 package com.metelsos.notice.vo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.notice.vo
+*   |_ FileVo.java
+* </pre>
+* 
+* Desc : 공지 글 첨부파일 관련 VO 클래스 
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 11:12:59
+* @Version :
+ */
 public class FileVo {
 	private int file_num;
 	private int board_num;

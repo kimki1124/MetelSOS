@@ -18,7 +18,18 @@ import org.springframework.web.servlet.ModelAndView;
 import com.metelsos.common.view.MetelSOSJsonModel;
 import com.metelsos.exclntstf.service.ExclntstfService;
 import com.metelsos.exclntstf.vo.ExclntStfVo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.exclntstf.controller
+*   |_ ExclntstfController.java
+* </pre>
+* 
+* Desc : 우수사원 관련 컨트롤러 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 6:24:23
+* @Version :
+ */
 @Controller
 public class ExclntstfController {
 	private Log log = LogFactory.getLog(ExclntstfController.class);
@@ -26,6 +37,14 @@ public class ExclntstfController {
 	@Resource(name="exclntstfService")
 	private ExclntstfService exclntstfService;
 	
+	/**
+	 * 
+	 * Desc : 우수사원 정보 삭제
+	 * @Method Name : deleteExclntStf
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/deleteExclntStf.do")
 	public ModelAndView deleteExclntStf(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => deleteExclntStf");
@@ -36,6 +55,14 @@ public class ExclntstfController {
 		return jsonModel;
 	}
 	
+	/**
+	 * 
+	 * Desc : 엔지니어들의 이름을 목록으로 가져옴
+	 * @Method Name : setEngineerNameList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/setEngineerNameList.do")
 	public ModelAndView setEngineerNameList(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => setEngineerNameList");
@@ -46,6 +73,14 @@ public class ExclntstfController {
 		return jsonModel;
 	}
 	
+	/**
+	 * 
+	 * Desc : 우수사원 등록
+	 * @Method Name : enrollExclntStf
+	 * @param vo
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/enrollExclntStf.do")
 	public ModelAndView enrollExclntStf(ExclntStfVo vo) throws Exception{
 		log.info("#operation => enrollExclntStf");
@@ -58,6 +93,14 @@ public class ExclntstfController {
 		return jsonModel;
 	}
 	
+	/**
+	 * 
+	 * Desc : 우수사원의 이미지를 가져와서 뷰에 뿌림
+	 * @Method Name : getExclntStfImage
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getExclntStfImage.do")
 	public ResponseEntity<byte[]> getExclntStfImage(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => getExclntStfImage");

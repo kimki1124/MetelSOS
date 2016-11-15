@@ -1,5 +1,16 @@
 package com.metelsos.meeting.vo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.meeting.vo
+*   |_ CSTMRMeetingVo.java
+* </pre>
+* 
+* Desc : 고객사 회의록 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 9:16:51
+* @Version :
+ */
 public class CSTMRMeetingVo {
 	private int meeting_num;
 	private String meeting_title;

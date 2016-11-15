@@ -3,7 +3,18 @@ package com.metelsos.support.service;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ * 
+* <pre>
+* com.metelsos.support.service
+*   |_ SupportService.java
+* </pre>
+* 
+* Desc : 지원 요청 및 지원 관련 서비스 인터페이스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오후 9:01:47
+* @Version :
+ */
 public interface SupportService {
 
 	HashMap<String, Object> insertSupportRequest(HashMap<String, String> paramMap) throws Exception;

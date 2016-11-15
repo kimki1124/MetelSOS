@@ -1,5 +1,16 @@
 package com.metelsos.engineer.vo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.engineer.vo
+*   |_ EngineerVo.java
+* </pre>
+* 
+* Desc : 엔지니어 회원 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 6:21:58
+* @Version :
+ */
 public class EngineerVo {
 	private int engineer_num;
 	private String engineer_id;

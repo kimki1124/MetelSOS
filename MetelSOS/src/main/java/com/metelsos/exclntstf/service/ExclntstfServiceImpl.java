@@ -12,7 +12,18 @@ import com.metelsos.engineer.dao.EngineerDao;
 import com.metelsos.engineer.vo.EngineerVo;
 import com.metelsos.exclntstf.dao.ExclntStfDao;
 import com.metelsos.exclntstf.vo.ExclntStfVo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.exclntstf.service
+*   |_ ExclntstfServiceImpl.java
+* </pre>
+* 
+* Desc : 우수사원 관련 서비스 구현 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 6:27:55
+* @Version :
+ */
 @Service("exclntstfService")
 public class ExclntstfServiceImpl implements ExclntstfService{
 
@@ -22,6 +33,14 @@ public class ExclntstfServiceImpl implements ExclntstfService{
 	@Resource(name="engineerDao")
 	private EngineerDao engineerDao;
 	
+	/**
+	 * 
+	 * Desc : 우수사원에 등록했던 사원의 정보 삭제
+	 * @Method Name : deleteExclntStf
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> deleteExclntStf(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -39,6 +58,14 @@ public class ExclntstfServiceImpl implements ExclntstfService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 우수사원을 등록할 때에 어떤 사원을 등록할지 사원의 이름 리스트 가져옴
+	 * @Method Name : setEngineerNameList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> setEngineerNameList(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -54,6 +81,14 @@ public class ExclntstfServiceImpl implements ExclntstfService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 우수사원 테이블에 사원의 정보를 등록
+	 * @Method Name : enrollExclntStf
+	 * @param vo
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> enrollExclntStf(ExclntStfVo vo) throws Exception {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
@@ -79,6 +114,14 @@ public class ExclntstfServiceImpl implements ExclntstfService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 우수사원의 리스트를 뷰에 뿌릴 때 우수사원의 이미지를 가져옴
+	 * @Method Name : getExclntStfImage
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> getExclntStfImage(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();

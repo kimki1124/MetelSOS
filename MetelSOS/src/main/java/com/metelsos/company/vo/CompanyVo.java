@@ -1,5 +1,17 @@
 package com.metelsos.company.vo;
 
+/**
+ * 
+* <pre>
+* com.metelsos.company.vo
+*   |_ CompanyVo.java
+* </pre>
+* 
+* Desc : 고객사 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 4:56:48
+* @Version :
+ */
 public class CompanyVo {
 	private int company_num;
 	private String company_name;

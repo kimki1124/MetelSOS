@@ -36,7 +36,18 @@ import com.metelsos.qna.dao.QnaDao;
 import com.metelsos.qna.vo.QnaVo;
 import com.metelsos.support.dao.SupportDao;
 import com.metelsos.support.vo.SupportVo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.menu.service
+*   |_ MenuServiceImpl.java
+* </pre>
+* 
+* Desc : LEFTMENU 관련 서비스 구현 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 9:19:02
+* @Version :
+ */
 @Service("menuService")
 public class MenuServiceImpl implements MenuService{
 	
@@ -73,6 +84,13 @@ public class MenuServiceImpl implements MenuService{
 	@Resource(name="qnaDao")
 	private QnaDao qnaDao;
 
+	/**
+	 * 
+	 * Desc : 엔지니어회원의 LEFTMENU 리스트를 가져옴
+	 * @Method Name : getEngineerLeftMenuList
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public List<MenuVo> getEngineerLeftMenuList() throws Exception {
 		List<MenuVo> list = new ArrayList<MenuVo>();
@@ -102,6 +120,13 @@ public class MenuServiceImpl implements MenuService{
 		return filterList;
 	}
 
+	/**
+	 * 
+	 * Desc : 고객사 고객회원의 LEFTMENU를 가져옴
+	 * @Method Name : getCustomerLeftMenuList
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public List<MenuVo> getCustomerLeftMenuList() throws Exception {
 		List<MenuVo> list = new ArrayList<MenuVo>();
@@ -132,6 +157,14 @@ public class MenuServiceImpl implements MenuService{
 		return filterList;
 	}
 
+	/**
+	 * 
+	 * Desc : 페이지 이동을 할 때 필수적으로 오는 LEFTMENU, MENUTITLE, MENUICON 등의 값을 SET해서 뷰에 넘기는 메서드
+	 * @Method Name : getMainPanelItems
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> getMainPanelItems(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -211,8 +244,8 @@ public class MenuServiceImpl implements MenuService{
 		
 		return returnMap;
 	}
-
-	private void getRequestCompanyList(HashMap<String, Object> returnMap) throws Exception{
+	
+	/*private void getRequestCompanyList(HashMap<String, Object> returnMap) throws Exception{
 		List<String> acceptReqCompanyList = supportDao.getReqCompanyList("접수완료");
 		List<String> supportingReqCompanyList = supportDao.getReqCompanyList("지원 중");
 		List<String> completeReqCompanyList = supportDao.getReqCompanyList("지원 완료");
@@ -220,13 +253,28 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("acceptReqCompanyList", acceptReqCompanyList);
 		returnMap.put("supportingReqCompanyList", supportingReqCompanyList);
 		returnMap.put("completeReqCompanyList", completeReqCompanyList);
-	}
+	}*/
 
+	/**
+	 * 
+	 * Desc : 고객회원 메인화면에서 QnA Best5에 뿌릴 QnA 데이터 SET
+	 * @Method Name : setQnABest5
+	 * @param returnMap
+	 * @throws Exception
+	 */
 	private void setQnABest5(HashMap<String, Object> returnMap) throws Exception{
 		List<QnaVo> qnaBest5List = qnaDao.getQnaBest5();
 		returnMap.put("qnaBest5List", qnaBest5List);
 	}
 
+	/**
+	 * 
+	 * Desc : 최근 지원 완료한 지원 사항 리스트 가져옴
+	 * @Method Name : setCurrCompleteSupportHistory
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	private void setCurrCompleteSupportHistory(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception{
 		MetelSOSUtil util = new MetelSOSUtil();
 		List<SupportVo> supportList = supportDao.selectCompleteSupportListByCustomerId(paramMap.get("userId"));
@@ -240,6 +288,14 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("supportCompleteList", supportList);
 	}
 
+	/**
+	 * 
+	 * Desc : 최근 접수 대기중인 지원 사항 리스트 가져옴 
+	 * @Method Name : setCurrWaitSupportHistory
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	private void setCurrWaitSupportHistory(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception{
 		MetelSOSUtil util = new MetelSOSUtil();
 		List<SupportVo> supportList = supportDao.selectSupportListByCustomerId(paramMap.get("userId"));
@@ -253,6 +309,13 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("supportList", supportList);
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어 메인 화면에 뿌릴 신입사원 관련 데이터 SET
+	 * @Method Name : setNewEmplydItems
+	 * @param returnMap
+	 * @throws Exception
+	 */
 	private void setNewEmplydItems(HashMap<String, Object> returnMap) throws Exception{
 		Date date= new Date();
 		Calendar cal = Calendar.getInstance();
@@ -271,6 +334,13 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("newEmplydList", newEmplydList);
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어 메인화면에 뿌릴 우수사원 관련 데이터 SET
+	 * @Method Name : setExclntStfItems
+	 * @param returnMap
+	 * @throws Exception
+	 */
 	private void setExclntStfItems(HashMap<String, Object> returnMap) throws Exception{
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		int exclntStfCount = 0;
@@ -294,6 +364,13 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("currExclntStfList", list);
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어 메인화면에 뿌릴 월별지원현황 관련 데이터 SET
+	 * @Method Name : setMonthSupportStats
+	 * @param returnMap
+	 * @throws Exception
+	 */
 	private void setMonthSupportStats(HashMap<String, Object> returnMap) throws Exception{
 		List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		int supportCompleteCount;
@@ -357,14 +434,40 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("currMonth", month);
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어 메인화면에 뿌릴 미지원된 요청사항의 개수 가져옴
+	 * @Method Name : getSupportNotCompleteCount
+	 * @param interval
+	 * @return
+	 * @throws Exception
+	 */
 	private int getSupportNotCompleteCount(int interval) throws Exception{
 		return supportDao.selectSupportNotCompleteCount(interval);
 	}
 
+	/**
+	 * 
+	 * Desc : 엔지니어 메인화면에 뿌릴 지원 완료된 요청사항의 개수 가져옴
+	 * @Method Name : getSupportCompleteCount
+	 * @param interval
+	 * @return
+	 * @throws Exception
+	 */
 	private int getSupportCompleteCount(int interval) throws Exception{
 		return supportDao.selectSupportCompleteCount(interval);
 	}
 
+	/**
+	 * 
+	 * Desc : 각 페이지에 메뉴의 경로를 나타내는 breadcrumblist SET
+	 * @Method Name : setMainBreadcrumb
+	 * @param menuList
+	 * @param breadcrumbList
+	 * @param menuEngTitleList
+	 * @param menu_title
+	 * @throws Exception
+	 */
 	private void setMainBreadcrumb(List<MenuVo> menuList, List<String> breadcrumbList, List<String> menuEngTitleList, String menu_title) throws Exception{
 		MenuVo vo = new MenuVo();
 		MenuVo tempVo = new MenuVo();
@@ -386,6 +489,14 @@ public class MenuServiceImpl implements MenuService{
 		}
 	}
 
+	/**
+	 * 
+	 * Desc : 마이페이지로 넘어갈 때 마이페이지에 뿌릴 아이템 SET
+	 * @Method Name : setProfileViewItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setProfileViewItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
@@ -437,6 +548,14 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 
+	/**
+	 * 
+	 * Desc : 회원탈퇴 페이지로 넘어갈 때 뿌릴 데이터 SET
+	 * @Method Name : setLeavePageItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setLeavePageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
@@ -462,6 +581,14 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 
+	/**
+	 * 
+	 * Desc : 공지사항 관리 페이지로 넘어갈 때 뿌릴 데이터 SET
+	 * @Method Name : setNoticePageItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setNoticePageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
@@ -490,6 +617,14 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 
+	/**
+	 * 
+	 * Desc : 공지사항 작성 페이지로 넘어갈 때 뿌릴 데이터 SET
+	 * @Method Name : setWriteNoticePageItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setWriteNoticePageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
@@ -501,6 +636,14 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 
+	/**
+	 * 
+	 * Desc : 우수사원 관리 페이지로 넘어갈 때 뿌릴 데이터 SET
+	 * @Method Name : setManageExclntStfPageItem
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setManageExclntStfPageItem(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception {
 		Date date= new Date();
@@ -516,6 +659,14 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 
+	/**
+	 * 
+	 * Desc : 우수사원 리스트 페이지로 넘어갈 때 뿌릴 데이터 SET
+	 * @Method Name : setExclntStfListItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setExclntStfListItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap) throws Exception {
 		String selectMonth = null;
@@ -542,6 +693,14 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 
+	/**
+	 * 
+	 * Desc : 신입사원 관리 페이지로 넘어갈 때 뿌릴 데이터 SET
+	 * @Method Name : setManageNewEmplydPageItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setManageNewEmplydPageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
@@ -558,6 +717,14 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 
+	/**
+	 * 
+	 * Desc : 신입사원 리스트 페이지로 넘어갈 때 뿌릴 데이터 SET
+	 * @Method Name : setNewEmplydListItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	@Override
 	public void setNewEmplydListItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
@@ -583,6 +750,14 @@ public class MenuServiceImpl implements MenuService{
 		returnMap.put("menuTitle", paramMap.get("menuTitle"));
 	}
 
+	/**
+	 * 
+	 * Desc : 고객회원이 새로운 지원 요청 페이지로 넘어갈 때 뿌릴 데이터 SET
+	 * @Method Name : setNewSupportReqPageItems
+	 * @param returnMap
+	 * @param paramMap
+	 * @throws Exception
+	 */
 	private void setNewSupportReqPageItems(HashMap<String, Object> returnMap, HashMap<String, String> paramMap)
 			throws Exception {
 		HashMap<String, Object> customerInfoMap = customerDao.getCustomerInfo(paramMap.get("userId"));

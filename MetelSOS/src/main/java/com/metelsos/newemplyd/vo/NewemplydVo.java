@@ -1,7 +1,18 @@
 package com.metelsos.newemplyd.vo;
 
 import org.springframework.web.multipart.MultipartFile;
-
+/**
+ * 
+* <pre>
+* com.metelsos.newemplyd.vo
+*   |_ NewemplydVo.java
+* </pre>
+* 
+* Desc : 신입사원 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 10:04:00
+* @Version :
+ */
 public class NewemplydVo {
 	private String new_emply_year_month;
 	private String engineer_name;

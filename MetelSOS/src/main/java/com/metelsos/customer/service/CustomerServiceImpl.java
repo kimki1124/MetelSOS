@@ -17,13 +17,34 @@ import com.metelsos.common.aes.AesUtil;
 import com.metelsos.common.util.MetelSOSUtil;
 import com.metelsos.customer.dao.CustomerDao;
 import com.metelsos.customer.vo.CustomerVo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.customer.service
+*   |_ CustomerServiceImpl.java
+* </pre>
+* 
+* Desc : 고객사 고객 관련 서비스 구현 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 14. 오후 5:53:44
+* @Version :
+ */
 @Service("customerService")
 public class CustomerServiceImpl implements CustomerService{
 	
 	@Resource(name="customerDao")
 	private CustomerDao customerDao;
 
+	/**
+	 * 
+	 * Desc : 로그인 비즈니스 로직 수행, 로그인 성공 시 세션 생성 후 세션에 속성 값 세팅
+	 * @Method Name : checkLogin
+	 * @param paramMap
+	 * @param request
+	 * @param session
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> checkLogin(HashMap<String, String> paramMap, HttpServletRequest request,
 			HttpSession session) throws Exception{
@@ -49,6 +70,14 @@ public class CustomerServiceImpl implements CustomerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 고객회원가입 시 ID validation 검사
+	 * @Method Name : validateCustomerId
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> validateCustomerId(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -63,6 +92,14 @@ public class CustomerServiceImpl implements CustomerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 고객회원가입 폼에 작성한 고객정보 INSERT
+	 * @Method Name : insertCustomer
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> insertCustomer(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -87,6 +124,14 @@ public class CustomerServiceImpl implements CustomerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 고객회원 ID 찾기
+	 * @Method Name : findCustomerId
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> findCustomerId(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -99,6 +144,14 @@ public class CustomerServiceImpl implements CustomerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 이메일로 고객회원 임시 비밀번호 전송 
+	 * @Method Name : sendTempCustomerPasswd
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> sendTempCustomerPasswd(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -120,7 +173,7 @@ public class CustomerServiceImpl implements CustomerService{
 			content.append("<br /><br />");
 			content.append("임시 비밀번호로 접속 후 마이프로필에서 비밀번호를 변경해 주시기 바랍니다. <br />");
 			content.append("from. MetelSOS ADMIN");
-			util.sendEmail(vo.getCustomer_email(), title, content.toString(), tempPasswd);
+			util.sendEmail(vo.getCustomer_email(), title, content.toString());
 			returnMap.put("tempPasswd", tempPasswd);
 			returnMap.put("resultMsg", "SUCCESS");
 		}else{
@@ -130,6 +183,14 @@ public class CustomerServiceImpl implements CustomerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 고객회원 개인정보 수정 시 업데이트 
+	 * @Method Name : updateCustomerInfo
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> updateCustomerInfo(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
@@ -157,6 +218,14 @@ public class CustomerServiceImpl implements CustomerService{
 		return returnMap;
 	}
 
+	/**
+	 * 
+	 * Desc : 고객회원탈퇴 시 DB에서 해당 고객회원정보 DELETE
+	 * @Method Name : deleteCustomerAccount
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@Override
 	public HashMap<String, Object> deleteCustomerAccount(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();

@@ -1,5 +1,16 @@
 package com.metelsos.support.vo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.support.vo
+*   |_ SupportVo.java
+* </pre>
+* 
+* Desc : 지원 요청 및 지원 관련 VO 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오후 9:02:27
+* @Version :
+ */
 public class SupportVo {
 	private int support_num;
 	private String support_title;

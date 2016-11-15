@@ -21,7 +21,18 @@ import com.metelsos.common.view.MetelSOSJsonModel;
 import com.metelsos.menu.service.MenuService;
 import com.metelsos.support.service.SupportService;
 import com.metelsos.support.vo.FileVo;
-
+/**
+ * 
+* <pre>
+* com.metelsos.support.controller
+*   |_ SupportController.java
+* </pre>
+* 
+* Desc : 고객 지원 요청 및 지원 관련 컨트롤러 클래스
+* @Author  : "Kim Kibeom"
+* @Date    : 2016. 11. 15. 오전 11:21:19
+* @Version :
+ */
 @Controller
 public class SupportController {
 	private Log log = LogFactory.getLog(SupportController.class);
@@ -31,7 +42,14 @@ public class SupportController {
 	
 	@Resource(name="menuService")
 	private MenuService menuService;
-	
+	/**
+	 * 
+	 * Desc : 접수대기 상태 지원요청 리스트 가져옴
+	 * @Method Name : getWaitSupportList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getWaitSupportList.do")
 	public ModelAndView getWaitSupportList(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => getWaitSupportList");
@@ -42,7 +60,14 @@ public class SupportController {
 		jsonModel = new MetelSOSJsonModel(returnMap);
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 접수완료 상태의 지원요청 리스트 가져옴
+	 * @Method Name : getCusAcceptSupportList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getCusAcceptSupportList.do")
 	public ModelAndView getCusAcceptSupportList(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => getCusAcceptSupportList");
@@ -53,7 +78,14 @@ public class SupportController {
 		jsonModel = new MetelSOSJsonModel(returnMap);
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원 중 상태의 지원요청 리스트 가져오기
+	 * @Method Name : getCusSupportingList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getCusSupportingList.do")
 	public ModelAndView getCusSupportingList(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => getCusSupportingList");
@@ -64,7 +96,14 @@ public class SupportController {
 		jsonModel = new MetelSOSJsonModel(returnMap);
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원 완료 상태의 지원요청 리스트 가져오기
+	 * @Method Name : getCusCompleteSupportList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getCusCompleteSupportList.do")
 	public ModelAndView getCusCompleteSupportList(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => getCusCompleteSupportList");
@@ -75,7 +114,14 @@ public class SupportController {
 		jsonModel = new MetelSOSJsonModel(returnMap);
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 고객으로부터 들어온 지원 요청 정보 INSERT
+	 * @Method Name : insertSupportRequest
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/insertSupportRequest.do")
 	public ModelAndView insertSupportRequest(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => insertSupportRequest");
@@ -85,7 +131,15 @@ public class SupportController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원요청 시 첨부파일 업로드
+	 * @Method Name : uploadSupportFile
+	 * @param paramMap
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/uploadSupportFile.do")
 	public ModelAndView uploadSupportFile(@RequestParam HashMap<String, Object> paramMap, HttpServletRequest request) throws Exception{
 		log.info("#operation => uploadNoticeFile");
@@ -95,7 +149,14 @@ public class SupportController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : (고객)지원 요청 상세페이지로 이동
+	 * @Method Name : moveSupportDetailPage
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/moveSupportDetailPage.do")
 	public ModelAndView moveSupportDetailPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => moveSupportDetailPage");
@@ -110,7 +171,14 @@ public class SupportController {
 		model.setViewName("/customer/support/RequestSupportDetail");
 		return model;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원요청 글에 첨부된 파일 다운로드
+	 * @Method Name : downloadSupportFile
+	 * @param paramMap
+	 * @param response
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/downloadSupportFile.do")
 	public void downloadSupportFile(@RequestParam HashMap<String, Object> paramMap, HttpServletResponse response) throws Exception{
 		log.info("#operation => downloadSupportFile");
@@ -131,7 +199,14 @@ public class SupportController {
 	    response.getOutputStream().flush();
 	    response.getOutputStream().close();
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원 요청 수정 페이지에 필요한 데이터 SET해서 뷰로 넘김
+	 * @Method Name : moveSupportUpdatePage
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/moveSupportUpdatePage.do")
 	public ModelAndView moveSupportUpdatePage(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => moveSupportUpdatePage ");
@@ -146,7 +221,14 @@ public class SupportController {
 		
 		return model;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원요청 글에 첨부한 파일 삭제
+	 * @Method Name : deleteSupportFile
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/deleteSupportFile.do")
 	public ModelAndView deleteSupportFile(@RequestParam HashMap<String, Object> paramMap) throws Exception{
 		log.info("#operation => deleteSupportFile");
@@ -157,7 +239,14 @@ public class SupportController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원요청 글 수정
+	 * @Method Name : updateSupportRequest
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/updateSupportRequest.do")
 	public ModelAndView updateSupportRequest(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => updateSupportRequest");
@@ -168,7 +257,14 @@ public class SupportController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원 요청 글 삭제
+	 * @Method Name : deleteSupportHistory
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/deleteSupportHistory.do")
 	public ModelAndView deleteSupportHistory(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => deleteSupportHistory");
@@ -178,7 +274,14 @@ public class SupportController {
 		jsonModel = new MetelSOSJsonModel(returnMap);
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 접수 대기 상태의 지원 요청 글 리스트 가져오기
+	 * @Method Name : getUnSupportList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getUnSupportList.do")
 	public ModelAndView getUnSupportList(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => getUnSupportList");
@@ -188,7 +291,14 @@ public class SupportController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 접수 대기 상태의 글 상세보기 페이지에 필요한 아이템 SET해서 뷰로 넘김 
+	 * @Method Name : moveUnsupportDetailPage
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/moveUnsupportDetailPage.do")
 	public ModelAndView moveUnsupportDetailPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => moveUnsupportDetailPage");
@@ -200,7 +310,14 @@ public class SupportController {
 		model.setViewName("/engineer/support/UnsupportDetail");
 		return model;
 	}
-	
+	/**
+	 * 
+	 * Desc : 접수 대기 상태의 지원 요청을 접수
+	 * @Method Name : acceptSupport
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/acceptSupport.do")
 	public ModelAndView acceptSupport(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => acceptSupport");
@@ -210,7 +327,14 @@ public class SupportController {
 		jsonModel = new MetelSOSJsonModel(returnMap);
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 접수완료 상태의 지원 요청 리스트 가져옴 
+	 * @Method Name : getAcceptSupportList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getAcceptSupportList.do")
 	public ModelAndView getAcceptSupportList(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => getAcceptSupportList");
@@ -222,7 +346,14 @@ public class SupportController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원 중 상태의 지원 요청 리스트 가져옴
+	 * @Method Name : getSupportingList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getSupportingList.do")
 	public ModelAndView getSupportingList(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => getSupportingList");
@@ -234,7 +365,14 @@ public class SupportController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원 완료 상태의 지원 요청 리스트 가져옴
+	 * @Method Name : getCompleteSupportList
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getCompleteSupportList.do")
 	public ModelAndView getCompleteSupportList(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => getCompleteSupportList");
@@ -246,7 +384,14 @@ public class SupportController {
 		
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 엔지니어 회원이 접수완료된 지원 요청 글 상세보기 할 때 데이터 SET
+	 * @Method Name : mvEngAcptSprtDtlPage
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/mvEngAcptSprtDtlPage.do")
 	public ModelAndView mvEngAcptSprtDtlPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => mvEngAcptSprtDtlPage");
@@ -262,7 +407,14 @@ public class SupportController {
 		model.setViewName("/engineer/support/UpdateAcceptSupportForm");
 		return model;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원 상태 업데이트
+	 * @Method Name : updateSupportState
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/updateSupportState.do")
 	public ModelAndView updateSupportState(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => updateSupportState");
@@ -272,7 +424,14 @@ public class SupportController {
 		jsonModel = new MetelSOSJsonModel(returnMap);
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원 중인 지원 요청 글 상세보기
+	 * @Method Name : mvEngSprtngDtlPage
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/mvEngSprtngDtlPage.do")
 	public ModelAndView mvEngSprtngDtlPage(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => mvEngSprtngDtlPage");
@@ -288,7 +447,14 @@ public class SupportController {
 		model.setViewName("/engineer/support/UpdateSupportingForm");
 		return model;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원 중 상태의 지원 요청 글 업데이트
+	 * @Method Name : updateSupportingState
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/updateSupportingState.do")
 	public ModelAndView updateSupportingState(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => updateSupportingState");
@@ -298,7 +464,14 @@ public class SupportController {
 		jsonModel = new MetelSOSJsonModel(returnMap);
 		return jsonModel;
 	}
-	
+	/**
+	 * 
+	 * Desc : 지원 완료 상태의 지원 요청 글 상세보기
+	 * @Method Name : getCompleteSupDetail
+	 * @param paramMap
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/getCompleteSupDetail.do")
 	public ModelAndView getCompleteSupDetail(@RequestParam HashMap<String, String> paramMap) throws Exception{
 		log.info("#operation => getCompleteSupDetail");
