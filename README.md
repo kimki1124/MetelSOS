@@ -1,12 +1,43 @@
 # Metel-SOS
-Metel SOS Project 2016-10-09 Started
 
-Ver 1.0.0
-Seed Project create
+Intro
+-------------
+Simple Web Service Project Started at 2016-10-09<br>
+Purpose of This Web Service is Technology Support between Engineer and Customer more easier.
 
-Ver 1.0.1
-Login operation implement
-Logout operation implement
-Join operation implement
+Front-End Technology Stack
+-------------
+HTML5<br>
+CSS3<br>
+Javascript<br>
+Bootstrap<br>
+jQuery<br>
+jQuery-ui<br>
+jQuery-validate.js<br>
+Dropzone.js<br>
+jqGrid.js<br>
 
-로컬에서 readme.md 커밋 테스트
+Back-End Technology Stack
+-------------
+Java<br>
+Spring Framework<br>
+OJDBC<br>
+Log4j<br>
+Mybatis<br>
+
+Commit History
+-------------
+2016-10-09<br>
+Create Seed Project
+
+2016-10-11<br>
+Implement Login
+
+2016-10-12<br>
+Create JoinUserForm
+
+2016-10-13<br>
+Applied validate in JoinUserForm
+
+
+
