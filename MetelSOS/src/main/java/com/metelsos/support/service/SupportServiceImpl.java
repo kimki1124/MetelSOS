@@ -84,7 +84,8 @@ public class SupportServiceImpl implements SupportService{
 		paramMap.put("hope_support_date", from);
 		
 		String content = paramMap.get("support_request");
-		content = content.replace(System.getProperty("line.separator"), "<br />");
+		//content = content.replace(System.getProperty("line.separator"), "<br />");
+		content = content.replace("\n", "<br />").replace("\r", "<br />");
 		paramMap.put("support_request", content);
 		
 		Date sysdate = new Date();
@@ -194,7 +195,7 @@ public class SupportServiceImpl implements SupportService{
          
         String supportNum = (String)paramMap.get("supportNum");
          
-        File file = new File("C:\\dev\\file\\support\\");
+        File file = new File("/home/indigo/MYMETELSOS/file/support");
         if(file.exists() == false){
             file.mkdirs();
         }
@@ -206,7 +207,7 @@ public class SupportServiceImpl implements SupportService{
                 originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 storedFileName = getRandomString() + originalFileExtension;
                 
-                file = new File("C:\\dev\\file\\support\\" + storedFileName);
+                file = new File("/home/indigo/MYMETELSOS/file/support" + storedFileName);
                 multipartFile.transferTo(file);
                 
                 listMap = new HashMap<String,Object>();
@@ -245,6 +246,23 @@ public class SupportServiceImpl implements SupportService{
 			throws Exception {
 		MetelSOSUtil util = new MetelSOSUtil();
 		SupportVo vo = supportDao.selectDetailSupport(paramMap);
+		
+		if(vo.getPurpose_of_visit() != null){
+			vo.setPurpose_of_visit(vo.getPurpose_of_visit().replace("<br /><br />", "<br />"));
+		}
+		
+		if(vo.getSupport_request() != null){
+			vo.setSupport_request(vo.getSupport_request().replace("<br /><br />", "<br />"));
+		}
+		
+		if(vo.getSupport_response() != null){
+			vo.setSupport_response(vo.getSupport_response().replace("<br /><br />", "<br />"));
+		}
+		
+		if(vo.getSupport_engineer_comment() != null){
+			vo.setSupport_engineer_comment(vo.getSupport_engineer_comment().replace("<br /><br />", "<br />"));
+		}
+		
 		
 		if(vo != null){
 			String userId = paramMap.get("userId");
@@ -354,7 +372,8 @@ public class SupportServiceImpl implements SupportService{
 		paramMap.put("hope_support_date", from);
 		
 		String content = paramMap.get("support_request");
-		content = content.replace(System.getProperty("line.separator"), "<br />");
+		//content = content.replace(System.getProperty("line.separator"), "<br />");
+		content = content.replace("\n", "<br />").replace("\r", "<br />");
 		paramMap.put("support_request", content);
 		
 		int result = supportDao.updateSupportRequest(paramMap);
@@ -450,6 +469,8 @@ public class SupportServiceImpl implements SupportService{
 		//support_history vo 가져오기
 		//해당 지원요청의 첨부파일 리스트 가져오기
 		SupportVo vo = supportDao.selectDetailSupport(paramMap);
+		//vo.setNotice_content(vo.getNotice_content().replace("<br /><br />", "<br />"));
+		vo.setSupport_request(vo.getSupport_request().replace("<br /><br />", "<br />"));
 		
 		if(vo != null){
 			HashMap<String, String> supportMap = new HashMap<String, String>();
@@ -714,6 +735,22 @@ public class SupportServiceImpl implements SupportService{
 		returnMap.put("menuTitle", "지원상태 업데이트");
 		HashMap<String, Object> supportMap = supportDao.selectAcceptSupport(paramMap);
 		
+		if(supportMap.get("PURPOSE_OF_VISIT") != null){
+			supportMap.put("PURPOSE_OF_VISIT", String.valueOf(supportMap.get("PURPOSE_OF_VISIT")).replace("<br /><br />", "<br />"));
+		}
+		
+		if(supportMap.get("SUPPORT_REQUEST") != null){
+			supportMap.put("SUPPORT_REQUEST", String.valueOf(supportMap.get("SUPPORT_REQUEST")).replace("<br /><br />", "<br />"));
+		}
+		
+		if(supportMap.get("SUPPORT_RESPONSE") != null){
+			supportMap.put("SUPPORT_RESPONSE", String.valueOf(supportMap.get("SUPPORT_RESPONSE")).replace("<br /><br />", "<br />"));
+		}
+		
+		if(supportMap.get("SUPPORT_ENGINEER_COMMENT") != null){
+			supportMap.put("SUPPORT_ENGINEER_COMMENT", String.valueOf(supportMap.get("SUPPORT_ENGINEER_COMMENT")).replace("<br /><br />", "<br />"));
+		}
+		
 		String cusPhone = String.valueOf(supportMap.get("CUSTOMER_PHONE"));
 		StringBuffer sb = new StringBuffer(cusPhone);
 		if(cusPhone.length() == 11){
@@ -759,7 +796,8 @@ public class SupportServiceImpl implements SupportService{
 		if("방문".equals(paramMap.get("support_way"))){
 			paramMap.put("purpose_of_visit", URLDecoder.decode(paramMap.get("purpose_of_visit"), "UTF-8"));
 			String content = paramMap.get("purpose_of_visit");
-			content = content.replace(System.getProperty("line.separator"), "<br />");
+			//content = content.replace(System.getProperty("line.separator"), "<br />");
+			content = content.replace("\n", "<br />").replace("\r", "<br />");
 			paramMap.put("purpose_of_visit", content);
 		}else{
 			paramMap.remove("purpose_of_visit");
@@ -801,6 +839,22 @@ public class SupportServiceImpl implements SupportService{
 		returnMap.put("menuTitle", "지원상태 업데이트");
 		
 		HashMap<String, Object> supportMap = supportDao.selectSupportingReq(paramMap);
+		
+		if(supportMap.get("PURPOSE_OF_VISIT") != null){
+			supportMap.put("PURPOSE_OF_VISIT", String.valueOf(supportMap.get("PURPOSE_OF_VISIT")).replace("<br /><br />", "<br />"));
+		}
+		
+		if(supportMap.get("SUPPORT_REQUEST") != null){
+			supportMap.put("SUPPORT_REQUEST", String.valueOf(supportMap.get("SUPPORT_REQUEST")).replace("<br /><br />", "<br />"));
+		}
+		
+		if(supportMap.get("SUPPORT_RESPONSE") != null){
+			supportMap.put("SUPPORT_RESPONSE", String.valueOf(supportMap.get("SUPPORT_RESPONSE")).replace("<br /><br />", "<br />"));
+		}
+		
+		if(supportMap.get("SUPPORT_ENGINEER_COMMENT") != null){
+			supportMap.put("SUPPORT_ENGINEER_COMMENT", String.valueOf(supportMap.get("SUPPORT_ENGINEER_COMMENT")).replace("<br /><br />", "<br />"));
+		}
 		
 		String cusPhone = String.valueOf(supportMap.get("CUSTOMER_PHONE"));
 		StringBuffer sb = new StringBuffer(cusPhone);
@@ -846,11 +900,13 @@ public class SupportServiceImpl implements SupportService{
 		paramMap.put("support_engineer_comment", URLDecoder.decode(paramMap.get("support_engineer_comment"), "UTF-8"));
 		
 		String support_response = paramMap.get("support_response");
-		support_response = support_response.replace(System.getProperty("line.separator"), "<br />");
+		//support_response = support_response.replace(System.getProperty("line.separator"), "<br />");
+		support_response = support_response.replace("\n", "<br />").replace("\r", "<br />");
 		paramMap.put("support_response", support_response);
 		
 		String support_engineer_comment = paramMap.get("support_engineer_comment");
-		support_engineer_comment = support_engineer_comment.replace(System.getProperty("line.separator"), "<br />");
+		//support_engineer_comment = support_engineer_comment.replace(System.getProperty("line.separator"), "<br />");
+		support_engineer_comment = support_engineer_comment.replace("\n", "<br />").replace("\r", "<br />");
 		paramMap.put("support_engineer_comment", support_engineer_comment);
 		
 		int result = supportDao.updateSupportingState(paramMap);
@@ -878,6 +934,22 @@ public class SupportServiceImpl implements SupportService{
 		MetelSOSUtil util = new MetelSOSUtil();
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
 		SupportVo vo = supportDao.getCompleteSupDetail(paramMap);
+		
+		if(vo.getPurpose_of_visit() != null){
+			vo.setPurpose_of_visit(vo.getPurpose_of_visit().replace("<br /><br />", "<br />"));
+		}
+		
+		if(vo.getSupport_request() != null){
+			vo.setSupport_request(vo.getSupport_request().replace("<br /><br />", "<br />"));
+		}
+		
+		if(vo.getSupport_response() != null){
+			vo.setSupport_response(vo.getSupport_response().replace("<br /><br />", "<br />"));
+		}
+		
+		if(vo.getSupport_engineer_comment() != null){
+			vo.setSupport_engineer_comment(vo.getSupport_engineer_comment().replace("<br /><br />", "<br />"));
+		}
 		
 		if(vo != null){
 			HashMap<String, String> cusMap = new HashMap<String, String>();

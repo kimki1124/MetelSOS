@@ -50,15 +50,7 @@ public class NoticeServiceImpl implements NoticeService{
 		paramMap.put("currDate", util.currDatetoString("yyyyMMddHHmmss"));
 		
 		String content = paramMap.get("noticeContent");
-		
-		System.out.println("####################replace 이전#############################################");
-		System.out.println(content);
-		System.out.println("####################replace 이전#############################################");
 		content = content.replace("\n", "<br />").replace("\r", "<br />");
-		
-		System.out.println("#################################################################");
-		System.out.println(content);
-		System.out.println("#################################################################");
 		paramMap.put("noticeContent", content);
 		
 		int result = noticeDao.insertNoticeBoard(paramMap);
@@ -134,9 +126,6 @@ public class NoticeServiceImpl implements NoticeService{
 			returnMap.put("fileList", fileList);
 		}
 		
-		System.out.println("##DETAILSELECT###############DETAILSELECT###############DETAILSELECT###############DETAILSELECT#############");
-		System.out.println(vo.getNotice_content());
-		System.out.println("##DETAILSELECT###############DETAILSELECT###############DETAILSELECT###############DETAILSELECT#############");
 		List<String> list = new ArrayList<String>();
 		list.add("공지사항 관리");
 		
