@@ -125,7 +125,7 @@
 						height:200,
 						resizable: false,
 						modal : true,
-						title:"<div class='widget-header'><h4><i class='fa fa-check'></i>&nbsp;개인정보 수정 실패</h4></div>",
+						title:"<div class='widget-header'><h4><i class='fa fa-check'></i>&nbsp;개인정보 수정 성공</h4></div>",
 						buttons:[{
 							html:"<i class='fa fa-check'></i>&nbsp; 확인",
 							"class": "btn btn-default",

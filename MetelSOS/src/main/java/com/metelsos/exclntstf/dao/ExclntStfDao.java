@@ -31,7 +31,11 @@ public class ExclntStfDao extends AbstractDAO{
 	}
 
 	public int insertExclntStf(HashMap<String, Object> paramMap) throws Exception{
-		return (int) insert("exclntstf.insertExclntStf", paramMap);
+		if(paramMap.get("engineer_image") != null){
+			return (int) insert("exclntstf.insertExclntStf", paramMap);
+		}else{
+			return (int) insert("exclntstf.insertExclntStfDefaultImg", paramMap);
+		}
 	}
 
 	public List<HashMap<String, Object>> selectCurrExclntStf(HashMap<String, String> paramMap) throws Exception{

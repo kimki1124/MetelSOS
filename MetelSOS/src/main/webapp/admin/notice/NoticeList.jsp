@@ -80,7 +80,7 @@
 												<tbody>
 													<c:forEach var="item" items="${noticeList}" varStatus="status">
 														<tr>
-															<td>${status.count }</td>
+															<td>${item.notice_num }</td>
 															<td><a href="javascript:moveNoticeDetailPage('${item.notice_num }');">${item.notice_title }</a></td>
 															<td style="text-align:center;"><c:if test="${item.has_file == 'Y' }">
 																	<i class="fa fa-file fa-lg" aria-hidden="true"></i>
@@ -141,12 +141,13 @@
 		  			comSubmit.addParam('userType', 'engineer');
 		  			comSubmit.addParam('menuTitle', encodeURI('공지사항 작성'));
 		  			comSubmit.addParam('menuIcon', 'fa fa-lg fa-fw fa-pencil-square-o');
+		  			comSubmit.addParam("userId", "${userId}");
 		  			comSubmit.getSubmit();
 		  		});
 		 	 });
 		  	
 		  	function moveNoticeDetailPage(notice_num){
-		  		document.location.href="/metelSOS/moveNoticeDetailPage.do?notice_num="+notice_num;
+		  		document.location.href="/metelSOS/moveNoticeDetailPage.do?notice_num="+notice_num+"&userId="+"${userId}";
 		  	}
 		
 		</script>

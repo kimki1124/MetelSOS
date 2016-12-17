@@ -212,7 +212,7 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public HashMap<String, Object> updateNotice(HashMap<String, String> paramMap) throws Exception {
 		HashMap<String, Object> returnMap = new HashMap<String, Object>();
-		
+		paramMap.put("noticeContent", paramMap.get("noticeContent").replace("\n", "<br />").replace("\r", "<br />"));
 		noticeDao.updateNotice(paramMap);
 		returnMap.put("resultMsg", "SUCCESS");
 		return returnMap;

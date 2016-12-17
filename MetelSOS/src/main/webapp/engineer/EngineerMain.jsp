@@ -28,6 +28,7 @@
 			<input type="hidden" name="userType">
 			<input type="hidden" name="menuTitle">
 			<input type="hidden" name="menuIcon">
+			<input type="hidden" name="userId">
 		</form>
 		<!-- #MAIN PANEL -->
 		<div id="main" role="main">
@@ -239,6 +240,7 @@
 		  		form.userType.value = "engineer";
 		  		form.menuTitle.value = encodeURI("공지사항 관리");
 		  		form.menuIcon.value = "fa fa-lg fa-fw fa-bell";
+		  		form.userId.value = "${userId}";
 		  		form.action = "/metelSOS/noticePageMove.do";
 		  		form.method = "get";
 		  		form.submit();
@@ -343,7 +345,7 @@
 	                	var hrefTag = '<a href="javascript:moveNoticeDetailPage('+value.NOTICE_NUM+');" name='+'title>' + value.NOTICE_TITLE + '</a>';
 	                	
 	                    str += "<tr>" + 
-	                                "<td>" + value.RNUM + "</td>" + 
+	                                "<td>" + value.NOTICE_NUM + "</td>" + 
 	                                "<td class='title'>" +
 	                                hrefTag  +
 	                                "</td>" +
@@ -359,7 +361,7 @@
 		  	}
 		  	
 		  	function moveNoticeDetailPage(notice_num){
-		  		document.location.href="/metelSOS/moveNoticeDetailPage.do?notice_num="+notice_num+"&userId="+"${userId}";
+		  		document.location.href="/metelSOS/moveNoticeDetailPage.do?notice_num="+notice_num;
 		  	};
 		
 		</script>

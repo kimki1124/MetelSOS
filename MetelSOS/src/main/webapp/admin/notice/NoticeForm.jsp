@@ -216,7 +216,7 @@
 						parallelUploads: 5,
 						maxFiles: 5,
 						autoProcessQueue:false,
-						acceptedFiles: ".jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF",
+						acceptedFiles: ".jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.txt,.TXT,.xlsx,.xls",
 						dictDefaultMessage: '<span class="text-center"><span class="font-lg visible-xs-block visible-sm-block visible-lg-block"><span class="font-lg"><i class="fa fa-caret-right text-danger"></i> <span class="font-xs"> 첨부 파일을 가져다 놓으세요.</span></span>',
 						dictResponseError: 'Error uploading file!',
 						init : function(){
@@ -243,6 +243,7 @@
 					        				myDropzone.processQueue();
 					        				
 					        				var comSubmit = new ComSubmit();
+					        				comSubmit.addParam("userId", "${userId}");
 					        				comSubmit.addParam('userType', "engineer");
 					    		  			comSubmit.addParam('menuTitle', encodeURI("공지사항 관리"));
 					    		  			comSubmit.addParam('menuIcon', "fa fa-lg fa-fw fa-bell");

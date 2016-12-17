@@ -67,7 +67,12 @@ public class NewemplydDao extends AbstractDAO{
 	 * @throws Exception
 	 */
 	public int enrollNewEmplyd(HashMap<String, Object> paramMap) throws Exception{
-		return (int)insert("newemplyd.enrollNewEmplyd", paramMap);
+		if(paramMap.get("engineer_image") != null){
+			return (int)insert("newemplyd.enrollNewEmplyd", paramMap);
+		}else{
+			return (int)insert("newemplyd.enrollNewEmplydDefaultImg", paramMap);
+		}
+		
 	}
 
 	/**

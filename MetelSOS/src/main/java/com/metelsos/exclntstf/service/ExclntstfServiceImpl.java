@@ -98,7 +98,11 @@ public class ExclntstfServiceImpl implements ExclntstfService{
 		paramMap.put("engineer_dept", vo.getEngineer_dept());
 		paramMap.put("engineer_name", vo.getEngineer_name());
 		paramMap.put("impression_speech", vo.getImpression_speech());
-		paramMap.put("engineer_image", vo.getEngineer_image().getBytes());
+		if(vo.getEngineer_image() != null){
+			paramMap.put("engineer_image", vo.getEngineer_image().getBytes());
+		}else{
+			paramMap.put("engineer_image", null);
+		}
 		
 		String engineerPosition = engineerDao.getEngineerPosition(paramMap);
 		paramMap.put("engineer_position", engineerPosition);

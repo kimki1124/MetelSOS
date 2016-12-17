@@ -38,6 +38,13 @@
 		]]>
 	</insert>
 	
+	<insert id="enrollNewEmplydDefaultImg" parameterType="hashmap">
+		<![CDATA[
+			INSERT INTO METELSOS_NEW_EMPLYD(NEW_EMPLY_YEAR_MONTH, ENGINEER_NAME, ENGINEER_POSITION, ENGINEER_DEPT, IMPRESSION_SPEECH)
+			VALUES(#{new_emply_year_month}, #{engineer_name}, #{engineer_position}, #{engineer_dept}, #{impression_speech})
+		]]>
+	</insert>
+	
 	<select id="getNewEmplydImage" parameterType="hashmap" resultMap="newemplydMapResult">
 		<![CDATA[
 			SELECT NEW_EMPLY_YEAR_MONTH, ENGINEER_NAME, ENGINEER_POSITION, ENGINEER_DEPT, ENGINEER_IMAGE, IMPRESSION_SPEECH

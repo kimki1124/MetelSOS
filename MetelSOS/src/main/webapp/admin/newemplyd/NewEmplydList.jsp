@@ -216,7 +216,9 @@
 		        	formData.append("new_emply_year_month", specifyDate);
 		        	formData.append("engineer_dept", $("#deptSelect").val());
 		        	formData.append("engineer_name", $("#nameSelect").val());
-		        	formData.append("engineer_image", $("input[name=engineer_image]")[0].files[0]);
+		        	if($("input[name=engineer_image]")[0].files[0] != undefined){
+		        		formData.append("engineer_image", $("input[name=engineer_image]")[0].files[0]);
+		        	}
 		        	formData.append("impression_speech", $("#impression_speech").val());
 		        	$.ajax({
 						url:'/metelSOS/enrollNewEmplyd.do',

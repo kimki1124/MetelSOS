@@ -222,9 +222,9 @@
 		  	
 		  	$(document).ready(function(){
 		  		pageSetUp();
-		  		
+		  		var content = "${noticeVo.notice_content }";
 		  		//로딩 후 textarea에 notice_content 값 세팅
-		  		$("#noticeContent").val('${noticeVo.notice_content }');
+		  		$("#noticeContent").val(content.replace(/<br\s?\/?>/g,"\n"));
 		  		Dropzone.autoDiscover = false;
 		  		$(".dropzone").each(function(){
 		  			var id = $(this).attr('id');
@@ -313,6 +313,7 @@
 	        				comSubmit.addParam('userType', "engineer");
 	    		  			comSubmit.addParam('menuTitle', encodeURI("공지사항 관리"));
 	    		  			comSubmit.addParam('menuIcon', "fa fa-lg fa-fw fa-bell");
+	    		  			comSubmit.addParam("userId", "${userId}");
 	    		  			comSubmit.setUrl("/metelSOS/noticePageMove.do");
 	    		  			comSubmit.getSubmit();
 						}

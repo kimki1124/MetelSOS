@@ -195,7 +195,7 @@ public class SupportServiceImpl implements SupportService{
          
         String supportNum = (String)paramMap.get("supportNum");
          
-        File file = new File("/home/indigo/MYMETELSOS/file/support");
+        File file = new File("/home/indigo/MYMETELSOS/file/support/");
         if(file.exists() == false){
             file.mkdirs();
         }
@@ -207,7 +207,7 @@ public class SupportServiceImpl implements SupportService{
                 originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 storedFileName = getRandomString() + originalFileExtension;
                 
-                file = new File("/home/indigo/MYMETELSOS/file/support" + storedFileName);
+                file = new File("/home/indigo/MYMETELSOS/file/support/" + storedFileName);
                 multipartFile.transferTo(file);
                 
                 listMap = new HashMap<String,Object>();
