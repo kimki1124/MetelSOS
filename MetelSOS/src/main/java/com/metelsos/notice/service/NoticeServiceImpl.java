@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import com.metelsos.common.util.MetelSOSUtil;
@@ -28,6 +30,8 @@ import com.metelsos.notice.vo.NoticeVo;
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService{
 	
+	private Log log = LogFactory.getLog(NoticeServiceImpl.class);
+	
 	@Resource(name="noticeDao")
 	private NoticeDao noticeDao;
 
@@ -46,7 +50,15 @@ public class NoticeServiceImpl implements NoticeService{
 		paramMap.put("currDate", util.currDatetoString("yyyyMMddHHmmss"));
 		
 		String content = paramMap.get("noticeContent");
-		content = content.replace(System.getProperty("line.separator"), "<br />");
+		
+		System.out.println("####################replace 이전#############################################");
+		System.out.println(content);
+		System.out.println("####################replace 이전#############################################");
+		content = content.replace("\n", "<br />").replace("\r", "<br />");
+		
+		System.out.println("#################################################################");
+		System.out.println(content);
+		System.out.println("#################################################################");
 		paramMap.put("noticeContent", content);
 		
 		int result = noticeDao.insertNoticeBoard(paramMap);
@@ -97,6 +109,9 @@ public class NoticeServiceImpl implements NoticeService{
 		MetelSOSUtil util = new MetelSOSUtil();
 		NoticeVo vo = noticeDao.selectDetailNotice(paramMap);
 		
+		//content = content.replace("\n", "<br />").replace("\r", "<br />");
+		vo.setNotice_content(vo.getNotice_content().replace("<br /><br />", "<br />"));
+		
 		if(vo != null){
 			if(paramMap.containsKey("userId")){
 				returnMap.put("userId", paramMap.get("userId"));
@@ -119,6 +134,9 @@ public class NoticeServiceImpl implements NoticeService{
 			returnMap.put("fileList", fileList);
 		}
 		
+		System.out.println("##DETAILSELECT###############DETAILSELECT###############DETAILSELECT###############DETAILSELECT#############");
+		System.out.println(vo.getNotice_content());
+		System.out.println("##DETAILSELECT###############DETAILSELECT###############DETAILSELECT###############DETAILSELECT#############");
 		List<String> list = new ArrayList<String>();
 		list.add("공지사항 관리");
 		

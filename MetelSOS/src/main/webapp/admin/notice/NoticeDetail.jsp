@@ -234,6 +234,7 @@
 		  		pageSetUp();
 		  		var content = "${noticeVo.notice_content }";
 		  		//로딩 후 textarea에 notice_content 값 세팅
+		  		console.log(content.replace(/<br\s?\/?>/g,"\n"));
 		  		$("#noticeContent").val(content.replace(/<br\s?\/?>/g,"\n"));
 		 	 });
 		  //삭제 버튼 클릭 이벤트 
