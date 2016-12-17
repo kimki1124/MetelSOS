@@ -2,7 +2,6 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="com.metelsos.user.vo.UserVo" alias="User" />
 		<typeAlias type="com.metelsos.customer.vo.CustomerVo" alias="Customer" />
 		<typeAlias type="com.metelsos.engineer.vo.EngineerVo" alias="Engineer" />
 		<typeAlias type="com.metelsos.company.vo.CompanyVo" alias="Company" />
